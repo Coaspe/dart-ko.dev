@@ -317,7 +317,7 @@ setting up and managing worker isolates:
   consider using [Flutter's `compute()` function][]
   instead of `Isolate.run()`.
   The `compute` function
-  allows your code to work  on both
+  allows your code to work on both
   [native and non-native platforms][].
   Use `Isolate.run()` when targeting native platforms only
   for a more ergonomic API.

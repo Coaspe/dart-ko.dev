@@ -1,69 +1,61 @@
 ---
-title: "Asynchronous programming: futures, async, await"
-description: Learn about and practice writing asynchronous code in DartPad!
+title: "비동기 프로그래밍: futures, async, await"
+description: DartPad로 비동기 코드를 작성법을 배우고 연습해봅시다!
 js: [{url: 'https://dartpad.dev/inject_embed.dart.js', defer: true}]
 ---
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g"?>
 <?code-excerpt plaster="none"?>
 
-This codelab teaches you how to write asynchronous code using
-futures and the `async` and `await` keywords. 
-Using embedded DartPad editors, 
-you can test your knowledge by running example code
-and completing exercises.
+이 코드랩에서는 future와 `async`, `await` 키워드를 사용하여
+비동기 코드 작성법을 배웁니다. 임베디드 DartPad 에디터로
+예제 코드를 실행하고 연습하며 배운 것을 테스트할 수 있습니다.
 
-To get the most out of this codelab, you should have the following:
+이 코드랩을 최대한 활용하려면 다음을 알고 있어야 합니다:
 
-* Knowledge of [basic Dart syntax](/samples).
-* Some experience writing asynchronous code in another language.
+* [기본 Dart 문법](/samples)에 대한 지식.
+* 다른 언어에서 비동기 코드를 작성해 본 경험.
 
-This codelab covers the following material:
+이 코드랩에서는 다음의 주제를 다룹니디:
 
-* How and when to use the `async` and `await` keywords.
-* How using `async` and `await` affects execution order.
-* How to handle errors from an asynchronous call
-  using `try-catch` expressions in `async` functions.
+* `async`와 `await` 키워드를 언제 어떻게 사용해야 하는지.
+* `async`와 `await`의 사용이 실행 순서에 어떤 영향을 미치는지.
+* `try-catch`을 사용하여 어떻게 `async` 함수에
+  사용된 비동기 호출에서 발생하는 에러를 다루는지.
 
-Estimated time to complete this codelab: 40-60 minutes.
+40-60분이면 이 코드랩을 완료할 수 있습니다.
 
 {{site.alert.note}}
-  This page uses embedded DartPads to display examples and exercises.
+  이 페이지는 예제와 연습을 수행할 때 임베디드 DartPad를 사용합니다.
   {% include dartpads-embedded-troubleshooting.md %}
 {{site.alert.end}}
 
-## Why asynchronous code matters
+## 비동기 코드는 왜 중요한가?
 
-Asynchronous operations let your program complete work
-while waiting for another operation to finish. 
-Here are some common asynchronous operations:
+비동기 작업을 사용하면 다른 작업이 완료되기를 기다리는 동안
+프로그램이 작업을 완료할 수 있습니다. 다음은 자주 사용되는 비동기 작업입니다:
 
-* Fetching data over a network.
-* Writing to a database.
-* Reading data from a file.
+* 네트워크를 통해 데이터를 가져올 때.
+* 데이터 베이스에 쓰기를 수행할 때.
+* 파일로부터 데이터를 읽을 때.
 
-Such asynchronous computations usually provide their result as a `Future`
-or, if the result has multiple parts, as a `Stream`.
-These computations introduce asynchrony into a program.
-To accommodate that initial asynchrony, 
-other plain Dart functions also need to become asynchronous.
+이와 같은 비동기 작업은 결과를 보통 `Future`로 제공하고,
+결과가 다수의 파트를 가지고 있다면 `Stream`으로 제공합니다.
+이러한 작업들은 프로그램에 비동기성을 도입합니다. 이 비동기성을 다루기 위해서
+다른 일반적인 Dart 함수들도 비동기화되어야 합니다.
 
-To interact with these asynchronous results,
-you can use the `async` and `await` keywords.
-Most asynchronous functions are just async Dart functions
-that depend, possibly deep down, 
-on an inherently asynchronous computation.
+이러한 비동기 결과와 상호작용하려면 `async`와 `await` 키워드를
+사용하면 됩니다. 대부분의 비동기 함수들은 본질적으로 비동기 연산에
+의존하는 비동기 Dart 함수입니다.
 
-### Example: Incorrectly using an asynchronous function
+### 예제: 옳지 않는 비동기 함수 사용례
 
-The following example shows the wrong way
-to use an asynchronous function (`fetchUserOrder()`). 
-Later you'll fix the example using `async` and `await`.
-Before running this example, try to spot the issue -- 
-what do you think the output will be?
+다음 예제는 비동기 함수(`fetchUserOrder()`)를
+잘못 사용한 경우를 보여줍니다. 이 예제를 실행하기 전에, 문제가 무엇일지 생각해보세요 --
+출력이 어떻게 될까요?
 
 <?code-excerpt "async_await/bin/get_order_sync_bad.dart" remove="Fetching"?>
 ```dart:run-dartpad:height-380px:ga_id-incorrect_usage
-// This example shows how *not* to write asynchronous Dart code.
+// 이 예제 같이 비동기 Dart 코드를 작성하면 *안 됩니다*.
 
 String createOrderMessage() {
   var order = fetchUserOrder();
@@ -71,7 +63,7 @@ String createOrderMessage() {
 }
 
 Future<String> fetchUserOrder() =>
-    // Imagine that this function is more complex and slow.
+    // 이 함수가 더 복잡하고 느린 함수라고 상상해보세요.
     Future.delayed(
       const Duration(seconds: 2),
       () => 'Large Latte',
@@ -82,91 +74,78 @@ void main() {
 }
 ```
 
-Here's why the example fails to print the value
-that `fetchUserOrder()` eventually produces:
+위의 예제가 `fetchUserOrder()` 함수의 비동기 작업
+결과 값을 출력하지 못하는 이유는 다음과 같습니다:
 
-* `fetchUserOrder()` is an asynchronous function that, after a delay,
-  provides a string that describes the user's order: a "Large Latte".
-* To get the user's order, `createOrderMessage()` should call `fetchUserOrder()`
-  and wait for it to finish. Because `createOrderMessage()` does *not* wait
-  for `fetchUserOrder()` to finish, `createOrderMessage()` fails to
-  get the string value that `fetchUserOrder()` eventually provides.
-* Instead, `createOrderMessage()` gets a representation of pending work to be
-  done: an uncompleted future. 
-  You'll learn more about futures in the next section.
-* Because `createOrderMessage()` fails to get the value describing the user's
-  order, the example fails to print "Large Latte" to the console, and instead
-  prints "Your order is: Instance of '_Future\<String\>'".
+* `fetchUserOrder()`는 일정 시간의 딜레이 이후에
+  사용자의 주문을 설명하는 문자열("Large Latte")을 제공합니다.
+* `createOrderMessage()`는 사용자의 주문을 받기 위해 
+  `fetchUserOrder()`를 호출해야 하고, 이 함수가 끝날 때까지 기다립니다.
+  `createOrderMessage()` 함수는 `fetchUserOrder()`가 끝나는 것을 *기다리지 않기* 때문에,
+  `createOrderMessage()`는 `fetchUserOrder()`가 제공하는 문자열을 얻지 못합니다.
+* 대신에, `createOrderMessage()`는 작업이 완료되지 않은 future를 얻습니다.
+  Future에 대해서는 다음 섹션에서 배웁니다.
+* `createOrderMessage()`가 사용자의 주문을 나타내는 값을 얻지 못했기 때문에,
+  콘솔에 "Large Latte"를 출력하지 못했고,
+  "Your order is: Instance of '_Future\<String\>'"가 대신 출력됩니다.
 
-In the next sections you'll learn about futures and about working with futures
-(using `async` and `await`)
-so that you'll be able to write the code necessary to make `fetchUserOrder()`
-print the desired value ("Large Latte") to the console.
+다음 섹션에서 `fetchUserOrder()`가 원하는 값("Large Latte")을 콘솔에 출력하는 데
+필요한 코드를 작성할 수 있도록 future와 
+`async`와 `await`를 사용하여 future를 사용하는 법을 배웁니다.
 
 {{site.alert.secondary}}
-  **Key terms:**
+  **주요 용어:**
 
-  * **synchronous operation**: A synchronous operation blocks other operations
-    from executing until it completes.
-  * **synchronous function**: A synchronous function only performs synchronous
-    operations.
-  * **asynchronous operation**: Once initiated, an asynchronous operation allows
-    other operations to execute before it completes.
-  * **asynchronous function**: An asynchronous function performs at least one
-    asynchronous operation and can also perform _synchronous_ operations.
+  * **동기 작업**: 동기 작업은 해당 작업이 완료되기 전에 다른 작업의 실행을 블락합니다.
+  * **동기 함수**: 동기 함수는 동기 작업만을 수행합니다.
+  * **비동기 작업**: 비동기 작업은 해당 작업이 완료되기 전에도 다른 작업을 실행할 수 있게 합니다.
+  * **비동기 함수**: 비동기 함수는 적어도 한 개 이상의 비동기 작업을 수행하며 _동기_ 작업도 수행이 가능합니다.
 {{site.alert.end}}
 
 
-## What is a future?
+## future란?
 
-A future (lower case "f") is an instance
-of the [Future][] (capitalized "F") class. 
-A future represents the result of an asynchronous operation, 
-and can have two states: uncompleted or completed.
+future(소문자 "f")는 [Future][] (대문자 "F") 클래스의 인스턴스입니다.
+future는 비동기 작업의 결과를 나타내며 미완료(uncompleted), 완료(completed) 중 한 가지 상태를 가집니다.
 
 {{site.alert.note}}
-  _Uncompleted_ is a Dart term referring to the state of a future
-  before it has produced a value.
+  _미완료_ 는 future가 값을 생성하기 전의 상태를 나타내는 Dart 용어입니다.
 {{site.alert.end}}
 
-### Uncompleted
+### 미완료
 
-When you call an asynchronous function, it returns an uncompleted future.
-That future is waiting for the function's asynchronous operation
-to finish or to throw an error.
+비동기 함수를 호출하면, 미완료된 future를 반환합니다.
+해당 future는 함수의 비동기 작업이 끝나거나 에러 발생을 기다립니다.
 
-### Completed
+### 완료
 
-If the asynchronous operation succeeds, 
-the future completes with a value. 
-Otherwise, it completes with an error.
+비동기 작업이 성공적으로 끝나면,
+future는 값으로 완료되고 그렇지 않으면 에러로 완료됩니다.
 
-#### Completing with a value
+#### 값으로 완료
 
-A future of type `Future<T>` completes with a value of type `T`.
-For example, a future with type `Future<String>` produces a string value.
-If a future doesn't produce a usable value, 
-then the future's type is `Future<void>`.
+`Future<T>` 타입의 future는 `T` 타입의 값으로 완료됩니다.
+예를 들어, `Future<String>` 타입의 future는 문자열 값을 생성합니다.
+future의 타입이 `Future<void>`이면
+사용가능한 값을 생성하지 않습니다.
 
-#### Completing with an error
+#### 에러로 완료
 
-If the asynchronous operation performed by the function fails for any reason,
-the future completes with an error.
+어떤 이유로 함수가 수행하는 비동기 작업이 실패하면,
+future는 에러로 완료됩니다.
 
-### Example: Introducing futures
+### 예제: future
 
-In the following example, `fetchUserOrder()` returns a future
-that completes after printing to the console. 
-Because it doesn't return a usable value,
-`fetchUserOrder()` has the type `Future<void>`. 
-Before you run the example,
-try to predict which will print first: 
-"Large Latte" or "Fetching user order...".
+다음 예제에서 `fetchUserOrder()`는 콘솔에 출력후 완료되는 future를 반환합니다.
+`fetchUserOrder()` 함수는 사용 가능한 값을 반환하지 않기 때문에
+반환 타입은 `Future<void>`입니다. 예제를 실행하기 전에,
+"Large Latte" 또는 "Fetching user order..." 중에 처음 출력될
+문자열이 무엇인지 예상해보세요.
 
 <?code-excerpt "async_await/bin/futures_intro.dart"?>
 ```dart:run-dartpad:height-300px:ga_id-introducting_futures
 Future<void> fetchUserOrder() {
-  // Imagine that this function is fetching user info from another service or database.
+  // 이 함수가 서비스 또는 데이터 베이스에서 사용자 정보를 가져오는 함수라고 생각해보세요.
   return Future.delayed(const Duration(seconds: 2), () => print('Large Latte'));
 }
 
@@ -176,21 +155,20 @@ void main() {
 }
 ```
 
-In the preceding example, 
-even though `fetchUserOrder()` executes before the `print()` call on line 8, 
-the console shows the output from line 8("Fetching user order...") 
-before the output from `fetchUserOrder()` ("Large Latte").
-This is because `fetchUserOrder()` delays before it prints "Large Latte".
+위의 코드에서 `fetchUserOrder()`는 8번째 라인의 `print()` 호출보다 먼저 실행되지만,
+"Fetching user order..."가 `fetchUserOrder()`의 출력인 "Large Latte" 보다
+먼저 출력됩니다. 이는 `fetchUserOrder()`가 "Large Latte"를 출력하기 전에
+딜레이되기 때문입니다.
 
-### Example: Completing with an error
+### 예제: 에러로 완료
 
-Run the following example to see how a future completes with an error.
-A bit later you'll learn how to handle the error.
+어떻게 future가 에러로 완료되는지 다음 예제를 실행해서 확인하세요.
+이후의 섹션에서 이 에러를 다루는 법을 배웁니다.
 
 <?code-excerpt "async_await/bin/futures_intro.dart (error)" replace="/Error//g"?>
 ```dart:run-dartpad:height-300px:ga_id-completing_with_error
 Future<void> fetchUserOrder() {
-// Imagine that this function is fetching user info but encounters a bug
+// 이 함수가 사용자 정보를 가져오던 중에 버그가 발생한다고 생각해보세요.
   return Future.delayed(const Duration(seconds: 2),
       () => throw Exception('Logout failed: user ID is invalid'));
 }
@@ -201,16 +179,15 @@ void main() {
 }
 ```
 
-In this example, `fetchUserOrder()` completes
-with an error indicating that the user ID is invalid.
-
-You've learned about futures and how they complete, 
-but how do you use the results of asynchronous functions? 
-In the next section you'll learn how to get results
-with the `async` and `await` keywords.
+이 예제에서, `fetchUserOrder()`는 사용자 ID가 무효하다고
+알려주는 에러로 완료됩니다.
+지금까지 future와 future가 어떻게 완료되는지에 대해 배웠습니다.
+그렇다면 비동기 함수의 결과 값을 어떻게 사용해야 할까요?
+다음 섹션에서 `async`와 `await` 키워드를 사용하여
+결과 값을 얻는 방법에 대해 배워봅시다.
 
 {{site.alert.secondary}}
-  **Quick review:**
+  **리뷰:**
 
   * A [Future\<T\>][Future] instance produces a value of type `T`.
   * If a future doesn't produce a usable value, 

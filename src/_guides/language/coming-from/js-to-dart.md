@@ -1150,7 +1150,7 @@ let visibility = isPublic ? "public" : "private";
 final visibility = isPublic ? 'public' : 'private';
 ```
 
-[if-else]: /language/control-flow#if-and-else
+[if-else]: /language/branches#if
 
 ### Assignment operators
 

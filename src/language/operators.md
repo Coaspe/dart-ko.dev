@@ -475,6 +475,6 @@ The `sb.write()` 호출은 void를 반환하고,
 [identical()]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/identical.html
 [Operators]: /language/methods#연산자
 [library prefixes]: /language/libraries#specifying-a-library-prefix
-[if-else]: /language/control-flow#if-else
+[if-else]: /language/branches#if
 [language version]: /guides/language/evolution#language-versioning
 [Classes]: /language/classes

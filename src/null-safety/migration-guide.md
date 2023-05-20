@@ -67,17 +67,17 @@ description: 기존의 코드를 null 안전성을 준수하는 코드로 수정
 종속성을 확인하고 업데이트하는 방법에 대해 설명합니다. 다음 지침은
 코드의 **버전 관리**가 되고 있고, 언제든지 모든 변경을 롤백할 수 있다고 가정합니다.
 
+<a id="switch-to-the-latest-stable-dart-release"></a>
+### Switch to the latest Dart 2.19 release
 
-### 최신 stable Dart 릴리즈로 전환
-
-Dart SDK를 **Dart 2.19 stable 릴리즈**로 전환하세요.
+Dart SDK를 최신 **Dart 2.19 릴리즈**로 전환하세요.
 이 버전은 Flutter 3.7 SDK에 포함되어있습니다.
 
 Dart 버전이 2.19인지 확인하세요:
 
 ```terminal
 $ dart --version
-Dart SDK version: 2.19.2
+Dart SDK version: 2.19.6
 ```
 
 ### 종속 상태 확인
@@ -382,7 +382,7 @@ To migrate a package by hand, follow these steps:
    $ dart pub get
    ```
 
-   [package configuration file]: https://github.com/dart-lang/language/blob/master/accepted/2.8/language-versioning/package-config-file-v2.md
+   [package configuration file]: https://github.com/dart-lang/language/blob/main/accepted/2.8/language-versioning/package-config-file-v2.md
 
    Running `dart pub get` with a lower SDK constraint of at least `2.12.0`
    sets the default language version of

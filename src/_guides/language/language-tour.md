@@ -80,11 +80,11 @@ This content has moved to [Collections](/language/collections#lists).
 <a id="trailing-comma"></a>
 #### Trailing commas
 
-This content has moved to [Collections](/language/collections#trailing-commas).
+This content has moved to [Collections](/language/collections#trailing-comma).
 
 #### Spread operator
 
-This content has moved to [Collections](/language/collections#spread-operator).
+This content has moved to [Collections](/language/collections#spread-operators).
 
 #### Collection operators
 
@@ -148,7 +148,7 @@ This content has moved to [Functions](/language/functions#lexical-closures).
 
 ### 동등성 테스트 함수
 
-This content has moved to [Functions](/language/functions#testing-functions-for-inequality).
+This content has moved to [Functions](/language/functions#testing-functions-for-equality).
 
 ### 반환 값
 
@@ -197,31 +197,31 @@ This content has moved to [Operators](/language/operators#other-operators).
 
 ## 흐름 제어문
 
-This content has moved to [Control flow](/language/control-flow).
+This content has moved to [Control flow](/language/loops).
 
 ### If, else
 
-This content has moved to [Control flow](/language/control-flow#if-and-else).
+This content has moved to [Control flow](/language/branches#if).
 
 ### For 루프
 
-This content has moved to [Control flow](/language/control-flow#for-loops).
+This content has moved to [Control flow](/language/loops#for-loops).
 
 ### While, do-while
 
-This content has moved to [Control flow](/language/control-flow#while-and-do-while).
+This content has moved to [Control flow](/language/loops#while-and-do-while).
 
 ### Break, continue
 
-This content has moved to [Control flow](/language/control-flow#break-and-continue).
+This content has moved to [Control flow](/language/loops#break-and-continue).
 
 ### Switch, case
 
-This content has moved to [Control flow](/language/control-flow#switch-and-case).
+This content has moved to [Control flow](/language/branches#switch).
 
 ### Assert
 
-This content has moved to [Control flow](/language/control-flow#assert).
+This content has moved to [Control flow](/language/error-handling#assert).
 
 ## 예외
 
@@ -332,7 +332,7 @@ This content has moved to [Methods](/language/methods#abstract-methods).
 
 ### 추상 클래스
 
-This content has moved to [Classes](/language/classes#abstract-classes).
+This content has moved to [Classes](/language/class-modifiers#abstract).
 
 <a id="interfaces"></a>
 
@@ -439,7 +439,7 @@ This content has moved to [Libraries & visibility](/language/libraries#lazily-lo
 
 #### `library` 명령어 {#library-directive}
 
-This content has moved to [Libraries & visibility](/language/libraries#the-library-directive).
+This content has moved to [Libraries & visibility](/language/libraries#library-directive).
 
 ### 라이브러리 구현
 
@@ -467,7 +467,7 @@ This content has moved to [Generators](/language/functions#generators).
 
 ## 호출 가능한 클래스
 
-This content has moved to [Callable classes](/language/callable-classes).
+This content has moved to [Callable objects](/language/callable-objects).
 
 ## Isolates
 

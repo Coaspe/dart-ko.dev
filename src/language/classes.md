@@ -9,7 +9,8 @@ Dart는 클래스와 mixin 기반 상속을 지원하는 객체지향언어입�
 모든 객체는 클래스의 인스턴스이고, `Null`을 제외한 클래스는 모두 [`Object`][]에서 비롯합니다.
 *Mixin 기반 상속*이란 말은, 모든 클래스가 하나의 부모 클래스를 가지고 있지만
 ([최상위 클래스][top-and-bottom]인 `Object?`를 제외한) 클래스의 바디는 다양한 클래스 계층에서 재사용 될 수 있음을 의미합니다.
-[확장 메서드][Extension methods]는 서브 클래스를 추가하거나, 클래스를 바꾸지 않고 클래스에 기능을 추가하는 방법입니다.
+[확장 메서드][Extension methods]는 서브 클래스를 생성하거나, 클래스를 바꾸지 않고 클래스에 기능을 추가하는 방법입니다.
+[클래스 제어자][Class modifiers]를 사용하여 라이브러리가 클래스를 서브타입하는 방법을 제어할 수 있습니다.
 
 
 ## 클래스 멤버 사용하기
@@ -194,28 +195,6 @@ class ProfileMark {
 * `late final`를 [_주의해서_][late-final-ivar] 사용하세요: initializer가 없는
 `late final`는 API에 setter를 추가합니다.
 
-
-
-## 추상 클래스
-
-`abstract` 수식어를 사용하여, 인스턴스화될 수 없는 *추상 클래스*를 선언하세요.
-추상 클래스는 인터페이스를 정의할 때 유용하며, 종종 일부 구현과 함께 사용됩니다
-추상 클래스를 인스턴스화하려면, [factory 생성자](/language/constructors#factory-constructors).
-
-추상 클래스는 [추상 메서드][abstract methods]를 가질 수 있습니다.
-다음은 추상 메서드를 가지는 추상 클래스의 예제입니다:
-
-<?code-excerpt "misc/lib/language_tour/classes/misc.dart (abstract)"?>
-```dart
-// 이 클래스는 abstract로 선언되어 인스턴스화 할 수 없습니다.
-abstract class AbstractContainer {
-  // 생성자, 필드, 메서드 등 정의 ...
-
-  void updateChildren(); // 추상 메서드.
-}
-```
-
-
 ## 암묵적 인터페이스
 
 클래스는 클래스의 모든 인스턴스 멤버와 클래스가 구현하는 모든 인터페이스를 포함하는 인터페이스를 암시적으로 정의합니다.
@@ -329,6 +308,7 @@ void main() {
 [`Object`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Object-class.html
 [top-and-bottom]: /null-safety/understanding-null-safety#top-and-bottom
 [Extension methods]: /language/extension-methods
+[Class modifiers]: /language/class-modifiers
 [constant constructors]: /language/constructors#constant-constructors
 [`Type`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Type-class.html
 [type test operator]: /language/operators#타입-테스트-연산자
@@ -336,4 +316,3 @@ void main() {
 [initializer list]: /language/constructors#이니셜라이저-리스트
 [factory constructor]: /language/constructors#factory-생성자
 [late-final-ivar]: /guides/language/effective-dart/design#avoid-public-late-final-fields-without-initializers
-[abstract methods]: /language/methods#추상-메서드

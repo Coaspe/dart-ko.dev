@@ -8,10 +8,11 @@ Dart 언어는 다음과 같은 특수한 내장 타입을 지원합니다:
 - [Numbers](#numbers) (`int`, `double`)
 - [Strings](#strings) (`String`)
 - [Booleans](#booleans) (`bool`)
-- [Lists](#lists) (`List`, *arrays*로도 부릅니다.)
-- [Sets](#sets) (`Set`)
-- [Maps](#maps) (`Map`)
-- [Runes](#characters) (`Runes`; 때로 `characters` API로 대체됩니다.)
+- [Records][] (`(value1, value2)`)
+- [Lists][] (`List`, *arrays*로도 부릅니다.)
+- [Sets][] (`Set`)
+- [Maps][] (`Map`)
+- [Runes](#runes-과-grapheme-clusters) (`Runes`; 때때로 `characters` API로 대체됩니다.)
 - [Symbols](#symbols) (`Symbol`)
 - `null` 값 (`Null`)
 
@@ -378,6 +379,7 @@ Symbol 리터럴은 컴파일 타임 상수입니다.
 
 
 
+[Records]: /language/records
 [Lists]: /language/collections#lists
 [Sets]: /language/collections#sets
 [Maps]: /language/collections#maps

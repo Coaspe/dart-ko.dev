@@ -28,7 +28,7 @@ var list = [1, 2, 3];
   [타입 추론][type inference]
 {{site.alert.end}}
 
-<a name="trailing-comma"></a>
+<a id="trailing-comma"></a>
 Dart 컬렉션 리터럴의 마지막 아이템 뒤에 쉼표를 추가할 수 있습니다.
 _trailing comma_ 는 컬렉션에 영향을 미치진 않지만,
 복사-붙여넣기 에러를 예방합니다.
@@ -285,7 +285,7 @@ assert(list2.length == 1);
 <a id="collection-operators"></a>
 ### 제어-흐름 연산자
 
-Dart는 조건 (`if`)과 반복 (`for`)을 사용하여
+Dart는 list, map 그리고 set 리터럴에 조건 (`if`)과 반복 (`for`)을 사용하여
 컬렉션을 빌드할 수 있는 **컬렉션 if** 와 **컬렉션 for**
 을 제공합니다.
 
@@ -296,8 +296,14 @@ Dart는 조건 (`if`)과 반복 (`for`)을 사용하여
 var nav = ['Home', 'Furniture', 'Plants', if (promoActive) 'Outlet'];
 ```
 
-다음은 **컬렉션 for**을 사용하여 list 항목을
-다른 목록에 추가하기 전에 해당 항목을 수정하는 예제입니다:
+컬렉션 리터럴 내부에서 [if-case][]를 사용할 수 있습니다:
+
+```dart
+var nav = ['Home', 'Furniture', 'Plants', if (login case 'Manager') 'Inventory'];
+```
+
+다음은 **컬렉션 for**을 사용하여
+list의 아이템을 다른 list에 추가하기 전에 조작하는 예제입니다.
 
 <?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-for)"?>
 ```dart
@@ -314,7 +320,8 @@ assert(listOfStrings[1] == '#1');
 [`List`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/List-class.html
 [`Map`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Map-class.html
 [Using constructors]: /language/classes#생성자-사용하기
-[collections proposal]: https://github.com/dart-lang/language/blob/master/accepted/2.3/control-flow-collections/feature-specification.md
-[spread proposal]: https://github.com/dart-lang/language/blob/master/accepted/2.3/spread-collections/feature-specification.md
+[collections proposal]: https://github.com/dart-lang/language/blob/main/accepted/2.3/control-flow-collections/feature-specification.md
+[spread proposal]: https://github.com/dart-lang/language/blob/main/accepted/2.3/spread-collections/feature-specification.md
 [generics]: /language/generics
 [`Set`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Set-class.html
+[if-case]: /language/branches#if-case

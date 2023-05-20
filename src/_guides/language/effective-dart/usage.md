@@ -912,7 +912,7 @@ var buffers = charCodes.map((code) => StringBuffer(code));
 
 {% include linter-rule-mention.md rule="prefer_equal_for_default_values" %}
 
-Dart는 오래된 이유로 `:`와 `=`를 모두 named 매개변수의 디폴트 값을 위한 구분자로 지원합니다.
+Dart 3 이전에 Dart는 `:`와 `=`를 모두 named 매개변수의 디폴트 값을 위한 구분자로 지원했습니다.
 Optional positional 매개변수와 통일된 방법을 사용하길 원한다면, `=`를 사용하세요.
 
 {:.good}
@@ -922,7 +922,6 @@ void insert(Object item, {int at = 0}) { ... }
 {% endprettify %}
 
 {:.bad}
-<?code-excerpt "usage_bad.dart (default-separator)"?>
 {% prettify dart tag=pre+code %}
 void insert(Object item, {int at: 0}) { ... }
 {% endprettify %}

@@ -67,9 +67,11 @@ Dart의 null 안전성 지원은 다음 세 가지 핵심 디자인 원칙을 �
 
 ## Dart 3와 null 안전성
 
-2023년 중반에 출시될 예정인 Dart 3은 항상 견고한 null 안전성을 준수합니다.
-Dart 3는 null 안전성을 지키지 않은 코드의 실행을 방지합니다.
+Dart 3은 견고한 null 안전성이 내장되어 있고,
+null 안전성을 지키지 않은 코드의 실행을 방지합니다.
 
+Dart 3 마이그레이션 가이드는
+[Dart 3 마이그레이션 가이드](/resources/dart-3-migration)를 참고하세요.
 Null 안전성을 준수하지 않고 개발된 패키지들은 종속성을 해결할 때 문제가 발생합니다: 
 
 ```terminal
@@ -114,7 +116,7 @@ $ dart analyze / flutter analyze     # 에러없이 통과해야 합니다
 `pub get` 단계에서 실패한다면, [종속성 상태][]를 참고하세요.
 `analyze` 단계에서 실패한다면, 애널라이저가 표시하는 문제를 코드에서 해결하세요.
 
-[다운로드 페이지]: /get-dart/archive#dart-3-alpha
+[다운로드 페이지]: /get-dart/archive
 [종속성 상태]: /null-safety/migration-guide#종속-상태-확인
 
 ## Dart 2.x와 null 안전성 {#enable-null-safety}

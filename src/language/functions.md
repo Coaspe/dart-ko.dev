@@ -8,8 +8,8 @@ Dart는 객체 지향 언어이므로, 함수도
 [Function][Function API reference]
 이라는 타입을 가지는 객체로 존재합니다.
 이건 함수가 변수나 다른 함수의 인자로 전달할 수 있다는 것을 의미합니다.
-또한 함수인 것처럼 Dart 클래스의 인스턴스를 호출할 수 있습니다.
-더 자세한 사항을 원한다면, [호출 가능한 클래스][Callable classes]를 참고하세요.
+Dart 클래스의 인스턴스를 함수인 것처럼 호출할 수 있습니다.
+더 자세한 정보를 원한다면, [호출 가능한 객체][Callable objects]를 참고하세요.
 
 다음은 함수를 구현하는 예제입니다:
 
@@ -421,6 +421,13 @@ foo() {}
 assert(foo() == null);
 ```
 
+To return multiple values in a function, aggregate the values in a [record][].
+
+```dart
+(String, int) foo() {
+  return ('something', 42);
+}
+```
 
 ## 제너레이터
 
@@ -467,11 +474,12 @@ Iterable<int> naturalsDownFrom(int n) sync* {
 
 [`Iterable`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Iterable-class.html
 [`Stream`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/Stream-class.html
+[record]: /language/records#multiple-returns
 
 [Function API reference]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Function-class.html
-[Callable classes]: /language/callable-classes
+[Callable objects]: /language/callable-objects
 [type annotations for public APIs]: /guides/language/effective-dart/design#do-type-annotate-fields-and-top-level-variables-if-the-type-isnt-obvious
-[if statement]: /language/control-flow#if-else
+[if statement]: /language/branches#if
 [conditional expression]: /language/operators#conditional-expressions
 [Flutter]: {{site.flutter}}
 [trailing commas]: /language/collections#lists

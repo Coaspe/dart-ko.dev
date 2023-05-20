@@ -154,4 +154,4 @@ print(Vehicle.car.carbonFootprint);
 [Factory constructors]: /language/constructors#factory-생성자
 [language version]: /guides/language/evolution#language-versioning
 [static variable]: /language/classes#클래스-변수와-메서드
-[switch statements]: /language/control-flow#switch-case
+[switch statements]: /language/branches#switch

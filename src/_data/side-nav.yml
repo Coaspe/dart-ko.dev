@@ -42,6 +42,8 @@
       children:
         - title: 내장 타입
           permalink: /language/built-in-types
+        - title: Records
+          permalink: /language/records
         - title: Collections
           permalink: /language/collections
         - title: Generics
@@ -50,10 +52,20 @@
           permalink: /language/typedefs
         - title: 타입 시스템
           permalink: /language/type-system 
+    - title: Patterns
+      children:
+        - title: 개요 & 용법
+          permalink: /language/patterns
+        - title: Pattern 타입
+          permalink: /language/pattern-types
     - title: 함수
       permalink: /language/functions
-    - title: 흐름 제어
-      permalink: /language/control-flow
+    - title: 제어 흐름
+      children:
+      - title: 루프
+        permalink: /language/loops
+      - title: 브랜치
+        permalink: /language/branches
     - title: 에러 핸들링
       permalink: /language/error-handling
     - title: 클래스 & 객체
@@ -66,14 +78,16 @@
           permalink: /language/methods
         - title: 클래스 확장
           permalink: /language/extend
-        - title: 확장 메소드
-          permalink: /language/extension-methods
-        - title: Enum 타입
-          permalink: /language/enum
         - title: Mixins
           permalink: /language/mixins
-        - title: 호출 가능한 클래스
-          permalink: /language/callable-classes
+        - title: 클레스 제어자
+          permalink: /language/class-modifiers
+        - title: Enum 타입
+          permalink: /language/enum
+        - title: 확장 메소드
+          permalink: /language/extension-methods
+        - title: 호출 가능한 객체
+          permalink: /language/callable-objects
     - title: 동시성
       children: 
         - title: 비동기 지원
@@ -314,6 +328,8 @@
       permalink: /guides/language/evolution
     - title: Language specification
       permalink: /guides/language/spec    
+    - title: Dart 3 migration guide
+      permalink: /resources/dart-3-migration
     - title: Coming from ...
       expanded: false
       children:

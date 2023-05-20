@@ -10,32 +10,34 @@ toc: false
 {% assign bii = '&nbsp;<sup title="built-in-identifier" alt="built-in-identifier">2</sup>' %}
 {% assign lrw = '&nbsp;<sup title="limited reserved word" alt="limited reserved word">3</sup>' %}
 <div class="table-wrapper" markdown="1">
-| [abstract][]{{bii}}   | [else][]              | [import][]{{bii}}     | [show][]{{ckw}}   |
-| [as][]{{bii}}         | [enum][]              | [in][]                | [static][]{{bii}} |
-| [assert][]            | [export][]{{bii}}     | [interface][]{{bii}}  | [super][]         |
-| [async][]{{ckw}}      | [extends][]           | [is][]                | [switch][]        |
-| [await][]{{lrw}}      | [extension][]{{bii}}  | [late][]{{bii}}       | [sync][]{{ckw}}   |
-| [break][]             | [external][]{{bii}}   | [library][]{{bii}}    | [this][]          |
-| [case][]              | [factory][]{{bii}}    | [mixin][]{{bii}}      | [throw][]         |
-| [catch][]             | [false][]             | [new][]               | [true][]          |
-| [class][]             | [final][]             | [null][]              | [try][]           |
-| [const][]             | [finally][]           | [on][]{{ckw}}         | [typedef][]{{bii}}|
-| [continue][]          | [for][]               | [operator][]{{bii}}   | [var][]           |
-| [covariant][]{{bii}}  | [Function][]{{bii}}   | [part][]{{bii}}       | [void][]          |
-| [default][]           | [get][]{{bii}}        | [required][]{{bii}}   | [while][]         |
-| [deferred][]{{bii}}   | [hide][]{{ckw}}       | [rethrow][]           | [with][]          |
-| [do][]                | [if][]                | [return][]            | [yield][]{{lrw}}  |
-| [dynamic][]{{bii}}    | [implements][]{{bii}} | [set][]{{bii}}        |                   |
+| [abstract][]{{bii}}   | [else][]                 | [import][]{{bii}}     | [show][]{{ckw}}    |
+| [as][]{{bii}}         | [enum][]                 | [in][]                | [static][]{{bii}}  |
+| [assert][]            | [export][]{{bii}}        | [interface][]{{bii}}  | [super][]          |
+| [async][]{{ckw}}      | [extends][]              | [is][]                | [switch][]         |
+| [await][]{{lrw}}      | [extension][]{{bii}}     | [late][]{{bii}}       | [sync][]{{ckw}}    |
+| [base][]{{bii}}       | [external][]{{bii}}      | [library][]{{bii}}    | [this][]           |
+| [break][]             | [factory][]{{bii}}       | [mixin][]{{bii}}      | [throw][]          |
+| [case][]              | [false][]                | [new][]               | [true][]           |
+| [catch][]             | [final (variable)][]     | [null][]              | [try][]            |
+| [class][]             | [final (class)][]{{bii}} | [on][]{{ckw}}         | [typedef][]{{bii}} |
+| [const][]             | [finally][]              | [operator][]{{bii}}   | [var][]            |
+| [continue][]          | [for][]                  | [part][]{{bii}}       | [void][]           |
+| [covariant][]{{bii}}  | [Function][]{{bii}}      | [required][]{{bii}}   | [when][]           |
+| [default][]           | [get][]{{bii}}           | [rethrow][]           | [while][]          |
+| [deferred][]{{bii}}   | [hide][]{{ckw}}          | [return][]            | [with][]           |
+| [do][]                | [if][]                   | [sealed][]{{bii}}     | [yield][]{{lrw}}   |
+| [dynamic][]{{bii}}    | [implements][]{{bii}}    | [set][]{{bii}}        |                    |
 {:.table .table-striped .nowrap}
 </div>
 
-[abstract]: /language/classes#추상-클래스
+[abstract]: /language/class-modifiers#abstract
 [as]: /language/operators#타입-테스트-연산자
-[assert]: /language/control-flow#assert
+[assert]: /language/error-handling#assert
 [async]: /language/async
 [await]: /language/async
-[break]: /language/control-flow#break-continue
-[case]: /language/control-flow#switch-case
+[base]: /language/class-modifiers#base
+[break]: /language/loops#break-continue
+[case]: /language/branches#switch
 [catch]: /language/error-handling#catch
 [class]: /language/classes#인스턴스-변수
 [const]: /language/variables#final-const
@@ -43,13 +45,13 @@ toc: false
   [TODO #2950: Make sure that points to a place that talks about const constructors,
   as well as const literals and variables.]
 {% endcomment %}
-[continue]: /language/control-flow#break-continue
+[continue]: /language/loops#break-continue
 [covariant]: /guides/language/sound-problems#the-covariant-keyword
-[default]: /language/control-flow#switch-case
+[default]: /language/branches#switch-case
 [deferred]: /language/libraries#라이브러리-지연-로딩
-[do]: /language/control-flow#while-do-while
+[do]: /language/loops#while-do-while
 [dynamic]: /language#주요-컨셉
-[else]: /language/control-flow#if-else
+[else]: /language/branches#if
 [enum]: /language/enum
 [export]: /guides/libraries/create-library-packages
 [extends]: /language/클래스-확장
@@ -57,17 +59,18 @@ toc: false
 [external]: https://spec.dart.dev/DartLangSpecDraft.pdf#External%20Functions
 [factory]: /language/constructors#factory-생성자
 [false]: /language/built-in-types#booleans
-[final]: /language/variables#final과-const
+[final (variable)]: /language/variables#final과-const
+[final (class)]: /language/class-modifiers#final
 [finally]: /language/error-handling#finally
-[for]: /language/control-flow#for-루프
+[for]: /language/loops#for-루프
 [Function]: /language/functions
-[get]: /language/methods#getter와-setter
+[get]: /language/methods#getters와-setters
 [hide]: /language/libraries#라이브러리의-일부만-가져오기
-[if]: /language/control-flow#if-else
+[if]: /language/branches#if
 [implements]: /language/classes#암묵적-인터페이스
 [import]: /language/libraries#라이브러리-사용하기
-[in]: /language/control-flow#for-루프
-[interface]: /language/classes#암묵적-인터페이스
+[in]: /language/loops#for-루프
+[interface]: /language/class-modifiers#인터페이스
 [is]: /language/operators#타입-테스트-연산자
 [late]: /language/variables#late-변수
 [library]: /language/libraries
@@ -80,11 +83,12 @@ toc: false
 [required]: /language/functions#named-매개변수
 [rethrow]: /language/error-handling#catch
 [return]: /language/functions#반환-값
-[set]: /language/methods#getter와-setter
+[sealed]: /language/class-modifiers#sealed
+[set]: /language/methods#getters-and-setters
 [show]: /language/libraries#라이브러리의-일부만-가져오기
 [static]: /language/classes#클래스-변수와-메서드
 [super]: /language/extend
-[switch]: /language/control-flow#switch-case
+[switch]: /language/branches#switch
 [sync]: /language/functions#제너레이터
 [this]: /language/constructors
 [throw]: /language/error-handling#throw
@@ -96,8 +100,9 @@ toc: false
 {% comment %}
   TODO #2950: Add coverage of void to the language tour.
 {% endcomment %}
+[when]: /language/branches#when
 [with]: /language/mixins
-[while]: /language/control-flow#while-do-while
+[while]: /language/loops#while-do-while
 [yield]: /language/functions#제너레이터
 
 이 단어들을 식별자로 사용하는 것을 지양하세요.

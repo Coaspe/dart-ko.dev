@@ -79,9 +79,10 @@ while (year < 2016) {
 }
 ```
 
-`break`과 `continue`, `switch`와 `case`, `assert`를
-가지는 Dart 흐름 제어문에 대해 
-[더보기](/language/control-flow)
+Dart의 제어 흐름문에 대해 더 자세히 알고 싶다면,
+[`break`와 `continue`](/language/loops),
+[`switch`와 `case`](/language/branches),
+[`assert`](/language/error-handling#assert)를 참고하세요.
 
 ## 함수
 
@@ -308,9 +309,8 @@ Mixin에 대해
 
 ## 인터페이스와 추상 클래스
 
-Dart에는 `interface` 키워드가 없습니다.
 대신, 모든 클래스가 암묵적으로 인터페이스를 정의합니다.
-그리므로, 클래스를 `implement` 할 수 있습니다.
+그리므로, 모든 클래스를 implement 할 수 있습니다.
 
 <?code-excerpt "misc/lib/samples/spacecraft.dart (implements)"?>
 ```dart
@@ -319,8 +319,8 @@ class MockSpaceship implements Spacecraft {
 }
 ```
 
-암묵적 인터페이스에 대해
-[더보기](/language/classes#암묵적-인터페이스).
+[암묵적 인터페이스](/language/classes#암묵적-인터페이스)와
+명시적 [`interface` 키워드](/language/class-modifiers#interface)를 참고하세요.
 
 구체적인 클래스로 확장 또는 구현되는 추항 클래스를 생성하는 것이 가능합니다.
 추상 클래스는 바디가 비어있는 추상 메서드를 가지는 것이 가능합니다.
@@ -343,7 +343,7 @@ Abstract classes can contain abstract methods (with empty bodies).
 `describeWithEmphasis()` 메서드를 가집니다.
 
 추상 클래스와 메서드에 대해
-[더보기](/language/classes#추상-클래스).
+[더보기](/language/class-modifiers#추상-클래스).
 
 
 ## Async
@@ -496,7 +496,7 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
 
 -   Java와 다르게, Dart는 `public`, `projected` 그리고 `private` 같은 키워드가 없습니다.
     식별자가 언더 스코어 (`_`)로 시작한다면, 이것은 해당 라이브러리에 귀속된(private) 것입니다.
-    더 자세한 정보를 원한다면, [라이브러리와 임포트][]
+    더 자세한 정보를 원한다면, [라이브러리와 임포트][Libraries and imports]
     를 참고하세요.
 
 -   *식별자*는 문자 또는 언더 스코어 (`_`)로 시작 할 수 있고,
@@ -504,10 +504,10 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
 
 -   Dart는 런타임 값을 가지는 *식 (expression)*과
     그렇지 않은 *문 (statement)*을 가지고 있습니다.
-    예를 들어, [조건 표현식 (conditional expression)][]인
+    예를 들어, [조건 표현식][conditional expression]인
     `condition ? expr1 : expr2` 은 `expr1` 또는 `expr2`의 값을 가집니다.
     위의 표현식과 값을 가지지 않는 
-    [if-else 문][]를 비교해봅시다.
+    [if-else 문][if-else statement]을 비교해봅시다.
     문은 때로 하나 혹은 그 이상의 식을 포함하지만,
     식은 직접적으로 문을 포함할 수 없습니다.
 
@@ -515,7 +515,7 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
     경고는 코드가 제대로 작동하지 않을 수도 있다는 것을 의미하지만,
     프로그램의 실행을 막지 않습니다. 에러는 컴파일 타임 또는 런타임으로 구분됩니다.
     컴파일 타임 에러는 코드가 실행되는 것을 막습니다;
-    런타임 에러는 코드가 실행되는 동안 [예외][]를 발생시킵니다.
+    런타임 에러는 코드가 실행되는 동안 [예외][exception]를 발생시킵니다.
 
 
 ## 추가적인 리소스
@@ -535,7 +535,7 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
 [`Object`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Object-class.html
 [language version]: /guides/language/evolution#language-versioning
 [ObjectVsDynamic]: /guides/language/effective-dart/design#avoid-using-dynamic-unless-you-want-to-disable-static-checking
-[라이브러리와 임포트]: /language/libraries
-[조건 표현식 (conditional expression)]: /language/operators#조건-표현식
-[if-else 문]: /language/control-flow#if-else
-[예외]: /language/error-handling#예외
+[Libraries and imports]: /language/libraries
+[conditional expression]: /language/operators#조건-표현식
+[if-else statement]: /language/branches#if
+[exception]: /language/error-handling#예외

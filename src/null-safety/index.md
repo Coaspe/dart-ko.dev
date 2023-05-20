@@ -101,12 +101,12 @@ $ dart run bin/my_app.dart
 pub.dev에서 설치한 패키지의 [null 안전성 버전](/null-safety/migration-guide#check-dependency-status)을
 확인하고, 모든 소스 코드가 견고한 null 안전성을 지키도록 [마이그레이션](#migrate)하세요.
 
-2023년 1월 말에 **Dart 3 알파**가 Dart dev 채널과 Flutter master 채널에서 사용 가능합니다;
+2023년 4월 말에 **Dart 3 알파**가 Dart dev 채널과 Flutter master 채널에서 사용 가능합니다;
 자세한 사항은 [다운로드 페이지][]를 참고하세요.
 Dart 3 상호운용을 위해 해당 릴리즈를 사용한 코드의 테스트를 추천합니다:
 
 ```terminal
-$ dart --version                     # 3.0.0-151.0.dev 이상의 버전이 설치되어 있어야 합니다
+$ dart --version                     # 3.0.0-417.1.beta 이상의 버전이 설치되어 있어야 합니다
 $ dart pub get / flutter pub get     # 문제없이 진행되어야 합니다
 $ dart analyze / flutter analyze     # 에러없이 통과해야 합니다
 ```
@@ -116,27 +116,6 @@ $ dart analyze / flutter analyze     # 에러없이 통과해야 합니다
 
 [다운로드 페이지]: /get-dart/archive#dart-3-alpha
 [종속성 상태]: /null-safety/migration-guide#종속-상태-확인
-
-### Dart 3 역호환성
-
-Dart 2.12 이상에서 null 안전성을 준수하도록 마이그레이션된 패키지와 앱은
-Dart 3과 역호환될 가능성이 높습니다. 특히, SDK의 제약의 하한이 2.12.0 이상인
-패키지의 경우 상한이 3.0.0 미만 버전으로 제한된 경우에도 pub으로 해결할 수 있습니다.
-예를 들어, 다음과 같은 SDK 제약 조건을 가지는 패키지는 Dart 3.x SDK로 리졸브 할 수 있습니다:
-
-```yaml
-environment:
-  sdk: '>=2.14.0 <3.0.0'
-```
-
-이를 통해 개발자들은 2.12 null 안전성으로 마이그레이션된 패키지와 함께 Dart 3 견고한 null 안전성을
-2차적인 마이그레이션 없이 사용할 수 있습니다. 이것은 Dart 3 주요 변경 사항에 의존하지 않는
-코드에만 적용이 가능하다는 것을 알아두세요:
-
-* 여러개의 코어 라이브러리 API가 제거되었습니다; 자세한 사항은
-  GitHub issues [#34233][] 그리고 [#49529][]를 참고하세요.
-* 디폴트 매개 변수 값에 대한 이전 언어 문법([#2357][])의 지원이 중단되었습니다.
-
 
 ## Dart 2.x와 null 안전성 {#enable-null-safety}
 

@@ -2,14 +2,12 @@
   expanded: false
   children:
     - title: 튜토리얼
-      urlExactMatch: true
       match-page-url-exactly: true
       permalink: /tutorials
     - title: Codelabs
       expanded: true
       children:
         - title: List of Dart codelabs
-          urlExactMatch: true
           match-page-url-exactly: true
           permalink: /codelabs
         - title: Language cheatsheet
@@ -46,10 +44,10 @@
           permalink: /language/built-in-types
         - title: Collections
           permalink: /language/collections
-        - title: Typedefs
-          permalink: /language/typedefs
         - title: Generics
           permalink: /language/generics
+        - title: Typedefs
+          permalink: /language/typedefs
         - title: 타입 시스템
           permalink: /language/type-system 
     - title: 함수
@@ -86,7 +84,6 @@
       expanded: false
       children:
         - title: 견고한 null 안전성
-          urlExactMatch: true
           match-page-url-exactly: true
           permalink: /null-safety
         - title: Null 안전성으로 마이그레이션
@@ -102,8 +99,6 @@
   expanded: false
   children:
     - title: 개요
-      urlExactMatch: true
-      match-page-url-exactly: true
       permalink: /guides/language/effective-dart
     - title: 스타일
       permalink: /guides/language/effective-dart/style
@@ -118,7 +113,6 @@
   expanded: false
   children:
     - title: Overview
-      urlExactMatch: true
       match-page-url-exactly: true
       permalink: /guides/libraries
     - title: Tour
@@ -189,7 +183,6 @@
     - title: Command-line & server apps
       children:
         - title: Overview
-          urlExactMatch: true
           match-page-url-exactly: true
           permalink: /server
         - title: Get started
@@ -207,7 +200,6 @@
     - title: Web apps
       children:
         - title: Overview
-          urlExactMatch: true
           match-page-url-exactly: true
           permalink: /web
         - title: Get started
@@ -231,7 +223,6 @@
   expanded: false
   children:
   - title: Overview
-    urlExactMatch: true
     match-page-url-exactly: true
     permalink: /tools
   - title: Editors & debuggers
@@ -245,7 +236,6 @@
       - title: DartPad
         children:
           - title: Overview
-            urlExactMatch: true
             match-page-url-exactly: true
             permalink: /tools/dartpad
           - title: DartPad in tutorials
@@ -261,7 +251,6 @@
           permalink: /tools/sdk
         - title: dart
           permalink: /tools/dart-tool
-          urlExactMatch: true
         - title: dart analyze
           permalink: /tools/dart-analyze
         - title: dart compile
@@ -350,8 +339,3 @@
       permalink: https://flutter.dev
     - title: Package site
       permalink: https://pub.dev
-
-# - title: Books
-#   permalink: /resources/books
-# - title: Videos
-#   permalink: /resources/videos

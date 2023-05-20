@@ -46,6 +46,9 @@ Dart는 필드, 메서드, 상수 생성자같이 수가 정해져 있는 상수
 * `value`로 명명된 멤버는 enum에 선언될 수 없습니다. 만약 enum에 선언한다면, 자동으로 생성된 정적 `value` getter와 충돌합니다.
 * Enum의 모든 인스턴스들은 선언의 처음 부분에 선언되어야 하고 반드시 한 개 이상의 인스턴스가 선언되어야 합니다.
 
+발전된 enum이 가지고 있는 인스턴스 메서드는 `this`를 사용하여
+현재 enum 값을 참조할 수 있습니다.
+
 다음은 다수의 인스턴스, 인스턴스 변수, getter 그리고 인터페이스를 가지는 발전된 enum의 예제 입니다:
 
 <?code-excerpt "misc/lib/language_tour/classes/enum.dart (enhanced)"?>
@@ -66,6 +69,8 @@ enum Vehicle implements Comparable<Vehicle> {
   final int carbonPerKilometer;
 
   int get carbonFootprint => (carbonPerKilometer / passengers).round();
+
+  bool get isTwoWheeled => this == Vehicle.bicycle;
 
   @override
   int compareTo(Vehicle other) => carbonFootprint - other.carbonFootprint;
@@ -131,6 +136,14 @@ switch (aColor) {
 <?code-excerpt "misc/lib/language_tour/classes/enum.dart (name)"?>
 ```dart
 print(Color.blue.name); // 'blue'
+```
+
+You can access a member of an enum value
+like you would on a normal object:
+
+<?code-excerpt "misc/lib/language_tour/classes/enum.dart (method-call)"?>
+```dart
+print(Vehicle.car.carbonFootprint);
 ```
 
 [`Enum`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Enum-class.html

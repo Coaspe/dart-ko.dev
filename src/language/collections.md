@@ -3,6 +3,10 @@ title: 컬렉션
 description: Dart의 다양한 컬렉션에 대한 요약.
 ---
 
+Dart has built-in support for list, set, and map [collections][].
+To learn more about configuring the types collections contain,
+check out [Generics][].
+
 ## Lists
 
 아마 모든 프로그래밍 언어에서 가장 흔한 컬렉션은 *배열*이나 정렬된 객체의 그룹일 겁니다.
@@ -62,65 +66,9 @@ var constantList = const [1, 2, 3];
 // constantList[1] = 1; // 이 라인은 에러를 발생시킵니다.
 ```
 
-### 전개 연산자
-
-Dart는 컬렉션에 여러 값들을 간편하게 삽입해주는
-**전개 연산자** (`...`)와 **null-aware 전개 연산자** (`...?`)
-를 지원합니다.
-
-예를 들어, 한 리스트의 모든 요소를 다른 리스트에 삽입할 때
-전개 연산자 (`...`)를 사용할 수 있습니다:
-
-<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-spread)"?>
-```dart
-var list = [1, 2, 3];
-var list2 = [0, ...list];
-assert(list2.length == 4);
-```
-
-전개 연산자의 오른편 표현식의 값이 null 일 수도 있다면,
-null-aware 전개 연산자 (`...?`)를 사용하여 예외를 피할 수 있습니다:
-
-
-<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-null-spread)"?>
-```dart
-var list2 = [0, ...?list];
-assert(list2.length == 1);
-```
-
-전개 연산에 대한 더 많은 정보와 예제를 원한다면,
-[전개 연산자 프로포절][spread proposal]을 참고하세요.
-
-### 컬렉션 연산자
-
-Dart는 조건 (`if`)과 반복 (`for`)을 사용하여
-컬렉션을 빌드할 수 있는 **컬렉션 if** 와 **컬렉션 for**
-을 제공합니다.
-
-다음은 **컬렉션 if**를 사용하여 3개 또는 4개의 요소가 있는 리스트를 생성한는 예제입니다:
-
-<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-if)"?>
-```dart
-var nav = ['Home', 'Furniture', 'Plants', if (promoActive) 'Outlet'];
-```
-
-다음은 **컬렉션 for**을 사용하여 list 항목을
-다른 목록에 추가하기 전에 해당 항목을 수정하는 예제입니다:
-
-<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-for)"?>
-```dart
-var listOfInts = [1, 2, 3];
-var listOfStrings = ['#0', for (var i in listOfInts) '#$i'];
-assert(listOfStrings[1] == '#1');
-```
-
-컬렉션 `if` 와 `for`에 대한 더 자세한 정보와 예제를 원한다면,
-[제어 흐름 컬렉션 프로포절][collections proposal]을 참고하세요.
-
-List 타입은 리스트를 조작하는 다양하고 간편한 메서드들을 가지고 있습니다.
-리스트에 대한 더 많은 정보를 원한다면, [제네릭][generics] and
-[컬렉션](/guides/libraries/library-tour#컬렉션)을 참고하세요.
-
+Lists에 대한 더 자세한 정보를 원한다면,
+[라이브러리 투어](/guides/libraries/library-tour#lists)의
+lists 섹션을 살펴보세요.
 
 ## Sets
 
@@ -193,15 +141,9 @@ final constantSet = const {
 // constantSet.add('helium'); // 이 라인은 에러를 발생시킵니다.
 ```
 
-Set은 list 처럼 전개 연산자 (`...` 그리고 `...?`)와
-컬렉션 `if` and `for`을 지원합니다.
-더 많은 정보를 원한다면,
-[list 전개 연산자](#전개-연산자) 그리고
-[list 컬렉션 연산자](#컬렉션-연산자)를 참고하세요.
-
-Set에 대한 더 많은 정보를 원한다면,
-[제네릭](/language/generics) 과
-[Sets](/guides/libraries/library-tour#sets)을 참고하세요.
+Sets에 대한 더 자세한 정보를 원한다면
+[라이브러리 투어](/guides/libraries/library-tour#sets)
+의 Sets 섹션을 참고하세요.
 
 ## Maps
 
@@ -305,19 +247,70 @@ final constantMap = const {
 // constantMap[2] = 'Helium'; // 이 라인은 에러를 발생시킵니다.
 ```
 
-Map은 list 처럼 전개 연산자 (`...` 그리고 `...?`)와
-컬렉션 `if` 그리고 `for`을 지원합니다.
-더 자세한 사항과 예제를 보고 싶다면,
-[전개 연산자 제안서][spread proposal] 와
-[흐름 제어 컬렉션 제안서][collections proposal]를 참고하세요.
+Maps에 대한 더 자세한 정보를 원한다면,
+[라이브러리 투어](/guides/libraries/library-tour#maps)의
+Maps 섹션을 참고하세요.
 
-Map에 대한 더 많은 정보를 원한다면,
-[제네릭][generics] 섹션과
-라이브러리 투어의
-[`Maps` API](/guides/libraries/library-tour#maps)를
-참고하세요.
+## 연산자
 
-[type inference]: /language/type-system#타입-추론
+### 전개 연산자
+
+Dart는 컬렉션에 여러 값들을 간편하게 삽입해주는
+**전개 연산자** (`...`)와 **null-aware 전개 연산자** (`...?`)
+를 지원합니다.
+
+예를 들어, 한 리스트의 모든 요소를 다른 리스트에 삽입할 때
+전개 연산자 (`...`)를 사용할 수 있습니다:
+
+<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-spread)"?>
+```dart
+var list = [1, 2, 3];
+var list2 = [0, ...list];
+assert(list2.length == 4);
+```
+
+전개 연산자의 오른편 표현식의 값이 null 일 수도 있다면,
+null-aware 전개 연산자 (`...?`)를 사용하여 예외를 피할 수 있습니다:
+
+
+<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-null-spread)"?>
+```dart
+var list2 = [0, ...?list];
+assert(list2.length == 1);
+```
+
+전개 연산에 대한 더 많은 정보와 예제를 원한다면,
+[전개 연산자 프로포절][spread proposal]을 참고하세요.
+
+<a id="collection-operators"></a>
+### 제어-흐름 연산자
+
+Dart는 조건 (`if`)과 반복 (`for`)을 사용하여
+컬렉션을 빌드할 수 있는 **컬렉션 if** 와 **컬렉션 for**
+을 제공합니다.
+
+다음은 **컬렉션 if**를 사용하여 3개 또는 4개의 요소가 있는 리스트를 생성한는 예제입니다:
+
+<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-if)"?>
+```dart
+var nav = ['Home', 'Furniture', 'Plants', if (promoActive) 'Outlet'];
+```
+
+다음은 **컬렉션 for**을 사용하여 list 항목을
+다른 목록에 추가하기 전에 해당 항목을 수정하는 예제입니다:
+
+<?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-for)"?>
+```dart
+var listOfInts = [1, 2, 3];
+var listOfStrings = ['#0', for (var i in listOfInts) '#$i'];
+assert(listOfStrings[1] == '#1');
+```
+
+컬렉션 `if` 와 `for`에 대한 더 자세한 정보와 예제를 원한다면,
+[제어 흐름 컬렉션 프로포절][collections proposal]을 참고하세요.
+
+[collections]: /guides/libraries/library-tour#collections
+[type inference]: /language/type-system#type-inference
 [`List`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/List-class.html
 [`Map`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Map-class.html
 [Using constructors]: /language/classes#생성자-사용하기

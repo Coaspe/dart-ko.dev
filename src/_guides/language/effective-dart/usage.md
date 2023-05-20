@@ -493,7 +493,7 @@ var counts = Set<int>();
 흐름 제어를 수행할 수 있기 때문에 Dart에서 특히 유용합니다:
 
 [spread]: /language/collections#spread-operators
-[control]: /language/collections#collection-operators
+[control]: /language/collections#control-flow-operators
 
 {:.good}
 <?code-excerpt "usage_good.dart (spread-etc)"?>

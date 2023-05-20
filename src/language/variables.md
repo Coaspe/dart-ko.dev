@@ -236,7 +236,7 @@ const set = {if (list is List<int>) ...list}; // ...를 사용하여 전개.
 [Instance variables]: /language/classes#인스턴스-변수
 [DON’T use const redundantly]: /guides/language/effective-dart/usage#const를-불필요하게-사용하지-마십시오
 [type checks and casts]: /language/operators#타입-체크와-캐스트
-[collection `if`]: /language/collections#컬렉션-연산자
+[collection `if`]: /language/collections#제어-흐름-연산자
 [spread operators]: /language/collections#전개-연산자
 [Lists]: /language/collections#lists
 [Maps]: /language/collections#maps

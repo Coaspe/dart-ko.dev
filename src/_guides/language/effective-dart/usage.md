@@ -530,7 +530,7 @@ arguments.addAll(filePaths
 
 [iterable]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Iterable-class.html
 
-대신, 더 빠르고 가독성이 높은 getter인 `.isEmpty`와 `.isNotEmpyt`를 사용하세요.
+대신, 더 빠르고 가독성이 높은 getter인 `.isEmpty`와 `.isNotEmpty`를 사용하세요.
 둘 중에 결과를 부정할 필요가 없는 getter를 사용하세요.
 
 {:.good}
@@ -1098,7 +1098,7 @@ public getter" 패턴이 필요할 수 있지만 꼭 필요한 경우가 아니�
 
 {% include linter-rule-mention.md rule="prefer_expression_function_bodies" %}
 
-`=>`를 함수 표현식으로 사용하는 것 외에도, Dart에서는 멤버를 정의하는 데 사용할 수도 이씃ㅂ니다.
+`=>`를 함수 표현식으로 사용하는 것 외에도, Dart에서는 멤버를 정의하는 데 사용할 수도 있습니다.
 이 스타일은 계산을 수행하고 결과를 반환하는 단순한 멤버에게 적합합니다.
 
 {:.good}

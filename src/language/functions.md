@@ -115,13 +115,10 @@ named 매개변수를 매개변수 목록의 임의의 위치에 두어 호출 �
 const Scrollbar({super.key, [!required!] Widget child});
 ```
 
-If someone tries to create a `Scrollbar`
-without specifying the `child` argument,
-then the analyzer reports an issue.
+사용자가 `child` 인수를 명시하지 않고 `Scrollbar`를 생성하려 하면 분석 도구는 문제가 있음을 보고하게 됩니다.
 
 {{site.alert.note}}
-  A parameter marked as `required`
-  can still be nullable:
+  `required` 가 있는 매개변수는 여전히 nullable한 값을 지닐 수 있습니다.
 
   <?code-excerpt "misc/lib/language_tour/functions.dart (required-named-parameters-nullable)" replace="/Widget\?/[!$&!]/g; /ScrollbarTwo/Scrollbar/g;"?>
   ```dart
@@ -129,10 +126,8 @@ then the analyzer reports an issue.
   ```
 {{site.alert.end}}
 
-You might want to place positional arguments first,
-but Dart doesn't require it.
-Dart allows named arguments to be placed anywhere in the
-argument list when it suits your API:
+positional 매개변수를 맨 앞에 위치하고 싶을수도 있지만, 다트에서 이는 필수적인 사항이 아닙니다.
+다트에서는 여러분의 API에 맞게 매개면수 목록 어디에나 named 매개변수를 배치할 수 있습니다.
 
 <?code-excerpt "misc/lib/language_tour/functions.dart (named-arguments-anywhere)"?>
 ```dart
@@ -192,7 +187,7 @@ assert(say('Bob', 'Howdy') == 'Bob says Howdy with a carrier pigeon');
 ## main() 함수
 
 모든 앱은 엔트리 포인트 역할을 하는 최상위 `main()` 함수를 반드시 가지고 있어야 합니다.
-`main()` 함수는 `void`를 반환하고 optional `List<String>` 매개변수를 인자롤 가집니다.
+`main()` 함수는 `void`를 반환하고 인자로 optional `List<String>` 매개변수를 가집니다.
 
 다음은 `main()` 함수의 예제입니다:
 

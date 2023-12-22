@@ -1,17 +1,18 @@
-FROM ruby:3.2-slim-bullseye@sha256:70370316b02901d7db3f6e453d6259ed4d0d52326d6ac57e3a579f7e3b616e41 as base
+FROM ruby:3.2-slim-bookworm@sha256:02a091c83d1aa1070c0f6fefcbd2aff58ddd3430e2d5661c6ef2142b1383349b as base
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=US/Pacific
 RUN apt update && apt install -yq --no-install-recommends \
-  build-essential \
-  ca-certificates \
-  curl \
-  git \
-  lsof \
-  make \
-  unzip \
-  vim-nox \
-  && rm -rf /var/lib/apt/lists/*
+      build-essential \
+      ca-certificates \
+      curl \
+      git \
+      gnupg \
+      lsof \
+      make \
+      unzip \
+      vim-nox \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN echo "alias lla='ls -lAhG --color=auto'" >> ~/.bashrc
 WORKDIR /root
@@ -31,36 +32,38 @@ ENV DART_CHANNEL=$DART_CHANNEL
 ENV DART_SDK=/usr/lib/dart
 ENV PATH=$DART_SDK/bin:$PATH
 RUN set -eu; \
-  case "$(dpkg --print-architecture)_${DART_CHANNEL}" in \
-  amd64_stable) \
-  DART_SHA256="caab438213bffba5ab704d88155710327f0fc4326594224714271bf823dfdc70"; \
-  SDK_ARCH="x64";; \
-  arm64_stable) \
-  DART_SHA256="d05d9052fe8eba57d4838cea5a29577a34988d882ea9610096f137f256409d03"; \
-  SDK_ARCH="arm64";; \
-  amd64_beta) \
-  DART_SHA256="1edcf9e1c5be94633fa025614866d49c437322ab3cc759822645287ddb9bfd62"; \
-  SDK_ARCH="x64";; \
-  arm64_beta) \
-  DART_SHA256="63442bd94a4bcb043fccf9f3f22a5ca846fbb3a3933eea84dcfe8502f8f767de"; \
-  SDK_ARCH="arm64";; \
-  amd64_dev) \
-  DART_SHA256="b60573251ee22613164df137343156f9dc397ad86c90c24bc189a9727caa63ef"; \
-  SDK_ARCH="x64";; \
-  arm64_dev) \
-  DART_SHA256="534f3ddaf3b4e7dfbd541bee4ce3de813371e01726869f490e21f0f56ceddb52"; \
-  SDK_ARCH="arm64";; \
-  esac; \
-  SDK="dartsdk-linux-${SDK_ARCH}-release.zip"; \
-  BASEURL="https://storage.googleapis.com/dart-archive/channels"; \
-  URL="$BASEURL/$DART_CHANNEL/release/$DART_VERSION/sdk/$SDK"; \
-  curl -fsSLO "$URL"; \
-  echo "$DART_SHA256 *$SDK" | sha256sum --check --status --strict - || (\
-  echo -e "\n\nDART CHECKSUM FAILED! Run 'make fetch-sums' for updated values.\n\n" && \
-  rm "$SDK" && \
-  exit 1 \
-  ); \
-  unzip "$SDK" > /dev/null && mv dart-sdk "$DART_SDK" && rm "$SDK";
+    case "$(dpkg --print-architecture)_${DART_CHANNEL}" in \
+      # BEGIN dart-sha
+      amd64_stable) \
+        DART_SHA256="3a1903a8743422e13e93fb3f497c179fab5658ae32b9151a7baee3158461e0a5"; \
+        SDK_ARCH="x64";; \
+      arm64_stable) \
+        DART_SHA256="dcf3c8116070c77f2376cbbd5229712a4e6874ef66438c0611e2ef23f69b2862"; \
+        SDK_ARCH="arm64";; \
+      amd64_beta) \
+        DART_SHA256="3b58bb6ff1ba2580858e2e9ad0a1f358246ba545bdd092a475f62e6aa1396394"; \
+        SDK_ARCH="x64";; \
+      arm64_beta) \
+        DART_SHA256="6eb38bec0f3167e7f892e2d074aa2b30bfb456b8f4b204acda453af4ca27dd1b"; \
+        SDK_ARCH="arm64";; \
+      amd64_dev) \
+        DART_SHA256="5ec87f0bde23fe420bc88e47865604bdab40cee2bcf5c75ee167705d9f70e5d3"; \
+        SDK_ARCH="x64";; \
+      arm64_dev) \
+        DART_SHA256="98c3910ea7145ce52cfa68deace1db3cb4a45e6dac9cb466876a8f36e4e9734e"; \
+        SDK_ARCH="arm64";; \
+      # END dart-sha
+    esac; \
+    SDK="dartsdk-linux-${SDK_ARCH}-release.zip"; \
+    BASEURL="https://storage.googleapis.com/dart-archive/channels"; \
+    URL="$BASEURL/$DART_CHANNEL/release/$DART_VERSION/sdk/$SDK"; \
+    curl -fsSLO "$URL"; \
+    echo "$DART_SHA256 *$SDK" | sha256sum --check --status --strict - || (\
+        echo -e "\n\nDART CHECKSUM FAILED! Run 'make fetch-sums' for updated values.\n\n" && \
+        rm "$SDK" && \
+        exit 1 \
+    ); \
+    unzip "$SDK" > /dev/null && mv dart-sdk "$DART_SDK" && rm "$SDK";
 ENV PUB_CACHE="${HOME}/.pub-cache"
 RUN dart --disable-analytics
 RUN echo -e "Successfully installed Dart SDK:" && dart --version
@@ -78,21 +81,13 @@ CMD ["./tool/test.sh"]
 
 # ============== NODEJS INSTALL ==============
 FROM dart as node
-RUN set -eu; \
-  NODE_PPA="node_ppa.sh"; \
-  NODE_SHA256=9f6707e20789ff7c1d39a11ed3be09039bf44e85f2082329cb27ae4c45541c81; \
-  curl -fsSL https://deb.nodesource.com/setup_lts.x -o "$NODE_PPA"; \
-  echo "$NODE_SHA256 $NODE_PPA" | sha256sum --check --status --strict - || (\
-  echo -e "\n\nNODE CHECKSUM FAILED! Run tool/fetch-node-ppa-sum.sh for updated values.\n\n" && \
-  rm "$NODE_PPA" && \
-  exit 1 \
-  ); \
-  sh "$NODE_PPA" && rm "$NODE_PPA"; \
-  apt-get update -q && apt-get install -yq --no-install-recommends \
-  nodejs \
-  && rm -rf /var/lib/apt/lists/*
-# Ensure latest NPM
-RUN npm install -g npm
+
+RUN mkdir -p /etc/apt/keyrings \
+    && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+    && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && apt-get update -yq \
+    && apt-get install nodejs -yq \
+    && npm install -g npm # Ensure latest npm
 
 
 # ============== DEV/JEKYLL SETUP ==============
@@ -106,7 +101,7 @@ RUN BUNDLE_WITHOUT="test production" bundle install --jobs=4 --retry=2
 
 ENV NODE_ENV=development
 COPY package.json package-lock.json ./
-RUN npm install -g firebase-tools@11.26.0
+RUN npm install -g firebase-tools@12.8.1
 RUN npm install
 
 COPY ./ ./
@@ -125,7 +120,7 @@ EXPOSE 35729
 
 # Firebase emulator port
 # Airplay runs on :5000 by default now
-EXPOSE 5500 
+EXPOSE 5500
 
 # re-enable defult in case we want to test packages
 ENV DEBIAN_FRONTEND=dialog
@@ -164,7 +159,7 @@ RUN bundle exec jekyll build --config $BUILD_CONFIGS
 
 # ============== DEPLOY to FIREBASE ==============
 FROM build as deploy
-RUN npm install -g firebase-tools@11.26.0
+RUN npm install -g firebase-tools@12.8.1
 ARG FIREBASE_TOKEN
 ENV FIREBASE_TOKEN=$FIREBASE_TOKEN
 ARG FIREBASE_PROJECT=default

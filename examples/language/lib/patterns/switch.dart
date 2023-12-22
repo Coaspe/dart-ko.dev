@@ -1,3 +1,5 @@
+// ignore_for_file: pattern_never_matches_value_type
+
 class Rect {
   int width;
   int height;
@@ -26,10 +28,10 @@ void main() {
   }
   // #enddocregion constant-pattern
 
-  const a = 'a';
-  const b = 'b';
   var obj = Object();
   // #docregion list-pattern
+  const a = 'a';
+  const b = 'b';
   switch (obj) {
     // List pattern [a, b] matches obj first if obj is a list with two fields,
     // then if its fields match the constant subpatterns 'a' and 'b'.
@@ -48,11 +50,13 @@ void main() {
       case 1:
         print('one');
 
-      // Matches if the value of obj is between the constant values of 'first' and 'last'.
+      // Matches if the value of obj is between the
+      // constant values of 'first' and 'last'.
       case >= first && <= last:
         print('in range');
 
-      // Matches if obj is a record with two fields, then assigns the fields to 'a' and 'b'.
+      // Matches if obj is a record with two fields,
+      // then assigns the fields to 'a' and 'b'.
       case (var a, var b):
         print('a = $a, b = $b');
 

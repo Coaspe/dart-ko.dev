@@ -7,7 +7,7 @@ description: 기존의 코드를 null 안전성을 준수하는 코드로 수정
   Dart 2.19는 `dart migrate` 툴을 포함하며,
   null 안전성 마이그레이션을 지원하는 마지막 릴리즈입니다.
   패키지를 null 안전성으로 마이그레이트하고 싶다면,
-  최신 Dart 2.19 SDK를 사용하세요.
+  최신 Dart 2.19.6 SDK를 사용하세요.
   더 자세한 사항은,
   [Dart 3와 null 안전성](/null-safety#dart-3-and-null-safety)을 참고하세요.
 {{site.alert.end}}
@@ -48,7 +48,7 @@ description: 기존의 코드를 null 안전성을 준수하는 코드로 수정
 예를 들어, C가 B에 의존하고 B가 A에 의존하는 경우 A -> B -> C의 순서로
 마이그레이션 해야 합니다.
 
-![Illustration of C/B/A sentence](/null-safety/null-safety-migration-order.png){:width="454px"}<br>
+![Illustration of C/B/A sentence](/assets/img/null-safety/null-safety-migration-order.png){:width="454px"}<br>
 
 모든 의존성의 마이그레이션이 완료되기 전에 [마이그레이션을 _수행할 수 있지만_][Unsound null safety],
 그렇게 하면 마이그레이션이 완료된 후에 코드를 다시 변경해야 할 수 있습니다.
@@ -68,12 +68,12 @@ description: 기존의 코드를 null 안전성을 준수하는 코드로 수정
 코드의 **버전 관리**가 되고 있고, 언제든지 모든 변경을 롤백할 수 있다고 가정합니다.
 
 <a id="switch-to-the-latest-stable-dart-release"></a>
-### Switch to the latest Dart 2.19 release
+### Switch to the Dart 2.19.6 release
 
-Dart SDK를 최신 **Dart 2.19 릴리즈**로 전환하세요.
-이 버전은 Flutter 3.7 SDK에 포함되어있습니다.
+Dart SDK를 최신 **Dart 2.19.6 릴리즈**로 전환하세요.
+이 버전은 Flutter 3.7.12 SDK에 포함되어있습니다.
 
-Dart 버전이 2.19인지 확인하세요:
+Dart 버전이 2.19.6인지 확인하세요:
 
 ```terminal
 $ dart --version
@@ -103,7 +103,7 @@ $ dart pub outdated --mode=null-safety
 다음은 간단한 패키지에 대한 예제입니다.
 각 패키지의 녹색 체크 표시는 해당 버전이 null 안전성을 지원함을 나타냅니다:
 
-![Output of dart pub outdated](/null-safety/pub-outdated-output.png)
+![Output of dart pub outdated](/assets/img/null-safety/pub-outdated-output.png)
 
 위의 출력은 패키지의 의존성이 사용 가능한 null 안전성을 지원하는 프리 릴리즈 버전을
 가지고 있음을 보여줍니다.
@@ -165,7 +165,7 @@ adding [hint markers][] to your Dart code.
 
 Before starting the tool, make sure you're ready:
 
-* Use the latest 2.19 release of the Dart SDK.
+* Use the 2.19.6 release of the Dart SDK.
 * Use `dart pub outdated --mode=null-safety` to make sure that
   all dependencies are null safe and up-to-date.
   
@@ -189,7 +189,7 @@ Visit that URL in a Chrome browser
 to see an interactive UI
 where you can guide the migration process:
 
-![Screenshot of migration tool](/null-safety/migration-tool.png)
+![Screenshot of migration tool](/assets/img/null-safety/migration-tool.png)
 
 For every variable and type annotation,
 you can see what nullability the tool infers.
@@ -416,7 +416,7 @@ $ dart pub get
 $ dart analyze     # or `flutter analyze`
 ```
 
-[static analysis]: /guides/language/analysis-options
+[static analysis]: /tools/analysis
 
 
 ## 4. Test {#step4-test}

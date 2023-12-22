@@ -1,6 +1,12 @@
 ---
 title: 메서드
 description: Dart의 메서드에 대해 학습합니다.
+prevpage:
+  url: /language/constructors
+  title: 생성자
+nextpage:
+  url: /language/extend
+  title: 클래스 확장
 ---
 
 메서드는 객체가 특정한 행동을 할 수 있도록 해주는 함수입니다.
@@ -89,6 +95,11 @@ Getter와 setter는 객체의 프로퍼티를 읽고(get) 쓰는(set) 함수 입
 모든 인스턴스 변수는 암묵적으로 getter와 setter를 가진다는 것을 기억하세요.
 `get`과 `set` 키워드를 사용하여 getter와 setter를 구현하므로써 추가적인 프로퍼티를 생성 할 수 있습니다.
 
+Getters and setters are special methods that provide read and write
+access to an object's properties. Recall that each instance variable has
+an implicit getter, plus a setter if appropriate. You can create
+additional properties by implementing getters and setters, using the
+`get` and `set` keywords:
 
 <?code-excerpt "misc/lib/language_tour/classes/rectangle.dart"?>
 ```dart
@@ -125,7 +136,7 @@ Getter 및 setter를 사용하는 이점은 인스턴스 변수를 먼저 사용
 
 인스턴스, getter, setter 메서드는 추상화될 수 있습니다.
 추상화란 인터페이스만 구현한 상태로 나머지 부분은 다른 클래스들에게 맡기는 것을 의미합니다.
-추상 메서드는 오직 [추상 클래스][abstract classes]에 존재할 수 있습니다.
+추상 메서드는 오직 [추상 클래스][abstract classes] 또는 [믹스인][mixins] 에 존재할 수 있습니다.
 
 메서드를 추상화 하려면, 메서드 바디 대신에 세미콜론 (;)을 사용하세요:
 
@@ -146,3 +157,4 @@ class EffectiveDoer extends Doer {
 
 [operators]: /language/operators
 [abstract classes]: /language/class-modifiers#abstract
+[mixins]: /language/mixins

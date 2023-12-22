@@ -2,7 +2,7 @@
 title: Dart SDK 설치
 description: Dart 웹, 커맨드라인, 서버 앱 개발에 필요한 라이브러리, 커맨드라인 도구 설치.
 js:
-- url: /get-dart/archive/assets/install.js
+- url: /assets/js/get-dart/install.js
   defer: true
 ---
 
@@ -56,8 +56,7 @@ Dart SDK는 윈도우, 리눅스, 그리고 macOS를 지원합니다.
 
 * **지원 버전:** Windows 10, 11.
 * **지원 아키텍처:** x64, IA32, ARM64.<br>
-  ARM64의 지원은 실험 단계에 있으며,
-  dev 채널에서만 사용할 수 있습니다.
+  ARM64의 지원은 실험 단계에 있으며, dev 그리고 beta 채널에서만 사용할 수 있습니다.
 
 ### 리눅스
 
@@ -65,18 +64,13 @@ Dart SDK는 윈도우, 리눅스, 그리고 macOS를 지원합니다.
 * **지원 아키텍쳐:** x64, IA32, ARM64, ARM, RISC-V (RV64GC).<br>
   RISC-V의 지원은 실험 단계에 있으며, dev와 beta 채널에서만 사용할 수 있습니다.
 
-{{site.alert.note}}
-  [다이나믹 링커 버그](https://sourceware.org/bugzilla/show_bug.cgi?id=14341)
-  으로 인해 arm의 지원은 glibc 2.23 또는 더 업데이트된 버전을 사용해야 합니다.
-{{site.alert.end}}
-
 ### macOS
 
 * **지원 버전:** 최신 3가지 주요 버전.
-2022년 11월 기준으로 Dart는 다음 macOS를 지원합니다:
-  - macOS 11 (Big Sur)
+2023년 11월 기준으로 Dart는 다음 macOS를 지원합니다:
   - macOS 12 (Monterey)
   - macOS 13 (Ventura)
+  - macOS 14 (Sonoma)
 * **지원 아키텍처:** x64, ARM64.
 
 ## 릴리즈 채널 및 버전 문자열 {#release-channels}
@@ -117,7 +111,6 @@ Stable 채널 릴리즈는 이 페이지의 [설치 섹션](#install)을 따라�
 stable, beta, dev 채널 릴리즈를 다운로드 할 수 있습니다.
 
 [SDK constraints]: /tools/pub/pubspec#sdk-constraints
-[Dart 2]: /dart-2
 [SDK 소스를 빌드]: https://github.com/dart-lang/sdk/wiki/Building
 [Dart libraries]: /guides/libraries/library-tour
 [Dart 도커 이미지]: https://hub.docker.com/_/dart

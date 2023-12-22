@@ -36,6 +36,8 @@ enchilada/
     getting_started.md
   example/
     main.dart
+  integration_test/
+    app_test.dart
   lib/
     enchilada.dart
     tortilla.dart
@@ -189,8 +191,7 @@ enchilada/
     tortilla.dart
 ```
 
-Many packages are [*library
-packages*](/tools/pub/glossary#library-package): they
+Many [packages](/tools/pub/glossary#package)
 define Dart libraries that other packages can import and use.
 These public Dart library files go inside a directory called `lib`.
 
@@ -240,8 +241,8 @@ resolve. Instead, your entrypoints should go in the appropriate
   Also, avoid imports of <code>package:<em>package_name</em>/src/...</code>.
 {{site.alert.end}}
 
-For more information on library packages, see
-[Creating packages](/guides/libraries/create-library-packages).
+For more information on packages, see
+[Creating packages](/guides/libraries/create-packages).
 
 ### Public tools {#public-tools}
 
@@ -271,7 +272,7 @@ enchilada/
     guacamole.css
 ```
 
-While most library packages exist to let you reuse Dart code, you can also
+While most packages exist to let you reuse Dart code, you can also
 reuse other kinds of content. For example, a package for
 [Bootstrap](https://getbootstrap.com/) might include a number of CSS files
 for consumers of the package to use.
@@ -310,9 +311,9 @@ depends on the locations of the libraries:
    use `package:`.
  * Otherwise, [prefer relative imports][].
  
- [reaching inside or outside `lib/`]: /guides/language/effective-dart/usage#dont-allow-an-import-path-to-reach-into-or-out-of-lib
- [_avoid_relative_lib_imports_]: /tools/linter-rules#avoid_relative_lib_imports
- [prefer relative imports]: /guides/language/effective-dart/usage#prefer-relative-import-paths
+ [reaching inside or outside `lib/`]: /effective-dart/usage#dont-allow-an-import-path-to-reach-into-or-out-of-lib
+ [_avoid_relative_lib_imports_]: /tools/linter-rules/avoid_relative_lib_imports
+ [prefer relative imports]: /effective-dart/usage#prefer-relative-import-paths
 
 For example:
 
@@ -375,11 +376,25 @@ enchilada/
 ```
 
 Every package should have tests. With pub, the convention is
-that these go in a `test` directory (or some directory inside it if you like)
-and have `_test` at the end of their file names.
+that most of these go in a `test` directory (or some directory inside it if you
+like) and have `_test` at the end of their file names.
 
-Typically, these use the [test]({{site.pub-pkg}}/test)
-package.
+Typically, these use the [test]({{site.pub-pkg}}/test) package.
+
+```nocode
+enchilada/
+  integration_test/
+    app_test.dart
+```
+
+Flutter app packages may also have special integration tests, which use the
+[integration_test]({{site.flutter-docs}}/cookbook/testing/integration/introduction)
+package. These tests live in their own `integration_test` directory.
+
+Other packages may choose to follow a similar pattern, to separate their slower
+integration tests from their unit tests, but note that by default `dart test`
+will not run these tests. You will have to explicitly run them with
+`dart test integration_test`.
 
 ```nocode
 enchilada/
@@ -516,7 +531,7 @@ This helps speed-up future re-runs of the build steps.
   * You are using a subdirectory named after a package you own
     (`.dart_tool/<my_tool_package_name>/`)
   * Your files don't belong under source control, 
-    as `.dart_tools` is generally listed in `.gitignore`
+    as `.dart_tool/` is generally listed in `.gitignore`
 {{site.alert.end}}
 
 

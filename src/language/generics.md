@@ -1,14 +1,20 @@
 ---
 title: 제네릭
 description: Dart의 제네릭에 대해 학습합니다.
+revpage:
+  url: /language/collections
+  title: 컬렉션
+nextpage:
+  url: /language/typedefs
+  title: Typedefs
 ---
 
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g; / *\/\/\s+ignore:[^\n]+//g; /([A-Z]\w*)\d\b/$1/g"?>
 
 기본 배열 타입의 API 문서를 보면,
 [`List`][] 타입이 `List<E>`로 표기되어 있는 걸 볼 수 있습니다.
-\<...\> 표시는 List를 형식 타입 매개변수를 가지는 제네릭 (또는 *매개변수화된*) 타입으로 지정합니다.
-[관례상][By convention] 대부분의 타입 변수는 E, T, S, K, V 같은 single-letter 이름을 가집니다.
+\<...\> 표기는 List를 형식 타입 매개변수를 가지는 제네릭 (또는 *매개변수화된*) 타입으로 지정합니다.
+[관례상][By convention], 대부분의 타입 변수는 E, T, S, K, V 같은 single-letter 이름을 가집니다.
 
 ## 제네릭을 왜 사용할까?
 
@@ -94,9 +100,6 @@ var pages = <String, String>{
 ```dart
 var nameSet = Set<String>.from(names);
 ```
-
-{% comment %}[TODO #2950: It isn't idiomatic to use a constructor for an empty Map.
-Change to a class that doesn't have literal support.]{% endcomment %}
 
 다음 예제에서는 정수 키와 View 타입의 값을 가지는 map을 생성합니다:
 
@@ -204,5 +207,5 @@ var foo = [!Foo<Object>!]();
 * 지역 변수의 타입 (`T tmp`).
 
 [`List`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/List-class.html
-[By convention]: /guides/language/effective-dart/design#do-follow-existing-mnemonic-conventions-when-naming-type-parameters
+[By convention]: /effective-dart/design#do-follow-existing-mnemonic-conventions-when-naming-type-parameters
 [top-and-bottom]: /null-safety/understanding-null-safety#top-and-bottom

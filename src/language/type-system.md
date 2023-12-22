@@ -1,6 +1,12 @@
 ---
 title: Dart 타입 시스템
 description: 타입 안전성을 지키는 Dart 코드를 작성하는 이유와 방법.
+prevpage:
+  url: /language/typedefs
+  title: Typedefs
+nextpage:
+  url: /language/patterns
+  title: Patterns
 ---
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /([A-Z]\w*)\d\b/$1/g; /\b(main)\d\b/$1/g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g"?>
 <?code-excerpt path-base="type_system"?>
@@ -18,7 +24,7 @@ _타입_ 은 필수적이지만, [타입 추론](#타입-추론) 덕분에
 
 {:.fails-sa}
 <?code-excerpt "lib/strong_analysis.dart (opening-example)" replace="/list(?=\))/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 void printInts(List<int> a) => print(a);
 
 void main() {
@@ -27,7 +33,7 @@ void main() {
   list.add('2');
   printInts([!list!]);
 }
-{% endprettify %}
+```
 
 위의 코드는 `printInts(list)`를 호출할 때 `list`에 대해
 타입 에러를 발생시킵니다 (강조 표시됨):
@@ -51,7 +57,7 @@ analyzer가 문자열 인수를 `int`형 매개변수에 할당할 수 없다는
 
 {:.passes-sa}
 <?code-excerpt "test/strong_test.dart (opening-example)" replace="/<int.(?=\[)|2/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 void printInts(List<int> a) => print(a);
 
 void main() {
@@ -60,7 +66,7 @@ void main() {
   list.add([!2!]);
   printInts(list);
 }
-{% endprettify %}
+```
 
 [DartPad에서 체험해보세요!]({{site.dartpad}}/25074a51a00c71b4b000f33b688dedd0).
 
@@ -107,7 +113,7 @@ Dart는 정적 검사 (컴파일 타임 에러)와 런타임 검사를 조합하
 
 다음의 타입 계층을 사용하여 이러한 규칙에 대해 자세히 살펴봅시다:
 
-<img src="images/type-hierarchy.png" alt="a hierarchy of animals where the supertype is Animal and the subtypes are Alligator, Cat, and HoneyBadger. Cat has the subtypes of Lion and MaineCoon">
+<img src="/assets/img/language/type-hierarchy.png" alt="a hierarchy of animals where the supertype is Animal and the subtypes are Alligator, Cat, and HoneyBadger. Cat has the subtypes of Lion and MaineCoon">
 
 <a name="use-proper-return-types"></a>
 
@@ -117,19 +123,19 @@ Dart는 정적 검사 (컴파일 타임 에러)와 런타임 검사를 조합하
 `Animal` 클래스의 getter 메서드를 다음과 같이 생성합니다:
 
 <?code-excerpt "lib/animal.dart (Animal)" replace="/Animal get.*/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 class Animal {
   void chase(Animal a) { ... }
   [!Animal get parent => ...!]
 }
-{% endprettify %}
+```
 
 `부모`의 getter 메서드는 `Animal`을 반환합니다. 자식 클래스인 `HoneyBadger`의 getter 메서드의 반환 타입을
 `HoneyBadger` 또는 `Animal`의 다른 서브타입으로 대체할 수 있지만, 관련이 없는 타입으로는 불가능합니다.
 
 {:.passes-sa}
 <?code-excerpt "lib/animal.dart (HoneyBadger)" replace="/(\w+)(?= get)/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 class HoneyBadger extends Animal {
   @override
   void chase(Animal a) { ... }
@@ -137,18 +143,19 @@ class HoneyBadger extends Animal {
   @override
   [!HoneyBadger!] get parent => ...
 }
-{% endprettify %}
+```
 
 {:.fails-sa}
-{% prettify dart tag=pre+code %}
+<?code-excerpt "lib/animal.dart (HoneyBadger)" replace="/HoneyBadger get/[!Root!] get/g"?>
+```dart
 class HoneyBadger extends Animal {
   @override
   void chase(Animal a) { ... }
-  
+
   @override
   [!Root!] get parent => ...
 }
-{% endprettify %}
+```
 
 <a name="use-proper-param-types"></a>
 
@@ -166,19 +173,19 @@ class HoneyBadger extends Animal {
 `Animal` 클래스의 `chase(Animal)` 메서드를 다음과 같이 작성합니다:
 
 <?code-excerpt "lib/animal.dart (Animal)" replace="/void chase.*/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 class Animal {
   [!void chase(Animal a) { ... }!]
   Animal get parent => ...
 }
-{% endprettify %}
+```
 
 `chase()` 메서드의 매개변수 타입은 `Animal` 입니다. `HoneyBadger`는 어느 것이든 선택할 수 있습니다.
 따라서 `chase()` 메서드를 재정의할 때 매개변수 타입을 어떤 타입의 `Object`로도 지정할 수 있습니다.
 
 {:.passes-sa}
 <?code-excerpt "lib/animal.dart (chase-Object)" replace="/Object/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 class HoneyBadger extends Animal {
   @override
   void chase([!Object!] a) { ... }
@@ -186,27 +193,29 @@ class HoneyBadger extends Animal {
   @override
   Animal get parent => ...
 }
-{% endprettify %}
+```
 
 `Mouse`는 `Animal`의 하위 클래스이며 아래 코드는 `chase()` 메서드의 매개변수 범위를
 `Animal`에서 `Mouse`로 좁힙니다.
 
 {:.fails-sa}
-{% prettify dart tag=pre+code %}
-class Mouse extends Animal {...}
+<?code-excerpt "lib/incorrect_animal.dart (chase-mouse)" replace="/Mouse/[!$&!]/g"?>
+```dart
+class [!Mouse!] extends Animal { ... }
 
 class Cat extends Animal {
   @override
-  void chase([!Mouse!] x) { ... }
+  void chase([!Mouse!] a) { ... }
 }
-{% endprettify %}
+```
 
 다음 코드는 a를 고양이 객체로 선언하고, 악어 객체를 넘겨줄 수 있기 때문에 타입이 안전하지 않습니다:
 
-{% prettify dart tag=pre+code %}
+<?code-excerpt "lib/incorrect_animal.dart (would-not-be-type-safe)" replace="/Alligator/[!$&!]/g"?>
+```dart
 Animal a = Cat();
 a.chase([!Alligator!]()); // 타입과 고양이가 안전하지 않습니다.
-{% endprettify %}
+```
 
 ### 동적으로 타입이 지정된 리스트를 타입이 지정된 리스트처럼 사용하지 마세요.
 
@@ -219,16 +228,13 @@ a.chase([!Alligator!]()); // 타입과 고양이가 안전하지 않습니다.
 해당 리스트를 `Cat` 타입의 리스트에 할당합니다. 이 코드는 정적 분석에서 에러를 발생시킵니다.
 
 {:.fails-sa}
-{% prettify dart tag=pre+code %}
-class Cat extends Animal { ... }
-
-class Dog extends Animal { ... }
-
+<?code-excerpt "lib/incorrect_animal.dart (invalid-dynamic-list)" replace="/(<dynamic\x3E)(.*?)Error/[!$1!]$2Error/g"?>
+```dart
 void main() {
   List<Cat> foo = [!<dynamic>!][Dog()]; // Error
   List<dynamic> bar = <dynamic>[Dog(), Cat()]; // OK
 }
-{% endprettify %}
+```
 
 ## 런타임 검사
 
@@ -239,12 +245,12 @@ void main() {
 
 {:.runtime-fail}
 <?code-excerpt "test/strong_test.dart (runtime-checks)" replace="/animals as[^;]*/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 void main() {
   List<Animal> animals = [Dog()];
   List<Cat> cats = [!animals as List<Cat>!];
 }
-{% endprettify %}
+```
 
 
 ## 타입 추론
@@ -259,16 +265,16 @@ Analyzer가 특정 타입을 추론할 만큼 충분한 정보가 없다면, `dy
 명시적으로 변수의 타입을 지정하려면, 다음과 같이 작성하면 됩니다:
 
 <?code-excerpt "lib/strong_analysis.dart (type-inference-1-orig)" replace="/Map<String, dynamic\x3E/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 [!Map<String, dynamic>!] arguments = {'argA': 'hello', 'argB': 42};
-{% endprettify %}
+```
 
 `var` 또는 `final`을 사용하여 Dart가 타입을 추론하도록 할 수 있습니다:
 
 <?code-excerpt "lib/strong_analysis.dart (type-inference-1)" replace="/var/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 [!var!] arguments = {'argA': 'hello', 'argB': 42}; // Map<String, Object>
-{% endprettify %}
+```
 
 Map 리터럴은 자신의 엔트리를 참고하여 타입을 추론하고
 변수는 map 리터럴의 타입을 참고하여 자신의 타입을 추론합니다.
@@ -303,17 +309,17 @@ If so, you can add a type annotation.
 
 {:.fails-sa}
 <?code-excerpt "lib/strong_analysis.dart (local-var-type-inference-error)"?>
-{% prettify dart tag=pre+code %}
+```dart
 var x = 3; // x는 int로 추론됩니다.
 x = 4.0;
-{% endprettify %}
+```
 
 {:.passes-sa}
 <?code-excerpt "lib/strong_analysis.dart (local-var-type-inference-ok)"?>
-{% prettify dart tag=pre+code %}
-num y = 3; // num는 double 또는 int가 될 수 있습니다.
+```dart
+num y = 3; //  num는 double 또는 int가 될 수 있습니다.
 y = 4.0;
-{% endprettify %}
+```
 
 ### 매개변수 타입 추론
 
@@ -323,7 +329,7 @@ y = 4.0;
 
 {:.passes-sa}
 <?code-excerpt "lib/strong_analysis.dart (type-arg-inference)"?>
-{% prettify dart tag=pre+code %}
+```dart
 // <int>[]로 추론됩니다.
 List<int> listOfInt = [];
 
@@ -332,7 +338,7 @@ var listOfDouble = [3.0];
 
 // Iterable<int>로 추론됩니다.
 var ints = listOfDouble.map((x) => x.toInt());
-{% endprettify %}
+```
 
 마지막 예제에서 `x`는 하향 정보를 사용하여 `double`로 추론됩니다.
 클로저의 반환 타입은 상향 정보를 사용하여 `int`로 추론됩니다.
@@ -360,32 +366,32 @@ Dart는 `map()` 메서드의 타입 매개변수 `<int>`를 추론할 때 이 �
 
 다음 타입 계층을 살펴봅시다:
 
-<img src="images/type-hierarchy.png" alt="a hierarchy of animals where the supertype is Animal and the subtypes are Alligator, Cat, and HoneyBadger. Cat has the subtypes of Lion and MaineCoon">
+<img src="/assets/img/language/type-hierarchy.png" alt="a hierarchy of animals where the supertype is Animal and the subtypes are Alligator, Cat, and HoneyBadger. Cat has the subtypes of Lion and MaineCoon">
 
 `Cat c`가 _소비자_ 이고 `Cat()`이 _생산자_ 인 다음 예제의 일반 할당을 살펴봅시다:
 
 <?code-excerpt "lib/strong_analysis.dart (Cat-Cat-ok)"?>
-{% prettify dart tag=pre+code %}
+```dart
 Cat c = Cat();
-{% endprettify %}
+```
 
 소비자 입장에서는 특정 타입(`Cat`)의 객체를 모든 타입(`Animal`)의 객체로 바꾸는 것이 안전합니다.
 `Animal`이 `Cat`의 상위 클래스이므로 `Cat c`를 `Animal c`로 바꾸는 것이 가능합니다.
 
 {:.passes-sa}
 <?code-excerpt "lib/strong_analysis.dart (Animal-Cat-ok)"?>
-{% prettify dart tag=pre+code %}
+```dart
 Animal c = Cat();
-{% endprettify %}
+```
 
 하지만 `Cat c`를 `MaineCoon c`로 대체하는 것은 부모 클래스가
 `Lion` 같은 Cat 타입을 제공하므로 안전성을 훼손시킵니다:
 
 {:.fails-sa}
 <?code-excerpt "lib/strong_analysis.dart (MaineCoon-Cat-err)"?>
-{% prettify dart tag=pre+code %}
+```dart
 MaineCoon c = Cat();
-{% endprettify %}
+```
 
 생산자의 입장에서, `Cat` 타입을 생산하는 것보다
 구체적인 타입(`MaineCoon`)으로 대체하는 것이 보다 안전합니다.
@@ -393,9 +399,9 @@ MaineCoon c = Cat();
 
 {:.passes-sa}
 <?code-excerpt "lib/strong_analysis.dart (Cat-MaineCoon-ok)"?>
-{% prettify dart tag=pre+code %}
+```dart
 Cat c = MaineCoon();
-{% endprettify %}
+```
 
 ### 제네릭 타입 할당
 
@@ -403,44 +409,37 @@ Cat c = MaineCoon();
 `Cat` `List`는 `Animal` `List`의 하위 타입이고
 `MaineCoon` `List`의 상위 타입인 동물 리스트 계층을 살펴봅시다:
 
-<img src="images/type-hierarchy-generics.png" alt="List<Animal> -> List<Cat> -> List<MaineCoon>">
+<img src="/assets/img/language/type-hierarchy-generics.png" alt="List<Animal> -> List<Cat> -> List<MaineCoon>">
 
 `List<MainCoon>`은 `List<Cat>`의 하위 타입이므로
 다음 예제에서, `MaineCoon` 리스트를 `myCats`에 할당이 가능합니다:
 
 {:.passes-sa}
 <?code-excerpt "lib/strong_analysis.dart (generic-type-assignment-MaineCoon)" replace="/<MaineCoon/<[!MaineCoon!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 List<[!MaineCoon!]> myMaineCoons = ...
 List<Cat> myCats = myMaineCoons;
-{% endprettify %}
+```
 
 방향을 반대로 해서 `Animal` 리스트를 `List<Cat>`에 할당하는 것이 가능할까요?
 
 {:.fails-sa}
 <?code-excerpt "lib/strong_analysis.dart (generic-type-assignment-Animal)" replace="/<Animal/<[!Animal!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 List<[!Animal!]> myAnimals = ...
 List<Cat> myCats = myAnimals;
-{% endprettify %}
+```
 
 이 할당은 `Animal` 같은 non-`dynamic` 타입에서 허용되지 않는
 암시적 다운캐스트를 생성하기 때문에 정적 분석을 통과하지 못합니다.
 
-{{site.alert.version-note}}
-  2.12 이전의 [language version][]을 사용하는 패키지에서, ([null safety][]가 도입된 경우)
-  코드는 이러한 non-`dynamic` 타입에서 암시적으로 다운캐스트할 수 있습니다.
-  [분석 옵션 파일][analysis]에서 `implicit-casts: false`로 설정하여
-  2.12 이전 프로젝트에서 non-`dynamic` 다운캐스트를 허용하지 않을 수 있습니다.
-{{site.alert.end}}
-
 이 코드가 정적 분석을 통과하려면 명시적 변환을 사용해야 합니다.
 
 <?code-excerpt "lib/strong_analysis.dart (generic-type-assignment-implied-cast)" replace="/as.*(?=;)/[!$&!]/g"?>
-{% prettify dart tag=pre+code %}
+```dart
 List<Animal> myAnimals = ...
 List<Cat> myCats = myAnimals [!as List<Cat>!];
-{% endprettify %}
+```
 
 그러나 변환된 리스트의 실제 타입 (여기서는 `myAnimals`)에 따라 명시적 변환이
 런타임에 실패할 수 있습니다.
@@ -450,7 +449,7 @@ List<Cat> myCats = myAnimals [!as List<Cat>!];
 메서드를 재정의할 때, 생산자와 소비자 규칙은 여전히 적용이 가능합니다.
 예제:
 
-<img src="images/consumer-producer-methods.png" alt="Animal class showing the chase method as the consumer and the parent getter as the producer">
+<img src="/assets/img/language/consumer-producer-methods.png" alt="Animal class showing the chase method as the consumer and the parent getter as the producer">
 
 `chase(Animal)` 메소드 같은 소비자의 경우 매개변수 타입을 상위 타입으로 대체가 가능합니다.
 `parent` getter 메서드 같은 생산자의 경우 반환 값의 타입을 하위 타입으로 대체가 가능합니다.
@@ -474,7 +473,6 @@ List<Cat> myCats = myAnimals [!as List<Cat>!];
   분석 옵션 파일을 사용하여 분석기와 린터를 셋업하고 사용자화하는 법을 다룹니다.
 
 
-[analysis]: /guides/language/analysis-options
-[dartdevc]: /tools/dartdevc
+[analysis]: /tools/analysis
 [language version]: /guides/language/evolution#language-versioning
 [null safety]: /null-safety

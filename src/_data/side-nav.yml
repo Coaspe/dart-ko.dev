@@ -37,7 +37,7 @@
         - title: 라이브러리 & 임포트
           permalink: /language/libraries
         - title: 키워드
-          permalink: /language/keywords 
+          permalink: /language/keywords
     - title: 타입
       children:
         - title: 내장 타입
@@ -51,7 +51,7 @@
         - title: Typedefs
           permalink: /language/typedefs
         - title: 타입 시스템
-          permalink: /language/type-system 
+          permalink: /language/type-system
     - title: Patterns
       children:
         - title: 개요 & 용법
@@ -69,7 +69,7 @@
     - title: 에러 핸들링
       permalink: /language/error-handling
     - title: 클래스 & 객체
-      children: 
+      children:
         - title: 클래스
           permalink: /language/classes
         - title: 생성자
@@ -80,16 +80,23 @@
           permalink: /language/extend
         - title: Mixins
           permalink: /language/mixins
-        - title: 클레스 제어자
-          permalink: /language/class-modifiers
-        - title: Enum 타입
-          permalink: /language/enum
+        - title: Enums
+          permalink: /language/enums
         - title: 확장 메소드
           permalink: /language/extension-methods
         - title: 호출 가능한 객체
           permalink: /language/callable-objects
+    - title: 클래스 제어자
+      children:
+        - title: 개요 & 사용법
+          match-page-url-exactly: true
+          permalink: /language/class-modifiers
+        - title: API 운영자를 위한 클래스 제어자
+          permalink: /language/class-modifiers-for-apis
+        - title: 레퍼런스
+          permalink: /language/modifier-reference
     - title: 동시성
-      children: 
+      children:
         - title: 비동기 지원
           permalink: /language/async
         - title: Isolates
@@ -111,17 +118,19 @@
 
 - title: 효과적인 Dart
   expanded: false
+  permalink: /effective-dart
   children:
     - title: 개요
-      permalink: /guides/language/effective-dart
+      match-page-url-exactly: true
+      permalink: /effective-dart
     - title: 스타일
-      permalink: /guides/language/effective-dart/style
-    - title: 문서화
-      permalink: /guides/language/effective-dart/documentation
+      permalink: /effective-dart/style
+    - title: 문서와
+      permalink: /effective-dart/documentation
     - title: 사용법
-      permalink: /guides/language/effective-dart/usage
+      permalink: /effective-dart/usage
     - title: 디자인
-      permalink: /guides/language/effective-dart/design
+      permalink: /effective-dart/design
 
 - title: 핵심 라이브러리
   expanded: false
@@ -144,7 +153,7 @@
     - title: Commonly used packages
       permalink: /guides/libraries/useful-libraries
     - title: Creating packages
-      permalink: /guides/libraries/create-library-packages
+      permalink: /guides/libraries/create-packages
     - title: Publishing packages
       permalink: /tools/pub/publishing
     - title: Writing package pages
@@ -180,16 +189,6 @@
       permalink: /guides/json
     - title: 숫자 표현
       permalink: /guides/language/numbers
-    - title: Interoperability
-      children:
-        - title: C interop
-          permalink: /guides/libraries/c-interop
-        - title: Objective-C and Swift interop
-          permalink: /guides/libraries/objective-c-interop
-        - title: Java and Kotlin interop
-          permalink: /guides/libraries/java-interop
-        - title: JavaScript interop
-          permalink: /web/js-interop
     - title: Google APIs
       permalink: /guides/google-apis
     - title: Multi-platform apps
@@ -207,7 +206,7 @@
           permalink: /tutorials/server/fetch-data
         - title: Write HTTP servers
           permalink: /tutorials/server/httpserver
-        - title: Libraries and packages
+        - title: Libraries & packages
           permalink: /server/libraries
         - title: Google Cloud
           permalink: /server/google-cloud
@@ -228,12 +227,24 @@
             permalink: /tutorials/web/low-level-html/remove-elements
         - title: Deployment
           permalink: /web/deployment
-        - title: Libraries and packages
+        - title: Libraries & packages
           permalink: /web/libraries
     - title: Environment declarations
       permalink: /guides/environment-declarations
 
-- title: 툴 & 테크닉
+- title: Interoperability
+  expanded: false
+  children:
+  - title: C interop
+    permalink: /interop/c-interop
+  - title: Objective-C & Swift interop
+    permalink: /interop/objective-c-interop
+  - title: Java & Kotlin interop
+    permalink: /interop/java-interop
+  - title: JavaScript interop
+    permalink: /interop/js-interop
+
+- title: Tools & techniques
   expanded: false
   children:
   - title: Overview
@@ -252,8 +263,6 @@
           - title: Overview
             match-page-url-exactly: true
             permalink: /tools/dartpad
-          - title: DartPad in tutorials
-            permalink: /tools/dartpad/dartpad-best-practices
           - title: Troubleshooting DartPad
             permalink: /tools/dartpad/troubleshoot
   - title: Command-line tools
@@ -273,9 +282,9 @@
           permalink: /tools/dart-create
         - title: dart doc
           permalink: /tools/dart-doc
-        - title: dart fix 
+        - title: dart fix
           permalink: /tools/dart-fix
-        - title: dart format 
+        - title: dart format
           permalink: /tools/dart-format
         - title: dart info
           permalink: /tools/dart-info
@@ -296,38 +305,38 @@
           permalink: /tools/build_runner
         - title: webdev
           permalink: /tools/webdev
-  - title: Managing source code
-    children:
-      - title: Formatting code
-        permalink: /guides/language/formatting
-      - title: What not to commit
-        permalink: /guides/libraries/private-files
   - title: Static analysis
     children:
       - title: Customizing static analysis
-        permalink: /guides/language/analysis-options
-      - title: Fixing common type problems
-        permalink: /guides/language/sound-problems
+        permalink: /tools/analysis
       - title: Diagnostic messages
         permalink: /tools/diagnostic-messages
       - title: Linter rules
         permalink: /tools/linter-rules
+      - title: Fixing common type problems
+        permalink: /guides/language/sound-problems
+      - title: Fixing type promotion failures
+        permalink: /tools/non-promotion-reasons
   - title: Testing & optimization
     children:
       - title: Testing
         permalink: /guides/testing
       - title: Debugging web apps
         permalink: /web/debugging
+  - title: What not to commit
+    permalink: /guides/libraries/private-files
 
 - title: 리소스
   expanded: false
   children:
     - title: FAQ
       permalink: /resources/faq
+    - title: Breaking changes
+      permalink: /resources/breaking-changes
     - title: Language evolution
       permalink: /guides/language/evolution
     - title: Language specification
-      permalink: /guides/language/spec    
+      permalink: /guides/language/spec
     - title: Dart 3 migration guide
       permalink: /resources/dart-3-migration
     - title: Coming from ...
@@ -337,6 +346,8 @@
           permalink: /guides/language/coming-from/js-to-dart
         - title: Swift to Dart
           permalink: /guides/language/coming-from/swift-to-dart
+    - title: Glossary
+      permalink: /resources/glossary
     - title: Books
       permalink: /resources/books
     - title: Videos

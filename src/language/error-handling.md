@@ -1,6 +1,12 @@
 ---
 title: 에러 핸들링
 description: Dart 언어에서 에러와 예외를 핸들링하는 방법에 대해 학습합니다.
+prevpage:
+  url: /language/branches
+  title: Branches
+nextpage:
+  url: /language/classes
+  title: 클래스
 ---
 
 ## 예외
@@ -64,8 +70,8 @@ try {
 ```
 
 한 개 이상의 예외 타입을 발생시키는 코드를 처리할 때,
-다수의 catch 절을 사용할 수 있습니다. 발생된 객체의 타입을 매치하는 첫 번째 catch 절은
-해당 예외를 처리합니다. catch 절에 타입을 명시하지 않는다면, 해당 절은 발생되는 모든
+다수의 catch 문을 사용할 수 있습니다. 발생된 객체의 타입을 매치하는 첫 번째 catch 절은
+해당 예외를 처리합니다. catch 문에 타입을 명시하지 않는다면, 해당 코드는 발생되는 모든
 타입의 예외를 처리할 수 있습니다:
 
 <?code-excerpt "misc/lib/language_tour/exceptions.dart (try-catch)"?>
@@ -190,7 +196,7 @@ assert(urlString.startsWith('https'),
 ```
 
 The first argument to `assert` can be any expression that
-resolves to a boolean value. If the expression’s value
+resolves to a boolean value. If the expression's value
 is true, the assertion succeeds and execution
 continues. If it's false, the assertion fails and an exception (an
 [`AssertionError`][]) is thrown.

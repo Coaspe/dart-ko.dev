@@ -1,12 +1,19 @@
 ---
 title: 라이브러리 & 임포트
 description: 라이브러리를 구현하고 임포팅하는 방법에 대해 학습합니다.
+prevpage:
+  url: /language/metadata
+  title: 메타데이터
+nextpage:
+  url: /language/keywords
+  title: 키워드
 ---
 
 `import`와 `library` 명령어는 코드를 모듈화하고 공유하는 것을 도와줍니다.
 라이브러리는 API를 제공할 뿐만 아니라, 관리(privacy)의 단위가 됩니다:
 언더스코어(`_`)로 시작하는 식별자들은 오직 그 라이브러리 안에서만 보입니다.
-[`library`](#library-directive) 명령어를 사용하지 않았다고 해도, *모든 Dart 앱은 라이브러리*입니다.
+[`library`](#library-directive) 명령어를 사용하지 않았다고 해도,
+*모든 Dart 앱은 [라이브러리][library]*입니다.
 
 라이브러리들은 [packages](/guides/packages)를 사용해 분산 될 수 있습니다.
 
@@ -17,6 +24,7 @@ description: 라이브러리를 구현하고 임포팅하는 방법에 대해 �
   를 참고하세요.
 {{site.alert.end}}
 
+[library]: /tools/pub/glossary#library
 
 ## 라이브러리 사용하기
 
@@ -147,7 +155,7 @@ library;
 
 라이브러리 구현에 대한 자세한 방법은
 다음 항목들을 포함하는
-[라이브러리 패키지 만들기](/guides/libraries/create-library-packages)를 살펴보세요:
+[패키지 만들기](/guides/libraries/create-packages)를 살펴보세요:
 
 * 라이브러리 소스 코드 구성법.
 * `export` 명령어 사용법.
@@ -156,5 +164,5 @@ library;
   조건적인 import와 export의 사용법.
 
 [dart:html]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-html
-[doc comments]: /guides/language/effective-dart/documentation#consider-writing-a-library-level-doc-comment
+[doc comments]: /effective-dart/documentation#consider-writing-a-library-level-doc-comment
 [metadata annotations]: /language/metadata

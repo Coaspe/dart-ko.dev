@@ -1,6 +1,12 @@
 ---
 title: 클래스
 description: 클래스, 클래스 인스턴스, 클래스 멤버에 대한 요약.
+prevpage:
+  url: /language/error-handling
+  title: 에러 핸들링
+nextpage:
+  url: /language/constructors
+  title: 생성자
 ---
 
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g; / *\/\/\s+ignore:[^\n]+//g; /([A-Z]\w*)\d\b/$1/g"?>
@@ -198,7 +204,7 @@ class ProfileMark {
 ## 암묵적 인터페이스
 
 클래스는 클래스의 모든 인스턴스 멤버와 클래스가 구현하는 모든 인터페이스를 포함하는 인터페이스를 암시적으로 정의합니다.
-B 클래스를 상속받지 않은 A 클래스가 B의 API를 사용하고 싶다면 B 인터페이스를 구현해야 합니다.
+B 클래스를 상속받지 않은 A 클래스가 B의 API를 사용하고 싶다면, A 클래스는 B 인터페이스를 구현해야 합니다.
 
 하나의 클래스는 `implements`문 안에 하나 혹은 여러 개의 인터페이스를 구현하고,
 인터페이스에 필요한 API들을 제공합니다:
@@ -232,7 +238,7 @@ void main() {
 }
 ```
 
-다음은 여러 개의 인터페이스를 가지는 클래스입니다:
+다음은 여러 개의 인터페이스를 구현하는 클래스입니다:
 
 <?code-excerpt "misc/lib/language_tour/classes/misc.dart (point_interfaces)"?>
 ```dart
@@ -263,7 +269,7 @@ void main() {
 정적 변수는 사용하기 전에는 초기화되지 않습니다.
 
 {{site.alert.note}}
-  이 페이지는 [스타일 가이드 추천](/guides/language/effective-dart/style#identifiers)
+  이 페이지는 [스타일 가이드 추천](/effective-dart/style#identifiers)
   에서 선호하는 `lowerCamelCase`를 상수 선언에 사용합니다.
 {{site.alert.end}}
 
@@ -311,8 +317,8 @@ void main() {
 [Class modifiers]: /language/class-modifiers
 [constant constructors]: /language/constructors#constant-constructors
 [`Type`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Type-class.html
-[type test operator]: /language/operators#타입-테스트-연산자
-[Getters and setters]: /language/methods#getter-setter
-[initializer list]: /language/constructors#이니셜라이저-리스트
-[factory constructor]: /language/constructors#factory-생성자
-[late-final-ivar]: /guides/language/effective-dart/design#avoid-public-late-final-fields-without-initializers
+[type test operator]: /language/operators#type-test-operators
+[Getters and setters]: /language/methods#getters-and-setters
+[initializer list]: /language/constructors#initializer-list
+[factory constructor]: /language/constructors#factory-constructors
+[late-final-ivar]: /effective-dart/design#avoid-public-late-final-fields-without-initializers

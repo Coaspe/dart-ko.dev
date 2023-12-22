@@ -247,7 +247,7 @@ These will behave the same and no symptoms will arise.
 The few constant expressions that aren't valid patterns
 will trigger the [`invalid_case_patterns` lint][].
 
-[`invalid_case_patterns` lint]: /tools/linter-rules#invalid_case_patterns
+[`invalid_case_patterns` lint]: /tools/linter-rules/invalid_case_patterns
 
 #### Migration
 
@@ -427,6 +427,19 @@ They have been applied to a number of classes in the core libraries.
 This is a [*versioned* change](#unversioned-vs-versioned-changes), 
 that only applies to language version 3.0 or later.
 
+#### `dart:async`
+
+* The following declarations can only be implemented, not extended:
+
+  - `StreamConsumer`
+  - `StreamIterator`
+  - `StreamTransformer`
+  - `MultiStreamController`
+
+  None of these declarations contained any implementation to inherit.
+  They are marked as `interface` to signify that
+  they are only intended as interfaces.
+
 #### `dart:core`
 
 * The `Function` type can no longer be implemented, extended or mixed in.
@@ -550,7 +563,7 @@ Use Dart 2.19 to [migrate to null safety](/null-safety/migration-guide).
 The [analyzer configuration options][] for 
 enabling stricter checking have changed.
 
-[analyzer configuration options]: /guides/language/analysis-options#enabling-additional-type-checks
+[analyzer configuration options]: /tools/analysis#enabling-additional-type-checks
 
 #### Scope
 
@@ -596,6 +609,12 @@ analyzer:
   have been cleaned up [#50700](https://github.com/dart-lang/sdk/issues/50700).
 * The output of `dart format` changed a bit for
   [some code](https://github.com/dart-lang/sdk/blob/main/CHANGELOG.md#formatter).
+* Ending backwards compatibility for the old location of pub-cache on Windows.
+  Prior to Dart 3 `%APPDATA%\Pub\Cache` was a fallback location for pub-cache.
+  Starting with Dart 3, the default pub-cache is located at
+  `%LOCALAPPDATA%\Pub\Cache`.
+  If you have added globally activated packages to your `PATH`, consider
+  updating `PATH` to contain `%LOCALAPPDATA%\Pub\Cache\bin`.
 
 #### Scope
 

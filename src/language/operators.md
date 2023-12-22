@@ -1,6 +1,12 @@
 ---
 title: 연산자
 description: Dart가 지원하는 연산자에 대해 학습합니다.
+prevpage:
+  url: /language/variables
+  title: 변수
+nextpage:
+  url: /language/comments
+  title: 주석
 ---
 
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g; / *\/\/\s+ignore:[^\n]+//g; /([A-Z]\w*)\d\b/$1/g"?>
@@ -158,13 +164,13 @@ assert(a != b); // -1 != 0
 {:.table .table-striped}
 
 두 객체 x와 y가 동일한 것인지 확인하고 싶다면, `==` 연산자를 사용하세요.
-(드물게 두 객체가 정확하게 같은 것인지 확인하고 싶다면 [identical()][] 함수를 대신 사용하세요.)
+(두 객체가 정확하게 같은 것인지 확인하고 싶다면 [identical()][] 함수를 대신 사용하세요.)
 `==` 연산자는 다음과 같이 작동합니다:
 
 1.  *x* 또는 *y* 가 null 일 때, 모두 null이라면 true를, 둘 중에 하나만 null이라면
     false를 반환합니다.
 
-2.  *y* 를 인자로 사용하여 *x*에서 `==` 메서드를 호출한 결과를 반환합니다.
+2.  *y*를 인자로 사용하여 *x*에 대해 `==` 메서드를 호출한 결과를 반환합니다.
     (`==` 같은 연산자들은 첫 번째 피연산자에서 호출되는 메서드입니다.
     더 자세한 사항은 [연산자][Operators]를 참고하세요.)
 
@@ -295,6 +301,12 @@ Dart에서는 숫자를 이루는 각각의 비트를 조작하는 것이 가능
 | `>>>`                       | Unsigned shift right
 {:.table .table-striped}
 
+{{site.alert.note}}
+  크거나 음의 피연산자에 대해 비트 단위 연산의 수행은 플랫폼 마다 다릅니다.
+  더 자세한 정보는 [플랫폼 마다 다른 비트 단위 연산][Bitwise operations platform differences]
+  을 참고하세요.
+{{site.alert.end}}
+
 다음은 비트 단위 및 쉬프트 연산자를 사용하는 예제입니다:
 
 <?code-excerpt "misc/test/language_tour/operators_test.dart (op-bitwise)"?>
@@ -306,10 +318,15 @@ assert((value & bitmask) == 0x02); // AND
 assert((value & ~bitmask) == 0x20); // AND NOT
 assert((value | bitmask) == 0x2f); // OR
 assert((value ^ bitmask) == 0x2d); // XOR
+
 assert((value << 4) == 0x220); // Shift left
 assert((value >> 4) == 0x02); // Shift right
+
+// Shift right example that results in different behavior on web
+// because the operand value changes when masked to 32 bits:
+assert((-value >> 4) == -0x03);
+
 assert((value >>> 4) == 0x02); // Unsigned shift right
-assert((-value >> 4) == -0x03); // Shift right
 assert((-value >>> 4) > 0); // Unsigned shift right
 ```
 
@@ -318,7 +335,7 @@ assert((-value >>> 4) > 0); // Unsigned shift right
   적어도 2.14의 [language version][]이 필요합니다.
 {{site.alert.end}}
 
-## 조건 표현식
+[Bitwise operations platform differences]: /guides/language/numbers#bitwise-operations
 
 Dart에는 [if-else][]문을 간결하게 표현 할 수 있는 두 개의 연산자가 있습니다:
 

@@ -1,6 +1,12 @@
 ---
 title: 확장 메서드
 description: 존재하는 API에 기능을 추가하는 법을 배웁니다.
+prevpage:
+  url: /language/enums
+  title: 열거
+nextpage:
+  url: /language/callable-objects
+  title: 호출 가능한 객체
 ---
 확장 메서드는 이미 존재하는 라이브러리에 기능을 추가합니다.
 확장 메서드가 무엇인지 모르는 상태에서 사용하고 있을 수도 있습니다.
@@ -205,6 +211,10 @@ extension NumberParsing on String {
 
 연산자, getter, setter 또는 메서드가 확장의 멤버가 될 수 있습니다.
 확장은 정적 필드와 정적 헬퍼 메서드를 가질 수 있습니다.
+확장 선언 외부에서 정적 멤버에 접근하고 싶다면,
+[클래스 변수와 메서드][class variables and methods]와 비슷하게 선언 이름을 호출하세요.
+
+[class variables and methods]: /language/classes#class-variables-and-methods
 
 ### 이름 없는 확장
 

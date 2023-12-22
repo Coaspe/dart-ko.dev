@@ -31,17 +31,19 @@ Dependencies upgraded!
 
 When `dart pub upgrade` upgrades dependency versions, it writes a lockfile to ensure that
 [`dart pub get`](/tools/pub/cmd/pub-get) will use the same versions of those
-dependencies. For application packages, check in the lockfile to
+dependencies. For [application packages][], check in the lockfile to
 source control; this ensures the application has the exact same
 versions of all dependencies for all developers and when deployed to
-production. For library packages, don't check in the lockfile,
-because libraries are expected to work with a range of dependency versions.
+production. For regular packages, don't check in the lockfile,
+because packages are expected to work with a range of dependency versions.
 
 If a lockfile already exists, `dart pub upgrade` ignores it and generates a new
 one from scratch, using the latest versions of all dependencies.
 
 See the [`dart pub get` documentation](/tools/pub/cmd/pub-get) for more information
 on package resolution and the system package cache.
+
+[application packages]: /tools/pub/glossary#application-package
 
 ## Upgrading specific dependencies
 
@@ -150,6 +152,12 @@ Also updates `pubspec.yaml` with the new constraints.
 
 To check which dependencies will be upgraded,
 you can use `dart pub upgrade --major-versions --dry-run`.
+
+### `--tighten`
+
+Updates the lower bounds of dependencies in `pubspec.yaml` to match the
+resolved versions, and returns a list of the changed constraints. 
+Can be applied to [specific dependencies](#upgrading-specific-dependencies).  
 
 
 {{site.alert.info}}

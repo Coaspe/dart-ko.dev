@@ -1,6 +1,12 @@
 ---
 title: Patterns
 description: Summary of patterns in Dart.
+prevpage:
+  url: /language/type-system
+  title: Type system
+nextpage:
+  url: /language/pattern-types
+  title: Pattern types
 ---
 
 {{site.alert.version-note}}
@@ -59,6 +65,8 @@ For example, the individual fields of any [collection-type][] pattern could be
 
 <?code-excerpt "language/lib/patterns/switch.dart (list-pattern)"?>
 ```dart
+const a = 'a';
+const b = 'b';
 switch (obj) {
   // List pattern [a, b] matches obj first if obj is a list with two fields,
   // then if its fields match the constant subpatterns 'a' and 'b'.
@@ -86,7 +94,7 @@ print(a + b + c);
 
 You can nest [any kind of pattern][types] inside a destructuring pattern. 
 For example, this case pattern matches and destructures a two-element
-list whose first element is `a` or `b`:
+list whose first element is `'a'` or `'b'`:
 
 <?code-excerpt "language/lib/patterns/destructuring.dart (nested-pattern)"?>
 ```dart
@@ -162,11 +170,13 @@ switch (obj) {
   case 1:
     print('one');
 
-  // Matches if the value of obj is between the constant values of 'first' and 'last'.
+  // Matches if the value of obj is between the
+  // constant values of 'first' and 'last'.
   case >= first && <= last:
     print('in range');
 
-  // Matches if obj is a record with two fields, then assigns the fields to 'a' and 'b'.
+  // Matches if obj is a record with two fields,
+  // then assigns the fields to 'a' and 'b'.
   case (var a, var b):
     print('a = $a, b = $b');
 
@@ -188,14 +198,32 @@ var isPrimary = switch (color) {
 ```
 
 Switch statements can have multiple cases share a body
-without using logical-or patterns, but they are
-still uniquely useful for allowing multiple cases to share a guard:
+[without using logical-or patterns][share], but they are
+still uniquely useful for allowing multiple cases to share a [guard][]:
 
 <?code-excerpt "language/lib/patterns/switch.dart (or-share-guard)"?>
 ```dart
 switch (shape) {
   case Square(size: var s) || Circle(size: var s) when s > 0:
     print('Non-empty symmetric shape');
+}
+```
+
+[Guard clauses][guard] evaluate an arbitrary conditon as part of a case, without
+exiting the switch if the condition is false
+(like using an `if` statement in the case body would cause).
+
+<?code-excerpt "language/lib/control_flow/branches.dart (guard)"?>
+```dart
+switch (pair) {
+  case (int a, int b):
+    if (a > b) print('First element greater');
+  // If false, prints nothing and exits the switch.
+  case (int a, int b) when a > b:
+    // If false, prints nothing but proceeds to next case.
+    print('First element greater');
+  case (int a, int b):
+    print('First element not greater');
 }
 ```
 
@@ -236,11 +264,11 @@ for (var MapEntry(:key, value: count) in hist.entries) {
 }
 ```
 
-## Uses cases for patterns
+## Use cases for patterns
 
 The [previous section](#places-patterns-can-appear)
 describes _how_ patterns fit into other Dart code constructs. 
-You saw some interesting uses cases as examples, like [swapping](#variable-assignment)
+You saw some interesting use cases as examples, like [swapping](#variable-assignment)
 the values of two variables, or
 [destructuring key-value pairs](#for-and-for-in-loops)
 in a map. This section describes even more use cases, answering:
@@ -403,6 +431,8 @@ This case pattern simultaneously validates that:
 [map]: /language/pattern-types#map
 [variable]: /language/pattern-types#variable
 [logical-or]: /language/pattern-types#logical-or
+[share]: /language/branches#switch-share
+[guard]: /language/branches#guard-clause
 [relational]: /language/pattern-types#relational
 [check]: /language/pattern-types#null-check
 [assert]: /language/pattern-types#null-assert

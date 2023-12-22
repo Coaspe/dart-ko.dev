@@ -2,6 +2,9 @@
 title: Dart 언어 소개
 description: Dart 프로그램과 주요 개념에 대한 간결한 소개.
 short-title: Dart 언어 기초
+nextpage:
+  url: /language/variables
+  title: 변수
 ---
 
 이 페이지에서는 Dart 언어의 주요 기능에 대한 예제를 통해 Dart 언어를 간결하게 소개합니다.
@@ -87,7 +90,7 @@ Dart의 제어 흐름문에 대해 더 자세히 알고 싶다면,
 ## 함수
 
 함수의 인자와 반환값의 타입을 지정하는 것을
-[추천합니다](/guides/language/effective-dart/design#타입):
+[추천합니다](/effective-dart/design#타입):
 
 <?code-excerpt "misc/test/samples_test.dart (functions)"?>
 ```dart
@@ -472,7 +475,7 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
     nullable로 만들 수 있습니다.
     예를 들어, `int?` 타입의 변수는 정수 또는 `null` 값을 가집니다.
     만약 표현식이 null로 평가되지 않지만 Dart가 이에 동의하지 않는다는 것을
-    _알고_ 있다면, `!`을 추가하여 null이 아니라고 주장(assert) 할 수 있습니다
+    _알고_ 있다면, `!`을 추가하여 null이 아니라고 명시 할 수 있습니다
     (null이라면 예외를 발생시킵니다).
     예시: `int x = nullableButNotNullInt!`
 
@@ -522,9 +525,9 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
 
 추가적인 코드 샘플은
 [라이브러리 투어](/guides/libraries/library-tour)와
-[Dart API 레퍼런스,]({{site.dart-api}})에서 확인할 수 있습니다.
+[Dart API 레퍼런스]({{site.dart-api}})에서 확인할 수 있습니다.
 이 사이트의 코드들은 
-[Dart 스타일 가이드](/guides/language/effective-dart/style)의 컨벤션을 준수합니다.
+[Dart 스타일 가이드](/effective-dart/style)의 컨벤션을 준수합니다.
 
 [Dart language specification]: /guides/language/spec
 [Comments]: /language/comments
@@ -534,7 +537,7 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
 [ns]: /null-safety
 [`Object`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Object-class.html
 [language version]: /guides/language/evolution#language-versioning
-[ObjectVsDynamic]: /guides/language/effective-dart/design#avoid-using-dynamic-unless-you-want-to-disable-static-checking
+[ObjectVsDynamic]: /effective-dart/design#avoid-using-dynamic-unless-you-want-to-disable-static-checking
 [Libraries and imports]: /language/libraries
 [conditional expression]: /language/operators#조건-표현식
 [if-else statement]: /language/branches#if

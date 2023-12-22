@@ -1,6 +1,12 @@
 ---
 title: Branches 
 description: Learn how to use branches to control the flow of your Dart code.
+prevpage:
+  url: /language/loops
+  title: Loops
+nextpage:
+  url: /language/error-handling
+  title: Error handling
 ---
 
 This page shows how you can control the flow of your Dart code using branches:
@@ -16,10 +22,11 @@ You can also manipulate control flow in Dart using:
 
 ## If
 
-Dart supports `if` statements with optional `else` clauses. The condition in
-parentheses after `if` must be an expression that evaluates to a [boolean][]:
+Dart supports `if` statements with optional `else` clauses.
+The condition in parentheses after `if` must be
+an expression that evaluates to a [boolean][]:
 
-<?code-excerpt "misc/lib/language_tour/control_flow.dart (if-else)"?>
+<?code-excerpt "language/lib/control_flow/branches.dart (if-else)"?>
 ```dart
 if (isRaining()) {
   you.bringRainCoat();
@@ -30,12 +37,14 @@ if (isRaining()) {
 }
 ```
 
-To learn how to use `if` in an expression context, see [Conditional expressions][]
+To learn how to use `if` in an expression context, 
+check out [Conditional expressions][].
 
 ### If-case
 
 Dart `if` statements support `case` clauses followed by a [pattern][]: 
 
+<?code-excerpt "language/lib/control_flow/branches.dart (if-case)"?>
 ```dart
 if (pair case [int x, int y]) return Point(x, y);
 ```
@@ -48,8 +57,10 @@ the list pattern `[int x, int y]` matches the value `pair`,
 so the branch `return Point(x, y)` executes with the variables that
 the pattern defined, `x` and `y`.
 
-Otherwise, control flow progresses to the `else` branch to execute, if there is one:
+Otherwise, control flow progresses to the `else` branch
+to execute, if there is one:
 
+<?code-excerpt "language/lib/control_flow/branches.dart (if-case-else)"?>
 ```dart 
 if (pair case [int x, int y]) {
   print('Was coordinate array $x,$y');
@@ -75,13 +86,15 @@ Each `case` clause is a [pattern][] for the value to match against.
 You can use [any kind of pattern][] for a case.
 
 When the value matches a case's pattern, the case body executes. 
-Non-empty `case` clauses jump to the end of the switch after completion. They do
-not require a `break` statement.
-Other valid ways to end a non-empty `case` clause are a [`continue`][break],
-[`throw`][], or [`return`][] statement.
+Non-empty `case` clauses jump to the end of the switch after completion.
+They do not require a `break` statement.
+Other valid ways to end a non-empty `case` clause are a
+[`continue`][break], [`throw`][], or [`return`][] statement.
 
-Use a `default` or [wildcard `_`][] clause to execute code when no `case` clause matches:
+Use a `default` or [wildcard `_`][] clause to
+execute code when no `case` clause matches:
 
+<?code-excerpt "language/lib/control_flow/branches.dart (switch)"?>
 ```dart
 var command = 'OPEN';
 switch (command) {
@@ -100,25 +113,28 @@ switch (command) {
 }
 ```
 
-Empty cases fall through to the next case. 
+<a id="switch-share"></a>
+
+Empty cases fall through to the next case, allowing cases to share a body. 
 For an empty case that does not fall through,
 use [`break`][break] for its body.
 For non-sequential fall-through,
 you can use a [`continue` statement][break] and a label:
 
+<?code-excerpt "language/lib/control_flow/branches.dart (switch-empty)"?>
 ```dart
 switch (command) {
   case 'OPEN':
     executeOpen();
-    continue newCase;     // Continues executing at the newCase label.
-  
-  case 'DENIED':          // Empty case falls through.
+    continue newCase; // Continues executing at the newCase label.
+
+  case 'DENIED': // Empty case falls through.
   case 'CLOSED':
-    executeClosed();      // Runs for both DENIED and CLOSED,
-  
+    executeClosed(); // Runs for both DENIED and CLOSED,
+
   newCase:
   case 'PENDING':
-    executeNowClosed();   // Runs for both OPEN and PENDING.
+    executeNowClosed(); // Runs for both OPEN and PENDING.
 }
 ```
 
@@ -148,29 +164,30 @@ use a [switch statement](#switch-statements).
 
 Switch expressions allow you to rewrite a switch _statement_ like this:
 
+<?code-excerpt "language/lib/control_flow/branches.dart (switch-stmt)"?>
 ```dart
 // Where slash, star, comma, semicolon, etc., are constant variables...
-
 switch (charCode) {
-  case slash || star || plus || minus:    // Logical-or pattern
+  case slash || star || plus || minus: // Logical-or pattern
     token = operator(charCode);
-  case comma || semicolon:                // Logical-or pattern
+  case comma || semicolon: // Logical-or pattern
     token = punctuation(charCode);
-  case >= digit0 && <= digit9:            // Relational and logical-and patterns
+  case >= digit0 && <= digit9: // Relational and logical-and patterns
     token = number();
   default:
-    throw invalid();
+    throw FormatException('Invalid');
 }
 ```
 
 Into an _expression_, like this:
 
+<?code-excerpt "language/lib/control_flow/branches.dart (switch-exp)"?>
 ```dart
 token = switch (charCode) {
   slash || star || plus || minus => operator(charCode),
   comma || semicolon => punctuation(charCode),
   >= digit0 && <= digit9 => number(),
-  _ => throw invalid()
+  _ => throw FormatException('Invalid')
 };
 ```
 
@@ -184,50 +201,59 @@ The syntax of a `switch` expression differs from `switch` statement syntax:
 - Default cases can _only_ use `_`, instead of allowing both `default` and `_`.
 
 {{site.alert.version-note}}
-    Switch expressions require a [language version][] of at least 3.0.
+  Switch expressions require a [language version][] of at least 3.0.
 {{site.alert.end}}
 
 ### Exhaustiveness checking
 
-Exhaustiveness checking is a feature that reports a compile-time
-error if it's possible for a value to enter a switch but not match any of the cases.
+Exhaustiveness checking is a feature that reports a
+compile-time error if it's possible for a value to enter a switch but
+not match any of the cases.
 
+<?code-excerpt "language/lib/control_flow/branches.dart (exh-bool)"?>
 ```dart
-bool? b = false;
-// Non-exhaustive switch on bool?, missing case to match null possiblity:
-switch (b) {
-  case true: print('yes');
-  case false: print('no');
+// Non-exhaustive switch on bool?, missing case to match null possibility:
+switch (nullableBool) {
+  case true:
+    print('yes');
+  case false:
+    print('no');
 }
 ```
 
-A default case (`default` or `_`) covers all possible values that can flow through
-a switch. This makes a switch on any type exhaustive.
+A default case (`default` or `_`) covers all possible values that
+can flow through a switch.
+This makes a switch on any type exhaustive.
 
-[Enums][enum] and [sealed types][sealed] are particularly useful for switches
-because, even without a default case, their possible values are known and fully
-enumerable. Use the [`sealed` modifier][sealed] on a class to enable
+[Enums][enum] and [sealed types][sealed] are particularly useful for
+switches because, even without a default case, 
+their possible values are known and fully enumerable. 
+Use the [`sealed` modifier][sealed] on a class to enable
 exhaustiveness checking when switching over subtypes of that class:
 
+<?code-excerpt "language/lib/patterns/algebraic_datatypes.dart (algebraic_datatypes)"?>
 ```dart
-sealed class Shape {
-  double calculateArea();
+sealed class Shape {}
+
+class Square implements Shape {
+  final double length;
+  Square(this.length);
 }
 
-class Square extends Shape { ... }
-class Circle extends Shape { ... }
+class Circle implements Shape {
+  final double radius;
+  Circle(this.radius);
+}
 
-// ...
-
-double calculateArea(Shape shape) =>
-  switch (shape) {
-    Square(length: var l) => l * l,
-    Circle(radius: var r) => math.pi * r * r
-  };
+double calculateArea(Shape shape) => switch (shape) {
+      Square(length: var l) => l * l,
+      Circle(radius: var r) => math.pi * r * r
+    };
 ```
 
-If anyone were to add a new subclass of `Shape`, this `switch` expression would 
-be incomplete. Exhaustiveness checking would inform you of the missing subtype.
+If anyone were to add a new subclass of `Shape`, 
+this `switch` expression would be incomplete. 
+Exhaustiveness checking would inform you of the missing subtype.
 This allows you to use Dart in a somewhat 
 [functional algebraic datatype style](https://en.wikipedia.org/wiki/Algebraic_data_type). 
 
@@ -235,21 +261,36 @@ This allows you to use Dart in a somewhat
 ## Guard clause
 
 To set an optional guard clause after a `case` clause, use the keyword `when`.
-A guard clause can follow `if case`, and both `switch` statements and expressions.
+A guard clause can follow `if case`, and
+both `switch` statements and expressions.
 
 ```dart
-switch (pair) {
-  case (int a, int b) when a > b:
-    print('First element greater');
-  case (int a, int b):
-    print('First element not greater');
+// Switch statement:
+switch (something) {
+  case somePattern when some || boolean || expression:
+    //             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Guard clause.
+    body;
+}
+
+// Switch expression:
+var value = switch (something) {
+  somePattern when some || boolean || expression => body,
+  //               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Guard clause.
+}
+
+// If-case statement:
+if (something case somePattern when some || boolean || expression) {
+  //                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Guard clause.
+  body;
 }
 ```
 
 Guards evaluate an arbitrary boolean expression _after_ matching.
-This allows you to add further constraints on whether a case body should execute.
-When the guard clause evaluates to false, execution proceeds to the next case
-rather than exiting the entire switch.
+This allows you to add further constraints on
+whether a case body should execute.
+When the guard clause evaluates to false, 
+execution proceeds to the next case rather
+than exiting the entire switch.
 
 [language version]: /guides/language/evolution#language-versioning
 [loops]: /language/loops
@@ -257,7 +298,7 @@ rather than exiting the entire switch.
 [conditional expressions]: /language/operators#conditional-expressions
 [boolean]: /language/built-in-types#booleans
 [pattern]: /language/patterns
-[enum]: /language/enum
+[enum]: /language/enums
 [`throw`]: /language/error-handling#throw
 [`return`]: /language/functions#return-values
 [wildcard `_`]: /language/pattern-types#wildcard

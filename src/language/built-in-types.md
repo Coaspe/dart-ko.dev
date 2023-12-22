@@ -1,6 +1,12 @@
 ---
 title: Built-in types
 description: Information on the types Dart supports.
+prevpage:
+  url: /language/keywords
+  title: Keywords
+nextpage:
+  url: /language/records
+  title: Records
 ---
 
 Dart 언어는 다음과 같은 특수한 내장 타입을 지원합니다:
@@ -39,10 +45,6 @@ Dart 언어의 일부 타입들은 특수한 역할을 수행합니다:
 * `void`: 값이 사용되지 않는다는 것을 의미합니다.
   보통 반환 타입으로 사용됩니다.
 
-{% comment %}
-[TODO: move/add for-in coverage to language tour?]
-{% endcomment %}
-
 `Object`, `Object?`, `Null`, 그리고 `Never` 클래스는
 [Understanding null safety][]의 [top-and-bottom][]
 섹션에 묘사되어 있는 것처럼, 클래스 계층에서 특별한 역할을 수행합니다.
@@ -76,10 +78,10 @@ Dart의 숫자는 두 가지 유형이 있습니다:
 :   IEEE 754 standard를 따라 64-bit (배정도) 부동 소수점 표현을 사용합니다.
 
 `int` 와 `double`는 모두 [`num`][]의 서브타입입니다.
-num 타입은 +, -, /, * 같은 기본적인 연산자 사용이 가능하고, `abs()`,` ceil()`,
+num 타입은 +, -, /, \* 같은 기본적인 연산자 사용이 가능하고, `abs()`,` ceil()`,
 그리고 `floor()` 같은 함수의 사용도 가능합니다.
 (\>\> 같은 비트와이즈 연산자는 `int` 클래스에 정의되어 있습니다.)
-원하는 타입을 num과 num의 서브타입이 가지고 있지 않다면, [dart:math][]
+당신이 원하는 타입을 num과 num의 서브타입이 가지고 있지 않다면, [dart:math][]
 라이브러리를 참고하세요.
 
 정수는 소수점이 없는 숫자입니다. 다음은 정수 리터럴을 정의하는 예제입니다:
@@ -114,7 +116,7 @@ Integer literals are automatically converted to doubles when necessary:
 double z = 1; // double z = 1.0 와 동일합니다.
 ```
 
-다음은 예제에서 문자열을 숫자로 그리고 그 반대의 변환도 수행합니다.
+다음은 예제에서 문자열을 숫자로 그리고 그 반대의 변환도 수행합니다:
 
 <?code-excerpt "misc/test/language_tour/built_in_types_test.dart (number-conversion)"?>
 ```dart
@@ -216,7 +218,7 @@ assert(s2 == 'The + operator works, as well.');
 ```
 
 작은 따옴표 또는 큰 따옴표로 triple quote를 형성해
-멀티 라인 문자열을 만들 수 있습니다.
+싱글 또는 멀티 라인 문자열을 만들 수 있습니다.
 
 <?code-excerpt "misc/lib/language_tour/built_in_types.dart (triple-quotes)"?>
 ```dart
@@ -229,7 +231,7 @@ var s2 = """This is also a
 multi-line string.""";
 ```
 
-`r`을 사용하여 "로우" (raw) 문자열을 생성할 수 있습니다:
+`r`을 접두사로 사용하여 "로우" (raw) 문자열을 생성할 수 있습니다:
 
 <?code-excerpt "misc/lib/language_tour/built_in_types.dart (raw-strings)"?>
 ```dart
@@ -359,18 +361,9 @@ The code from the following excerpt isn't actually what is being shown in the pa
 
 <?code-excerpt "misc/lib/language_tour/built_in_types.dart (symbols)"?>
 ```dart
-// MOVE TO library tour?
-
 void main() {
   print(Function.apply(int.parse, ['11']));
   print(Function.apply(int.parse, ['11'], {#radix: 16}));
-  print(Function.apply(int.parse, ['11a'], {#onError: handleError}));
-  print(Function.apply(
-      int.parse, ['11a'], {#radix: 16, #onError: handleError}));
-}
-
-int handleError(String source) {
-  return 0;
 }
 ```
 {% endcomment %}

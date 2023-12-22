@@ -3,6 +3,12 @@ title: 호출 가능한 객체
 description: Dart에서 호출 가능한 객체를 사용하고 생성하는 법을 학습힙니다.
 js: [{url: 'https://dartpad.dev/inject_embed.dart.js', defer: true}]
 toc: false
+prevpage:
+  url: /language/extension-methods
+  title: Extension methods
+nextpage:
+  url: /language/class-modifiers
+  title: Class modifiers
 ---
 
 Dart 클래스의 인스턴스를 함수처럼 호출하고 싶다면, `call()` 메소드를 구현하세요.

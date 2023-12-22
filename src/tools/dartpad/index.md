@@ -71,13 +71,12 @@ To create a simple command-line app, use **New Pad**.
 
 3. Change the code. For example, change the `main()` function
    to contain this code:  
-   
-   <!-- library-tour/string-tests/bin/main.dart -->
-   {% prettify dart tag=pre+code %}
+
+   ```dart
    for (final char in 'hello'.split('')) {
      print(char);
    }
-   {% endprettify %}  
+   ``` 
    
    As you type, DartPad shows hints, documentation,
    and autocomplete suggestions.
@@ -115,14 +114,10 @@ For example, the [futures codelab][]
 contains multiple embedded DartPads
 labeled as _examples_ and _exercises_.
 
-For more information about how to use embedded DartPads, see
-[best practices for using DartPad in tutorials][].
-
 For technical details on embedding DartPads, see the
 [DartPad embedding guide.][]
 
 [DartPad]: {{site.dartpad}}
-[best practices for using DartPad in tutorials]: /tools/dartpad/dartpad-best-practices
 [DartPad embedding guide.]: https://github.com/dart-lang/dart-pad/wiki/Embedding-Guide
 [deferred loading]: /language/libraries#lazily-loading-a-library
 [futures codelab]: /codelabs/async-await

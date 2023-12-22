@@ -1,6 +1,12 @@
 ---
 title: 컬렉션
 description: Dart의 다양한 컬렉션에 대한 요약.
+prevpage:
+  url: /language/records
+  title: 레코드
+nextpage:
+  url: /language/generics
+  title: 제네릭
 ---
 
 Dart has built-in support for list, set, and map [collections][].
@@ -43,9 +49,9 @@ var list = [
 ```
 
 리스트는 0 부터 시작하는 제로 베이스 인덱싱을 사용하고,
-`list.length - 1`가 list의 마지막 인덱스입니다.
-`.length` 프로퍼티를 사용하여 list의 길이를 구할 수 있고,
-서브스크립트 연산자 (`[]`)를 사용하여 list의 값에 접근할 수 있습니다:
+`list.length - 1`가 리스트의 마지막 인덱스입니다.
+`.length` 프로퍼티를 사용하여 리스트의 길이를 구할 수 있고,
+서브스크립트 연산자 (`[]`)를 사용하여 리스트의 값에 접근할 수 있습니다:
 
 <?code-excerpt "misc/test/language_tour/built_in_types_test.dart (list-indexing)"?>
 ```dart

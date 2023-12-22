@@ -2,6 +2,12 @@
 title: 생성자
 description: Dart 생성자에 대한 모든 것.
 js: [{url: 'https://dartpad.dev/inject_embed.dart.js', defer: true}]
+prevpage:
+  url: /language/classes
+  title: Classes
+nextpage:
+  url: /language/methods
+  title: Methods
 ---
 
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g; / *\/\/\s+ignore:[^\n]+//g; /([A-Z]\w*)\d\b/$1/g"?>
@@ -12,18 +18,18 @@ js: [{url: 'https://dartpad.dev/inject_embed.dart.js', defer: true}]
 
 제너러티브 생성자는 생성자의 가장 흔한 형태로 새 인스턴스를 생성합니다:
 
-<?code-excerpt "misc/lib/language_tour/classes/point_alt.dart (constructor-long-way)" plaster="none"?>
+Use the most common constructor, the generative constructor, to create a new
+instance of a class, and [initializing formal parameters](#initializing-formal-parameters)
+to instantiate any instance variables, if necessary:
+
+<?code-excerpt "misc/lib/language_tour/classes/point_alt.dart (idiomatic-constructor)" plaster="none"?>
 ```dart
 class Point {
   double x = 0;
   double y = 0;
 
-  Point(double x, double y) {
-    // 인스턴스 변수를 초기화하는 더 나은 방법은
-    // 형식 매개변수(formal parameters) 초기화를 참조하십시오.  
-    this.x = x;
-    this.y = y;
-  }
+  // Generative constructor with initializing formal parameters:
+  Point(this.x, this.y);
 }
 ```
 
@@ -35,10 +41,11 @@ class Point {
 {{site.alert.end}}
 
 
-## 형식 매개변수 초기화
+## 생성자 인자 초기화
 
-생성자 인수를 인스턴스 변수에 할당하는 패턴은 자주 쓰입니다.
-Dart에서는 형식 매개변수 초기화를 사용하여 더 쉽게 수행합니다.
+Dart는 생성자의 인자를 사용해 인스턴스 변수를 할당하는 간단하 패턴인
+*생성자 인자 초기화*가 가능합니다. 생성자 선언에 `this.propertyName`를
+직접 사용하고 바디를 생략하세요.
 
 매개변수 초기화는 초기화 되어야만 하거나 기본 값이 주어져야하는 non-nullable
 또는 `final` 인스턴스 변수에만 사용이 가능합니다.
@@ -54,7 +61,12 @@ class Point {
 }
 ```
 
-Initializing formal로 주어진 변수는 초기화 리스트 범위에서 암묵적으로 final 입니다.
+Initializing formal로 주어진 변수는
+[초기화 리스트]((/language/constructors#initializer-list))
+스코프에서 암묵적으로 final 입니다.
+
+초기화 리스트에 작성할 수 없는 로직을 수행하고 싶다면 [팩토리 생성자](#factory-생성자)
+(또는 [static method][])에 해당 로직을 작성하고, 계산된 값을 일반 생성자로 넘겨주세요. 
 
 
 ## 디폴트 생성자
@@ -91,17 +103,18 @@ class Point {
 {% endprettify %}
 
 부모 클래스의 생성자는 자식 클래스로 상속되지 않는다는 것을 꼭 기억하세요.
+부모 클래스의 명명된 생성자는 자식 클래스로 상속되지 않습니다.
 자식 클래스에서 부모 클래스와 같은 명명된 생성자를 사용하고 싶다면, 자식 클래스에서도 똑같이 구현해야 합니다.
 
 
 ## 부모 클래스의 Non-default 생성자 호출
 
-자식 클래스의 생성자는 부모 클래스의 이름이 없고(unnamed), 인수가 없는(no-argument) 생성자를 디폴트로 호출합니다.
+자식 클래스의 생성자는 부모 클래스의 이름이 없고(unnamed), 인자가 없는(no-argument) 생성자를 디폴트로 호출합니다.
 부모 클래스의 생성자는 자식 클래스 생성자 바디의 처음에 호출됩니다.
-[이니셜라이저 리스트](#이니셜라이저-리스트)가 사용되면, 부모 클래스가 호출되기 전에 실행됩니다.
+[초기화 리스트](#초기화-리스트)가 사용되면, 부모 클래스가 호출되기 전에 실행됩니다.
 요약하자면, 실행 순서는 다음과 같습니다:
 
-1. 이니셜라이저 리스트
+1. 초기화 리스트
 1. 부모 클래스의 인자가 없는 생성자
 1. 메인 클래스의 인자가 없는 생성자
 
@@ -159,10 +172,10 @@ class Employee extends Person {
 ### Super 매개변수
 
 수동으로 부모 클래스의 생성자 매개변수를 넘겨주는 것을 피하고 싶다면,
-super 이니셜라이저 매개변수를 부모 클래스의 생성자로 넘겨주면 됩니다.
+super 초기화 매개변수를 부모 클래스의 생성자로 넘겨주면 됩니다.
 이 피처를 리다이렉팅 생성자와 함께 사용하는 것은 불가능합니다.
-Super 이니셜라이저 매개변수는
-[형식 매개변수 초기화](#형식-매개변수-초기화)와 비슷한 문법과 의미를 가집니다:
+Super 초기화 매개변수는
+[생성자 인자 초기화](#생성자-인자-초기화)와 비슷한 문법과 의미를 가집니다:
 
 <?code-excerpt "misc/lib/language_tour/classes/super_initializer_parameters.dart (positional)" plaster="none"?>
 ```dart
@@ -182,8 +195,8 @@ class Vector3d extends Vector2d {
 }
 ```
 
-Super 생성자 호출이 positional 인자를 가지고 있다면,
-Super 이니셜라이저 매개변수는 positional이 될 수 없지만
+super 생성자 호출이 positional 인자를 가지고 있다면,
+super 초기화 매개변수는 positional이 될 수 없지만
 명명된 매개변수는 언제나 가능합니다:
 
 <?code-excerpt "misc/lib/language_tour/classes/super_initializer_parameters.dart (named)" plaster="none"?>
@@ -205,22 +218,18 @@ class Vector3d extends Vector2d {
 ```
 
 {{site.alert.version-note}}
-  Super 이니셜라이저 매개변수를 사용하는 것은 최소 2.17의 [language version][]을 요구합니다.
+  Super 초기화 매개변수를 사용하는 것은 최소 2.17의 [language version][]을 요구합니다.
   이전의 버전을 사용하고 있다면, 수동으로 모든 super 생성자 매개변수를 넘겨줘야 합니다.
 {{site.alert.end}}
 
-## 이니셜라이저 리스트
+## 초기화 리스트
 
 생성자 바디가 실행되기 전에 부모 클래스의 생성자를 호출할 뿐만 아니라
-인스턴스 변수를 초기화할 수도 있습니다. 이니셜라이저는 쉼표로 구분합니다.
-
-{% comment %}
-[TODO #2950: Maybe change example or point to discussion of ! (in map section?).]
-{% endcomment %}
+인스턴스 변수를 초기화할 수도 있습니다. 초기화는 쉼표로 구분합니다.
 
 <?code-excerpt "misc/lib/language_tour/classes/point_alt.dart (initializer-list)"?>
 ```dart
-// 이니셜라이저 리스트는 생성자 바디가 실행되기 전에 인스턴스 변수를 설정합니다.
+// 초기화 리스트는 생성자 바디가 실행되기 전에 인스턴스 변수를 설정합니다.
 Point.fromJson(Map<String, double> json)
     : x = json['x']!,
       y = json['y']! {
@@ -229,10 +238,10 @@ Point.fromJson(Map<String, double> json)
 ```
 
 {{site.alert.warning}}
-  이니셜라이저의 오른쪽은 `this`에 접근 할 수 없습니다.
+  초기화의 오른쪽은 `this`에 접근 할 수 없습니다.
 {{site.alert.end}}
 
-개발하는 동안 `assert`를 이니셜라이저 리스트 안에 넣어서 입력에 조건을 추가 할 수 있습니다.
+개발하는 동안 `assert`를 초기화 리스트 안에 넣어서 입력에 조건을 추가 할 수 있습니다.
 
 <?code-excerpt "misc/lib/language_tour/classes/point_alt.dart (initializer-list-with-assert)" replace="/assert\(.*?\)/[!$&!]/g"?>
 {% prettify dart tag=pre+code %}
@@ -241,8 +250,8 @@ Point.withAssert(this.x, this.y) : [!assert(x >= 0)!] {
 }
 {% endprettify %}
 
-이니셜라이저 리스트는 final 필드를 설정 할 때 유용합니다.
-다음 예제에서는 세 개의 final 필드를 이니셜라이저 리스트로 초기화합니다.
+초기화 리스트는 final 필드를 설정 할 때 유용합니다.
+다음 예제에서는 세 개의 final 필드를 초기화 리스트로 초기화합니다.
 **Run**을 클릭해 코드를 실행하세요.
 
 <?code-excerpt "misc/lib/language_tour/classes/point_with_distance_field.dart"?>
@@ -361,4 +370,5 @@ var loggerJson = Logger.fromJson(logMap);
 
 [language version]: /guides/language/evolution#language-versioning
 [using constructors]: /language/classes#using-constructors
-[late-final-ivar]: /guides/language/effective-dart/design#avoid-public-late-final-fields-without-initializers
+[late-final-ivar]: /effective-dart/design#avoid-public-late-final-fields-without-initializers
+[static method]: /language/classes#static-methods

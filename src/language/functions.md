@@ -2,6 +2,12 @@
 title: 함수
 description: Dart 언어의 함수에 대한 모든 것
 js: [{url: 'https://dartpad.dev/inject_embed.dart.js', defer: true}]
+prevpage:
+  url: /language/pattern-types
+  title: Pattern types
+nextpage:
+  url: /language/loops
+  title: Loops
 ---
 
 Dart는 객체 지향 언어이므로, 함수도
@@ -304,7 +310,7 @@ list
 
 ## 렉시컬 스코프
 
-Dart는 `lexically scoped` 언어로
+Dart는 `lexically scoped` 언어로,
 변수의 범위가 코드의 레이아웃에 따라 정적으로 결정된다는 것을 의미합니다.
 변수의 범위를 확인하고 싶다면 "중괄호의 끝을 따라가면" 됩니다.
 
@@ -473,7 +479,7 @@ Iterable<int> naturalsDownFrom(int n) sync* {
 
 [Function API reference]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Function-class.html
 [Callable objects]: /language/callable-objects
-[type annotations for public APIs]: /guides/language/effective-dart/design#do-type-annotate-fields-and-top-level-variables-if-the-type-isnt-obvious
+[type annotations for public APIs]: /effective-dart/design#do-type-annotate-fields-and-top-level-variables-if-the-type-isnt-obvious
 [if statement]: /language/branches#if
 [conditional expression]: /language/operators#conditional-expressions
 [Flutter]: {{site.flutter}}

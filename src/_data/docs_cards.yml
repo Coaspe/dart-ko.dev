@@ -3,7 +3,7 @@
   url: /language
 - name: 효과적인 Dart
   description: 일관적이고 지속가능하며 효과적인 Dart 코드를 작성하는 모범 사례를 소개합니다.
-  url: /guides/language/effective-dart
+  url: /effective-dart
 - name: 라이브러리 투어
   description: Dart SDK의 핵심 라이브러리의 주요 기능에 대한 예제 기반의 입문서.
   url: /guides/libraries/library-tour

@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:dart_sdk_archive/src/version_selector.dart';
 import 'package:http/browser_client.dart';
 import 'package:sdk_builds/sdk_builds.dart';
 
-Future<void> runApp() async {
-  var client = DartDownloads(client: BrowserClient());
+import 'version_selector.dart';
 
-  var stableSelector = VersionSelector(
+Future<void> runApp() async {
+  final client = DartDownloads(client: BrowserClient());
+
+  final stableSelector = VersionSelector(
     'stable',
     client,
     querySelector('#stable') as TableElement,
@@ -16,7 +17,7 @@ Future<void> runApp() async {
     querySelector('#stable-os') as SelectElement,
   );
 
-  var betaSelector = VersionSelector(
+  final betaSelector = VersionSelector(
     'beta',
     client,
     querySelector('#beta') as TableElement,
@@ -24,7 +25,7 @@ Future<void> runApp() async {
     querySelector('#beta-os') as SelectElement,
   );
 
-  var devSelector = VersionSelector(
+  final devSelector = VersionSelector(
     'dev',
     client,
     querySelector('#dev') as TableElement,

@@ -1,6 +1,12 @@
 ---
 title: 주석
 description: Dart의 주석 타입
+prevpage:
+  url: /language/operators
+  title: 연산자
+nextpage:
+  url: /language/metadata
+  title: 메타데이터
 ---
 
 Dart는 싱글 라인, 멀티 라인, 문서화 주석을 지원합니다.
@@ -84,5 +90,5 @@ Dart의 문서 생성 툴인 [`dart doc`](/tools/dart-doc)를 사용하세요.
 생성된 문서의 예를 보고 싶다면,
 [Dart API 문서화]({{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}})를
 참고하세요. 주석을 어떻게 달아야하는지 조언을 얻고 싶다면,
-[효과적인 Dart: 문서와](/guides/language/effective-dart/documentation)을
+[효과적인 Dart: 문서화](/effective-dart/documentation)을
 참고하세요.

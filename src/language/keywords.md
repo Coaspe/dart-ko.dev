@@ -2,6 +2,12 @@
 title: 키워드
 description: Dart의 키워드에 대해 학습합니다.
 toc: false
+prevpage:
+  url: /language/libraries
+  title: Libraries
+nextpage:
+  url: /language/built-in-types
+  title: Built-in types
 ---
 
 다음 테이블 리스트는 Dart 언어가 특별히 관리하는 단어들입니다.
@@ -41,10 +47,6 @@ toc: false
 [catch]: /language/error-handling#catch
 [class]: /language/classes#인스턴스-변수
 [const]: /language/variables#final-const
-{% comment %}
-  [TODO #2950: Make sure that points to a place that talks about const constructors,
-  as well as const literals and variables.]
-{% endcomment %}
 [continue]: /language/loops#break-continue
 [covariant]: /guides/language/sound-problems#the-covariant-keyword
 [default]: /language/branches#switch-case
@@ -54,7 +56,7 @@ toc: false
 [else]: /language/branches#if
 [enum]: /language/enum
 [export]: /guides/libraries/create-library-packages
-[extends]: /language/클래스-확장
+[extends]: /language/extend
 [extension]: /language/확장-메서드
 [external]: https://spec.dart.dev/DartLangSpecDraft.pdf#External%20Functions
 [factory]: /language/constructors#factory-생성자
@@ -79,7 +81,7 @@ toc: false
 [null]: /language/variables#디폴트-값
 [on]: /language/error-handling#catch
 [operator]: /language/methods#연산자
-[part]: /guides/libraries/create-library-packages#organizing-a-library-package
+[part]: /guides/libraries/create-packages#organizing-a-library-package
 [required]: /language/functions#named-매개변수
 [rethrow]: /language/error-handling#catch
 [return]: /language/functions#반환-값
@@ -97,9 +99,6 @@ toc: false
 [typedef]: /language/typedefs
 [var]: /language/variables
 [void]: /language/built-in-types
-{% comment %}
-  TODO #2950: Add coverage of void to the language tour.
-{% endcomment %}
 [when]: /language/branches#when
 [with]: /language/mixins
 [while]: /language/loops#while-do-while

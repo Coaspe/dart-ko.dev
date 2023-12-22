@@ -1,6 +1,12 @@
 ---
 title: 클래스 확장
 description: 클래스를 확장하는 방법에 대해 학습합니다.
+prevpage:
+  url: /language/methods
+  title: 메서드
+nextpage:
+  url: /language/mixins
+  title: 믹스인
 ---
 
 자식 클래스를 만들고 싶다면, `extends`를 사용하세요.

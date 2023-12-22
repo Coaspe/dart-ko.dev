@@ -1,6 +1,13 @@
 ---
 title: 비동기 지원
 description: Dart 언어를 사용한 비동기 코드 작성법을 알려드립니다.
+short-title: 비동기
+prevpage:
+  url: /language/modifier-reference
+  title: 클래스 제어자 레퍼런스
+nextpage:
+  url: /language/concurrency
+  title: 동시성
 ---
 
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g; / *\/\/\s+ignore:[^\n]+//g; /([A-Z]\w*)\d\b/$1/g"?>
@@ -182,4 +189,4 @@ void main() [!async!] {
 
 [`Future`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/Future-class.html
 [`Stream`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/Stream-class.html
-[unawaited_futures linter rule]: /tools/linter-rules#unawaited_futures
+[unawaited_futures linter rule]: /tools/linter-rules/unawaited_futures

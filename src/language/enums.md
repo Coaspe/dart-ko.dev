@@ -35,7 +35,7 @@ enum Color { red, green, blue }
 ```
 
 {{site.alert.tip}}
-  열거 타입을 선언 할 때 복사-붙혀넣기 에러를 방지하기 위해, [trailing commas][]를 사용해도 됩니다.
+  열거 타입을 선언 할 때 복사-붙여넣기 에러를 방지하기 위해, [trailing commas][]를 사용해도 됩니다.
 {{site.alert.end}}
 
 ## 발전된 enum 사용하기

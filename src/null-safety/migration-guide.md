@@ -3,6 +3,8 @@ title: Null 안전성으로 마이그레이션
 description: 기존의 코드를 null 안전성을 준수하는 코드로 수정하는 방법을 배웁니다.
 ---
 
+{% include yt_shims.liquid %}
+
 {{site.alert.version-note}}
   Dart 2.19는 `dart migrate` 툴을 포함하며,
   null 안전성 마이그레이션을 지원하는 마지막 릴리즈입니다.
@@ -33,9 +35,15 @@ description: 기존의 코드를 null 안전성을 준수하는 코드로 수정
   의존하는 모든 패키지 마이그레이션이 준비되었는지 확인하세요.
 {{site.alert.end}}
 
-다음 영상은 마이그레이션 툴의 사용법을 알려줍니다:
+To get an informal look at the experience of using the migration tool,
+watch this video:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/eBr5tlumwlg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe
+  {{yt-std-size}}
+  title="Learn about the null-safety migration tool"
+  src="{{yt-embed}}/eBr5tlumwlg"
+  {{yt-set}}>
+</iframe>
 
 [null 안전성]: /null-safety
 [큰 Dart 프로젝트를 위한 점진적인 null 안전성 마이그레이션]: https://medium.com/dartlang/gradual-null-safety-migration-for-large-dart-projects-85acb10b64a9

@@ -3,11 +3,11 @@ title: 비동기 지원
 description: Dart 언어를 사용한 비동기 코드 작성법을 알려드립니다.
 short-title: 비동기
 prevpage:
-  url: /language/modifier-reference
-  title: 클래스 제어자 레퍼런스
-nextpage:
   url: /language/concurrency
-  title: 동시성
+  title: Concurrency
+nextpage:
+  url: /null-safety
+
 ---
 
 <?code-excerpt replace="/ *\/\/\s+ignore_for_file:[^\n]+\n//g; /(^|\n) *\/\/\s+ignore:[^\n]+\n/$1/g; /(\n[^\n]+) *\/\/\s+ignore:[^\n]+\n/$1\n/g; / *\/\/\s+ignore:[^\n]+//g; /([A-Z]\w*)\d\b/$1/g"?>
@@ -25,11 +25,10 @@ Dart의 라이브러리에는 [`Future`][] 또는 [`Stream`][] 객체를 반환�
 
 완료된 Future의 결과를 사용하고 싶다면, 두 가지 옵션이 있습니다:
 
-* `async`와 `await`을
-  [비동기식 프로그래밍 코드랩](/codelabs/async-await)
-  과 같이 사용하세요.
-* Future API를 [라이브러리 투어](/guides/libraries/library-tour#future)
-  와 같이 사용하세요.
+* Use `async` and `await`, as described here and in the
+  [asynchronous programming codelab](/codelabs/async-await).
+* Use the Future API, as described in the
+  [`dart:async` documentation](/libraries/dart-async#future).
 
 `async`나 `await`을 사용하는 코드는 비동기적이지만, 외관상 동기적인 코드와 비슷합니다.
 예를 들어, 다음은 `await`을 사용해 비동기 함수의 결과를 기다리는 코드입니다:
@@ -139,8 +138,9 @@ TODO #1117: Where else should we cover generalized void?
 
 두 가지 옵션을 사용하여 Stream에서 값을 가져올 수 있습니다:
 
-* `async` 와 _비동기 for 루프_ (`await for`)을 사용하세요.
-* [라이브러리 투어](/guides/libraries/library-tour#stream)와 같이 Stream API를 사용하세요.
+* Use `async` and an _asynchronous for loop_ (`await for`).
+* Use the Stream API, as described in the
+  [`dart:async` documentation](/libraries/dart-async#stream).
 
 {{site.alert.note}}
    `await for`의 사용이 코드를 더 간결하게 만드는지 확인하고,
@@ -183,9 +183,8 @@ void main() [!async!] {
 }
 {% endprettify %}
 
-비동기 프로그래밍에 대해 더 자세히 알고 싶다면 라이브러리 투어의
-[dart:async](/guides/libraries/library-tour#dartasync---asynchronous-programming)
-섹션을 참고하세요.
+For more information about Dart's asynchronous programming support,
+check out the [`dart:async`](/libraries/dart-async) library documentation.
 
 [`Future`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/Future-class.html
 [`Stream`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/Stream-class.html

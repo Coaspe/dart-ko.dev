@@ -108,7 +108,7 @@ class Point {
 ## Dart: 라이브러리 {#libraries}
 
 Dart는 프로그래밍 업무에 필수적인 기능을 제공하는
-[풍부한 핵심 라이브러리](/guides/libraries)를 가지고 있습니다:
+[풍부한 핵심 라이브러리](/libraries)를 가지고 있습니다:
 
 * 내장 타입, 컬렉션, 그리고 Dart 프로그램을 위한 또 다른 핵심 기능
   (`dart:core`)
@@ -118,14 +118,16 @@ Dart는 프로그래밍 업무에 필수적인 기능을 제공하는
   (`dart:convert`)
 * 수학과 관련된 상수, 함수, 난수 생성
   (`dart:math`)
-* 웹이 아닌 애플리케이션을 위한 파일, 소켓, HTTP 그리고 I/O 지원
-  (`dart:io`)
-* `Future` 그리고 `Stream` 클래스와 함께 비동기 프로그래밍 지원
+* Support for asynchronous programming,
+  with classes such as `Future` and `Stream`
   (`dart:async`)
 * 고정된 크기의 데이터를 효과적으로 다루는 리스트들
   (예를 들어, unsigned 8-byte 정수)과 SIMD 숫자 타입
   (`dart:typed_data`)
-* C 스타일 인터페이스를 제공하는 다른 코드와의 상호 운용성을 위한 외부 함수 인터페이스
+* File, socket, HTTP, and other I/O support for non-web applications
+  (`dart:io`)
+* Foreign function interfaces for interoperability with
+  other code that presents a C-style interface
   (`dart:ffi`)
 * _Isolate_ 를 사용한 동시(concurrent) 프로그래밍—
   스레드와 비슷하지만 메모리를 공유하지 않고, 메시지로 통신하는 독립된 워커(worker)
@@ -151,10 +153,10 @@ Dart 팀은 다음과 같은 유용한 보조 패키지를 만들었습니다:
 * [SQLite]({{site.pub-pkg}}/sqflite_common)
 * [compression]({{site.pub-pkg}}/archive)
 
-Dart 핵심 라이브러리를 사용하여 작업한 예제를 보고 싶다면,
-[라이브러리 투어](/guides/libraries/library-tour)를 참고하세요.
-추가적으로 더 많은 API에 대해 알고 싶다면,
-[자주 사용되는 패키지 페이지](/guides/libraries/useful-libraries).
+To see a series of working examples featuring the Dart core libraries,
+read the [core library documentation](/libraries).
+To find additional APIs, see the
+[commonly used packages page](/guides/libraries/useful-libraries).
 
 
 ## Dart: 플랫폼 {#platform}
@@ -212,8 +214,9 @@ Dart 웹은 두개의 컴파일 모드를 가지고 있습니다:
 * 빠르고 컴팩트하며 배포가능한 Javascript로 Dart 코드를 컴파일 하는 최적화된 프로덕션 컴파일러.
   이러한 효율성은 죽은 코드 제거(dead-code elimination)와 같은 기술에서 비롯됩니다.
 
-더 자세한 정보를 원한다면 다음을 참고하세요.:
-* [시작: 웹 앱](/tutorials/web/get-started)
+More information:
+
+* [Build a web app with Dart](/web/get-started)
 * [`dart compile js`](/tools/dart-compile#js)
 * [`webdev` 툴](/tools/webdev)
 * [웹 배포 팁](/web/deployment)

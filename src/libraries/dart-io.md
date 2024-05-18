@@ -1,3 +1,14 @@
+---
+title: dart:io
+description: Learn about the major features in Dart's dart:io library.
+prevpage:
+  url: /libraries/dart-convert
+  title: dart:convert
+nextpage:
+  url: /libraries/dart-html
+  title: dart:html
+---
+
 <?code-excerpt plaster="none"?>
 
 The [dart:io][] library provides APIs to deal with
@@ -97,7 +108,7 @@ void main() async {
 #### Streaming file contents
 
 Use a Stream to read a file, a little at a time.
-You can use either the [Stream API](/guides/libraries/library-tour#stream)
+You can use either the [Stream API](/libraries/dart-async#stream)
 or `await for`, part of Dart's
 [asynchrony support.](/language/async)
 
@@ -181,10 +192,10 @@ void main() async {
 The File and Directory classes contain other functionality, including
 but not limited to:
 
--   Creating a file or directory: `create()` in File and Directory
--   Deleting a file or directory: `delete()` in File and Directory
--   Getting the length of a file: `length()` in File
--   Getting random access to a file: `open()` in File
+- Creating a file or directory: `create()` in File and Directory
+- Deleting a file or directory: `delete()` in File and Directory
+- Getting the length of a file: `length()` in File
+- Getting random access to a file: `open()` in File
 
 Refer to the API docs for [File][] and [Directory][] for a full
 list of methods.
@@ -234,27 +245,15 @@ void processRequest(HttpRequest request) {
 
 #### HTTP client
 
-The [HttpClient][] class
-helps you connect to HTTP resources from your Dart command-line or
-server-side application. You can set headers, use HTTP methods, and read
-and write data. The HttpClient class does not work in browser-based
-apps. When programming in the browser, use the
-[dart:html HttpRequest class.][HttpRequest]
-Here's an example of using HttpClient:
+You should avoid directly using `dart:io` to make HTTP requests.
+The [HttpClient][] class in `dart:io` is platform-dependent
+and tied to a single implementation.
+Instead, use a higher-level library like
+[`package:http`]({{site.pub-pkg}}/http).
 
-<?code-excerpt "misc/test/library_tour/io_test.dart (client)" replace="/Future<\w+\W/void/g"?>
-```dart
-void main() async {
-  var url = Uri.parse('http://localhost:8888/dart');
-  var httpClient = HttpClient();
-  var request = await httpClient.getUrl(url);
-  var response = await request.close();
-  var data = await utf8.decoder.bind(response).toList();
-  print('Response ${response.statusCode}: $data');
-  httpClient.close();
-}
-```
-
+The [Fetch data from the internet][] tutorial
+explains how to make HTTP requests
+using `package:http`.
 
 ### More information
 
@@ -266,9 +265,9 @@ For more information about server-side and command-line app development, see the
 [server-side Dart overview.](/server)
 
 
-[library tour]: /guides/libraries/library-tour
 [dart:io]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-io/dart-io-library.html
 [Directory]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-io/Directory-class.html
+[Fetch data from the internet]: /tutorials/server/fetch-data
 [File]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-io/File-class.html
 [HttpClient]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-io/HttpClient-class.html
 [HttpRequest]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-html/HttpRequest-class.html

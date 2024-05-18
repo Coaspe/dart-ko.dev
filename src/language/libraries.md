@@ -131,13 +131,15 @@ Future<void> greet() async {
 
 지연 로딩을 사용할 때 다음을 꼭 기억해두세요:
 
-* 지연된 라이브러리의 상수는 import하는 파일에서 상수가 아닙니다.
-  꼭 기억하세요, 이 상수는 지연된 라이브러리가 로드되기 전에는 존재하지 않는 상수 입니다.
-* Import하는 파일에서 지연된 라이브러리에 타입을 사용 할 수 없습니다.
-  대신, 지연된 라이브러리와 import하는 파일에서 가져온 라이브러리로 인터페이스 타입을 이동하는 것을 고려하세요.
-* Dart는 암묵적으로 `loadLibrary()`를 <code>deferred as <em>namespace</em></code>
-  를 사용하여 정의한 네임스페이스에 삽입합니다.
-  `loadLibrary()`는 [`Future`](/guides/libraries/library-tour#future)를 반환합니다.
+* A deferred library's constants aren't constants in the importing file.
+  Remember, these constants don't exist until the deferred library is loaded.
+* You can't use types from a deferred library in the importing file.
+  Instead, consider moving interface types to a library imported by
+  both the deferred library and the importing file.
+* Dart implicitly inserts `loadLibrary()` into the namespace that you define
+  using <code>deferred as <em>namespace</em></code>.
+  The `loadLibrary()` function returns
+  a [`Future`](/libraries/dart-async#future).
 
 ### `library` 명령어 {#library-directive}
 

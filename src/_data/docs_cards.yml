@@ -4,9 +4,9 @@
 - name: 효과적인 Dart
   description: 일관적이고 지속가능하며 효과적인 Dart 코드를 작성하는 모범 사례를 소개합니다.
   url: /effective-dart
-- name: 라이브러리 투어
+- name: 라이브러리 문서
   description: Dart SDK의 핵심 라이브러리의 주요 기능에 대한 예제 기반의 입문서.
-  url: /guides/libraries/library-tour
+  url: /libraries
 - name: Dart SDK
   description: SDK에는 무엇이 있는지 그리고 설치하는 방법을 배웁니다.
   url: /tools/sdk

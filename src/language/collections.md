@@ -73,7 +73,7 @@ var constantList = const [1, 2, 3];
 ```
 
 Lists에 대한 더 자세한 정보를 원한다면,
-[라이브러리 투어](/guides/libraries/library-tour#lists)의
+[라이브러리 투어](/libraries/library-tour#lists)의
 lists 섹션을 살펴보세요.
 
 ## Sets
@@ -148,7 +148,7 @@ final constantSet = const {
 ```
 
 Sets에 대한 더 자세한 정보를 원한다면
-[라이브러리 투어](/guides/libraries/library-tour#sets)
+[라이브러리 투어](/libraries/library-tour#sets)
 의 Sets 섹션을 참고하세요.
 
 ## Maps
@@ -254,7 +254,7 @@ final constantMap = const {
 ```
 
 Maps에 대한 더 자세한 정보를 원한다면,
-[라이브러리 투어](/guides/libraries/library-tour#maps)의
+[라이브러리 투어](/libraries/library-tour#maps)의
 Maps 섹션을 참고하세요.
 
 ## 연산자
@@ -321,7 +321,7 @@ assert(listOfStrings[1] == '#1');
 컬렉션 `if` 와 `for`에 대한 더 자세한 정보와 예제를 원한다면,
 [제어 흐름 컬렉션 프로포절][collections proposal]을 참고하세요.
 
-[collections]: /guides/libraries/library-tour#collections
+[collections]: /libraries/dart-core#collections
 [type inference]: /language/type-system#type-inference
 [`List`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/List-class.html
 [`Map`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Map-class.html

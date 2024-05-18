@@ -12,9 +12,10 @@ nextpage:
 Dart 언어에 대해 더 자세히 배우고 싶다면,
 왼쪽 사이드 메뉴의 **언어**에 나열된 토픽들을 참고하세요.
 
-Dart의 코어 라이브러리에 대해 배우고 싶다면, [라이브러리 투어](/guides/libraries/library-tour)를 참고하세요.
-직접 Dart 언어를 사용하여 학습하고 싶다면, [Dart cheatsheet codelab](/codelabs/dart-cheatsheet)를
-참고하세요.
+For coverage of Dart's core libraries,
+check out the [core library documentation](/libraries).
+You can also try the [Dart cheatsheet codelab](/codelabs/dart-cheatsheet),
+for a more hands-on introduction.
 
 
 ## Hello World
@@ -523,11 +524,11 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
 
 ## 추가적인 리소스
 
-추가적인 코드 샘플은
-[라이브러리 투어](/guides/libraries/library-tour)와
-[Dart API 레퍼런스]({{site.dart-api}})에서 확인할 수 있습니다.
-이 사이트의 코드들은 
-[Dart 스타일 가이드](/effective-dart/style)의 컨벤션을 준수합니다.
+You can find more documentation and code samples in the
+[core library documentation](/libraries/dart-core)
+and the [Dart API reference]({{site.dart-api}}).
+This site's code follows the conventions in the
+[Dart style guide](/effective-dart/style).
 
 [Dart language specification]: /guides/language/spec
 [Comments]: /language/comments

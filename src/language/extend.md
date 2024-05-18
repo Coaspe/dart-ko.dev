@@ -74,9 +74,9 @@ class SmartTelevision extends Television {
 자세한 정보를 원한다면, [Dart 언어 설명서][Dart language specification]를 참고하세요.
 
 {{site.alert.warning}}
-  `==` 를 재정의하면, `hashCode` getter도 재정의해야 합니다.
-  [Implementing map keys](/guides/libraries/library-tour#implementing-map-keys)에
-  `==`와 `hashCode`를 재정의하는 예제가 있습니다.
+  If you override `==`, you should also override Object's `hashCode` getter.
+  For an example of overriding `==` and `hashCode`, check out
+  [Implementing map keys](/libraries/dart-core#implementing-map-keys).
 {{site.alert.end}}
 
 ## noSuchMethod()

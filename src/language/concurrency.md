@@ -3,6 +3,9 @@ title: Dart의 동시성
 description: Isolate를 사용하여 멀티 프로세서 코어에서 병렬 코드를 실행하세요.
 short-title: 동시성
 prevpage:
+  url: /language/modifier-reference
+  title: Class modifiers reference
+nextpage:
   url: /language/async
   title: 비동기
 ---
@@ -15,67 +18,112 @@ prevpage:
   }
 </style>
 
-Dart는 async-await, isolate 그리고 `Future`, `Stream`과 같은 클래스로 동시 프로그래밍을 지원합니다.
-이 페이지는 async-await, `Future`, `Stream` 그리고 isolate에 대해 다루며,
-대부분은 isolate에 대한 설명입니다.
+This page contains a conceptual overview of how concurrent programming works in
+Dart. It explains the event-loop, async language features, and isolates from
+a high-level. For more practical code examples of using async features,
+read the [Asynchrony support](/language/async).
 
-앱의 모든 Dart 코드는 _isolate_ 안에서 실행됩니다.
-각 Dart isolate는 단일 실행 스레드를 가지고
-다른 isolate와 변할 수 있는 객체를 공유하지 않습니다.
-Isolate 사이의 커뮤니케이션은 메시지 패싱으로 이루어집니다.
-대부분의 Dart 앱은 _main isolate_ 라는 하나의 isolate만 사용합니다.
-멀티 프로세서 코어에서 병렬 코드 실행을 활성화하고 싶다면
-추가적인 isolate를 생성하세요.
+Concurrent programming in Dart refers to both asynchronous APIs, like `Future`
+and `Stream`, and *isolates*, which allow you to move processes to separate
+cores.
 
-Dart의 isolate 모델은 운영 체제가 제공하는 프로세스와 스레드 같은
-내재된 프리미티브로 만들어지만, Dart VM에서 이러한 프리미티브를 어떻게 사용하여
-isolate를 구현하였는지는 이 페이지에서 다루지 않습니다.
+All Dart code runs in isolates, starting in the default main isolate,
+and optionally expanding to whatever subsequent isolates you
+explicitly create. When you spawn a new isolate,
+it has its own isolated memory, and its own event loop.
+The event loop is what makes asynchronous and
+concurrent programming possible in Dart.
 
-## 비동기 타입과 문법
+## Event Loop
 
-`Future`, `Stream` 그리고 async-await에 이미 익숙하다면,
-[isolate 섹션][]으로 넘어가세요.
+Dart’s runtime model is based on an event loop.
+The event loop is responsible for executing your program's code,
+collecting and processing events, and more.
 
-[isolate 섹션]: #isolate-작동-방식
+As your application runs, all events are added to a queue,
+called the *event queue*.
+Events can be anything from requests to repaint the UI,
+to user taps and keystrokes, to I/O from the disk.
+Because your app can’t predict what order events will happen,
+the event loop processes events in the order they're queued, one at a time.
 
+![A figure showing events being fed, one by one, into the
+event loop](/assets/img/language/concurrency/event-loop.png)
 
-### Future와 Stream 타입
+The way the event loop functions resembles this code:
 
-Dart 언어와 라이브러리는 객체의 값을 미래에 얻을 수 있다는 것을 나타내기 위해
-`Future`와 `Stream`을 사용합니다. 예를 들어, 결국에 `int` 값을 얻게 되는
-약속(promise)은 `Future<int>` 타입입니다.
-`int`의 시리즈를 얻을 수 있는 약속은 `Stream<int>` 타입입니다.
+```dart
+while (eventQueue.waitForEvent()) {
+  eventQueue.processNextEvent();
+}
+```
 
-다른 예로, 파일을 읽을 때 dart:io 메서드를 사용할 수 있습니다.
-동기 `File` 메서드인 [`readAsStringSync()`][]는 파일을 동기적으로 읽습니다.
-즉, 파일을 모두 읽거나 에러가 발생하기 전까지 코드 실행을 막습니다.
-그런 다음 메서드는 `String` 타입의 객체를 반환하거나 예외를 발생시킵니다.
-같은 작업을 수행하는 비동기 함수인 [`readAsString()`][]은
-즉시 `Future<String>` 타입의 객체를 반환합니다.
-미래의 어느 시점에서, `Future<String>`은 작업을 끝내 문자열 값 또는 에러를 반환합니다.
+This example event loop is synchronous and runs on a single thread.
+However, most Dart applications need to do more than one thing at a time. 
+For example, a client application might need to execute an HTTP request, 
+while also listening for a user to tap a button. 
+To handle this, Dart offers many async APIs, 
+like [Futures, Streams, and async-await](/language/async).
+These APIs are built around this event loop.
 
-[`readAsStringSync()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-io/File/readAsStringSync.html
-[`readAsString()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-io/File/readAsString.html
+For example, consider making a network request:
 
+```dart
+http.get('https://example.com').then((response) {
+  if (response.statusCode == 200) {
+    print('Success!')'
+  }  
+}
+```
 
-#### 비동기 코드가 중요한 이유
+When this code reaches the event loop, it immediately calls the
+first clause, `http.get`, and returns a `Future`.
+It also tells the event loop to hold onto the callback in the `then()` clause
+until the HTTP request resolves. When that happens, it should
+execute that callback, passing the result of the request as an argument.
 
-대부분의 앱은 동시에 여러가지 작업을 수행해야하기 때문에
-메서드의 동기, 비동기 여부는 중요합니다.
+![Figure showing async events being added to an event loop and
+holding onto a callback to execute later
+.](/assets/img/language/concurrency/async-event-loop.png)
 
-비동기 계산은 종종 현재 Dart 코드 외부에서 수행한 계산의 결과입니다.
-이런 계산들은 즉시 끝나지 않으며 결과가 나올 때까지 Dart 코드의 실행을 중지해야 할 수도 있습니다.
-예를 들어, 비동기 코드는 앱이 HTTP 요청을 보낸 후 완료되기 전에
-디스플레이를 갱신하거나 유저 입력에 반응할 수 있습니다.
+This same model is generally how the event loop handles all other
+asynchronous events in Dart, such as [`Stream`][] objects.
 
-비차단 I/O, HTTP 요청 또는 브라우저와의 상호 작용 같은 운영 체제 호출이 비동기 작업에 해당합니다.
-Dart의 isolate를 사용하여 계산하거나 타이머가 트리거될 때까지 기다리는 경우도 있습니다.
-비동기 작업들은 다른 스레드에서 실행되거나 운영 체제 또는 Dart 런타임에 처리되어 계산과 함께 Dart 코드가 동시에 실행될 수 있습니다.
+[`Stream`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-async/Stream-class.html
 
+## Asynchronous programming
+
+This section summarizes the different types and syntaxes of asynchronous programming in Dart.
+If you're already familiar with `Future`, `Stream`, and async-await,
+then you can skip ahead to the [isolates section][].
+
+[isolates section]: #isolates
+
+### Futures
+
+A `Future` represents the result of an asynchronous operation that will 
+eventually complete with a value or an error.
+
+In this sample code, the return type of `Future<String>` represents a 
+promise to eventually provide a `String` value (or error).
+
+<?code-excerpt "lib/future_syntax.dart"?>
+```dart
+Future<String> _readFileAsync(String filename) {
+  final file = File(filename);
+
+  // .readAsString() returns a Future.
+  // .then() registers a callback to be executed when `readAsString` resolves.
+  return file.readAsString().then((contents) {
+    return contents.trim();
+  });
+}
+```
 
 ### async-await 문법
 
-`async`와 `await` 키워드는 비동기 함수와 그 결과를 사용하는 선언적인 방법을 제공합니다.
+The `async` and `await` keywords provide a declarative way to define
+asynchronous functions and use their results.
 
 다음 코드는 파일 I/O가 진행되는 동안 코드의 실행이 중단되는 동기식 코드입니다:
 
@@ -137,13 +185,48 @@ Dart 가상 머신 (VM) 또는 운영 체제(OS)에서 `readAsString()`이 non-D
 Dart 코드는 중단됩니다.
 `readAsString()`이 값을 반환하고 나면, Dart 코드는 재개됩니다.
 
-![Flowchart-like figure showing app code executing from start to exit, waiting for native I/O in between](/assets/img/language/concurrency/basics-await.png)
+![Flowchart-like figure showing app code executing from start to exit, waiting
+for native I/O in between](/assets/img/language/concurrency/basics-await.png)
 
-`async`, `await`, 그리고 future에 대해 더 학습하고 싶다면,
-[비동기 프로그래밍 codelab][]을 방문하세요.
+### Streams
+
+Dart also supports asynchronous code in the form of streams. Streams
+provide values in the future and repeatedly over time. A promise to provide a
+series of `int` values over time has the type `Stream<int>`.
+
+In the following example, the stream created with `Stream.periodic`
+repeatedly emits a new `int` value every second.
+
+<?code-excerpt "lib/stream_syntax.dart"?>
+```dart
+Stream<int> stream = Stream.periodic(const Duration(seconds: 1), (i) => i * i);
+```
+
+#### await-for and yield
+
+Await-for is a type of for loop that executes each subsequent iteration of the
+loop as new values are provided. In other words, it’s used to “loop over”
+streams. In this example, a new value will be emitted from the function
+`sumStream` as new values are emitted from the stream that’s provided as an
+argument. The `yield` keyword is used rather than `return` in functions that 
+return streams of values.
+
+<?code-excerpt "lib/await_for_syntax.dart"?>
+```dart
+Stream<int> sumStream(Stream<int> stream) async* {
+  var sum = 0;
+  await for (final value in stream) {
+    yield sum += value;
+  }
+}
+```
+
+If you'd like to learn more about using `async`, `await`, `Stream`s and
+`Future`s,  visit the [asynchronous programming codelab][].
 
 [비동기 프로그래밍 codelab]: /codelabs/async-await
 
+## Isolates
 
 ## Isolate 작동 방식
 
@@ -182,7 +265,8 @@ Isolate를 사용하면 Dart 코드가 가능한 추가 프로세서 코어를 �
 다음 그림에서 볼 수 있듯이 main isolate는 프로그램의 실행이
 시작되는 스레드 입니다:
 
-![A figure showing a main isolate, which runs `main()`, responds to events, and then exits](/assets/img/language/concurrency/basics-main-isolate.png)
+![A figure showing a main isolate, which runs `main()`, responds to events,
+and then exits](/assets/img/language/concurrency/basics-main-isolate.png)
 
 단일 isolate 프로그램도 [async-await][]를 사용하여 비동기 작업이
 완료될 때까지 기다렸다가 다음 코드를 진행하면 원할하게 실행할 수 있습니다.
@@ -315,178 +399,124 @@ main isolate를 구현합니다.
 
 <?code-excerpt "lib/simple_worker_isolate.dart (main)"?>
 ```dart
-const String filename = 'with_keys.json';
+int slowFib(int n) => n <= 1 ? 1 : slowFib(n - 1) + slowFib(n - 2);
 
-void main() async {
-  // 데이터 읽기.
-  final jsonData = await Isolate.run(_readAndParseJson);
-
-  // 데이터 사용.
-  print('Number of JSON keys: ${jsonData.length}');
+// Compute without blocking current isolate.
+void fib40() async {
+  var result = await Isolate.run(() => slowFib(40));
+  print('Fib(40) = $result');
 }
 ```
 
-생성된 isolate는 첫 번째 인자로 주어진
-함수인 `_readAndParseJson`을 실행합니다:
+### Performance and isolate groups
 
-<?code-excerpt "lib/simple_worker_isolate.dart (spawned)"?>
-```dart
-Future<Map<String, dynamic>> _readAndParseJson() async {
-  final fileData = await File(filename).readAsString();
-  final jsonData = jsonDecode(fileData) as Map<String, dynamic>;
-  return jsonData;
-}
-```
+When an isolate calls [`Isolate.spawn()`][], the two isolates have the same
+executable code and are in the same _isolate group_. Isolate groups enable
+performance optimizations such as sharing code; a new isolate immediately runs
+the code owned by the isolate group. Also, `Isolate.exit()` works only when the
+isolates are in the same isolate group.
 
-1. `Isolate.run()`은 백그라운드 워커인 isolate를 생성하고
-   `main()`은 결과를 기다립니다.
-
-2. 생성된 isolate는 `run()`의 인자로 넘겨진 함수를 (위에서는 `_readAndParseJson()`) 실행합니다.
-
-3. `Isolate.run()`은 `return`이 반환하는 결과를 main isolate에 전달하고
-   워커 isolate를 셧다운합니다.
-
-4. 워커 isolate는 결과를 홀딩하고 있는 메모리를 main isolate에게 *전달*합니다.
-   데이터를 *복사하지 않습니다*. 워커 isolate는 해당 객체를
-   전달할 수 있는지 검증하는 작업을 수행합니다.
-
-`_readAndParseJson()` 함수는 main isolate에서 직접
-실행할 수도 있는 비동기 함수입니다. 하지만 `Isolate.run()`을 사용하여
-실행하면 동시성이 활성화됩니다. 워커 isolate는 `_readAndParseJson()`의
-계산을 완전히 추상화하며 main isolate를 블락하지 않고 작업을 완료할 수 있습니다.
-
-Main isolate의 코드는 계속해서 실행되기 때문에 `Isolate.run()`의 결과는 항상 Future 입니다.
-Main isolate와 워커 isolate는 동시에 실행되기 때문에
-워커 isolate가 실행하는 계산이 동기적이든 아니든 main isolate에 영향을 주지 않습니다.
-
-For the complete program, check out the [send_and_receive.dart][] sample.
-
-{% comment %}
-TODO:
-Should create a diagram for the current example.
-Previous example's diagram and text for reference:
-
-  The following figure illustrates the communication between
-  the main isolate and the worker isolate:
-  
-  ![A figure showing the previous snippets of code running in the main isolate and in the worker isolate](/assets/img/language/concurrency/isolate-api.png)
-{% endcomment %}
-
-#### Isolate에 클로저 전달
-
-`run()`을 사용하여 Main isolate에서 워커 isolate를 생성할 때,
-직접적으로 함수 리터럴 또는 클로저를 사용할 수 있습니다.
-
-<?code-excerpt "lib/simple_isolate_closure.dart (main)"?>
-```dart
-const String filename = 'with_keys.json';
-
-void main() async {
-  // 데이터 읽기.
-  final jsonData = await Isolate.run(() async {
-    final fileData = await File(filename).readAsString();
-    final jsonData = jsonDecode(fileData) as Map<String, dynamic>;
-    return jsonData;
-  });
-
-  // 데이터 사용.
-  print('Number of JSON keys: ${jsonData.length}');
-}
-```
-
-이 예제는 이전의 예제와 같은 작업을 수행합니다.
-새로운 isolate를 생성하고 작업을 수행하며 마지막으로 결과를 반환합니다.
-
-그러나, 이번 예제에서는 isolate에 [클로저][Closure]를 전달합니다.
-클로저는 코드를 작성하는 방법과 작동하는 방식에서 일반적인 named 함수보다 제약이 적습니다.
-이번 예제에서, `Isolate.run()`은 로컬 코드처럼 보이는 코드를 동시에 실행합니다.
-이런 맥락에서 `run()`이 코드를 "병렬적으로 실행"하기 위해 흐름 제어 연산자 처럼
-작동한다고 생각할 수도 있습니다.
-
-[Closure]: /language/functions#익명-함수
-
-### Isolate 사이에 다수의 메시지 전송
-
-`Isolate.run()`은 isolate를 관리하는
-다음과 같은 유용한 저수준의 API들을 추상화합니다:
-
-* [`Isolate.spawn()`][], [`Isolate.exit()`][]
-* [`ReceivePort`][], [`SendPort`][]
-
-* [`Isolate.spawn()`][], [`Isolate.exit()`][]
-* [`ReceivePort`][], [`SendPort`][]
-
-[`Isolate.exit()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/Isolate/exit.html
-[`Isolate.spawn()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/Isolate/spawn.html
-[`ReceivePort`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/ReceivePort-class.html
-[`SendPort`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/SendPort-class.html
-
-Isolate 기능을 더 정밀하게 제어하고 싶다면 위의 저수준 API를 사용하면 됩니다.
-예를 들어, `run()`은 하나의 메시지를 반환한 후 isolate를 셧다운합니다.
-Isolate 사이에 다수의 메시지를 전송하고 싶다면 어떻게 해야할까요?
-`run()`의 구현에서 `SendPort`의 [`send()` 메소드][]를 조금 다르게 수정하여
-isolate를 설정하면 됩니다.
-
-다음과 그림과 같이 main isolate에서 워커 isolate로
-요청 메시지를 보낸 후 하나 또는 다수의 응답 메시지를 보내는 패턴이 자주 사용됩니다.
-
-![A figure showing the main isolate spawning the isolate and then sending a request message, which the worker isolate responds to with a reply message; two request-reply cycles are shown](/assets/img/language/concurrency/isolate-custom-bg-worker.png)
-
-Isolate 사이에서 다수의 메시지를 송수신하는
-장기 실행 isolate를 생성하는 방법은 [long_running_isolate.dart][] 샘플에서 확인하세요.
-
-{% assign samples = "https://github.com/dart-lang/samples/tree/main/isolates" %}
-
-[isolate 샘플]: {{ samples }}
-[send_and_receive.dart]: {{ samples }}/bin/send_and_receive.dart
-[long_running_isolate.dart]: {{ samples }}/bin/long_running_isolate.dart
-
-
-## 성능과 isolate 그룹
-
-Isolate가 [`Isolate.spawn()`][]을 호출하면,
-두 개의 isolate는 동일한 실행 가능 코드를 가지고
-같은 _isolate 그룹_ 에 속합니다.
-Isolate 그룹은 코드 공유 같은 성능 최적화가 가능합니다;
-코드 공유를 활성화하면 새로운 isolate가 isolate 그룹이 가지고 있는 코드를
-즉시 실행합니다. 또한, `Isolate.exit()`은 해당 isolate들이 동일한
-isolate 그룹에 있을 때 작동합니다.
-
-가끔 [`Isolate.spawnUri()`][]를 사용하여 특정 URI에 해당하는
-코드 사본을 사용하여 새로운 isolate를 셋업 할 때가 있습니다.
-그러나, `spawnUri()`는 `spawn()` 보다 느리고
-그렇게 생성된 isolate는 해당 isolate를 생성한 isolate와 같은
-그룹에 속하지 않습니다. 또한 다른 그룹에 속한 isolate
-사이의 메시지 패싱은 느립니다.
+In some special cases, you might need to use [`Isolate.spawnUri()`][], which
+sets up the new isolate with a copy of the code that's at the specified URI.
+However, `spawnUri()` is much slower than `spawn()`, and the new isolate isn't
+in its spawner's isolate group. Another performance consequence is that message
+passing is slower when isolates are in different groups.
 
 [`Isolate.spawnUri()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/Isolate/spawnUri.html
 
-{{site.alert.flutter-note}}
-  Flutter는 `Isolate.spawnUri()`를 지원하지않습니다.
-{{site.alert.end}}
+### Limitations of isolates
+
+#### Isolates aren't threads
+
+If you’re coming to Dart from a language with multithreading, it’d be reasonable
+to expect isolates to behave like threads, but that isn’t the case. Each isolate
+has its own state, ensuring that none of the state in an isolate is
+accessible from any other isolate. Therefore, isolates are limited by their
+access to their own memory.
+
+For example, if you have an application with a
+global mutable variable, that variable will be a separate
+variable in your spawned isolate. If you mutate that variable in the spawned
+isolate, it will remain untouched in the main isolate. This is how isolates are
+meant to function, and it's important to keep in mind when you’re considering
+using isolates.
+
+#### Message types
+
+Messages sent via [`SendPort`][]
+can be almost any type of Dart object, but there are a few exceptions:
+
+- Objects with native resources, such as [`Socket`][].
+- [`ReceivePort`][]
+- [`DynamicLibrary`][]
+- [`Finalizable`][]
+- [`Finalizer`][]
+- [`NativeFinalizer`][]
+- [`Pointer`][]
+- [`UserTag`][]
+- Instances of classes that are marked with `@pragma('vm:isolate-unsendable')`
+
+Apart from those exceptions, any object can be sent.
+Check out the [`SendPort.send`][] documentation for more information.
+
+Note that `Isolate.spawn()` and `Isolate.exit()` abstract over `SendPort` 
+objects, so they're subject to the same limitations.
+
+[`SendPort.send`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/SendPort/send.html
+[`Socket`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-io/Socket-class.html
+[`DynamicLibrary`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-ffi/DynamicLibrary-class.html
+[`Finalizable`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-ffi/Finalizable-class.html
+[`Finalizer`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/Finalizer-class.html
+[`NativeFinalizer`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-ffi/NativeFinalizer-class.html
+[`Pointer`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-ffi/Pointer-class.html
+[`UserTag`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-developer/UserTag-class.html
 
 <a id="web"></a>
 ## 웹에서의 동시성
 
-모든 Dart 앱은 비차단, 인터리브 계산을 위해
-`async-await`, `Future`, 그리고 `Stream`을 사용할 수 있습니다.
-그러나 [Dart 웹 플랫폼][]은 isolate를 지원하지 않습니다.
-Dart 웹앱은 isolate와 유사하게 [웹 워커][]를 사용하여
-백그라운드 스레드에서 스크립트 실행이 가능합니다.
-그러나 웹 워커의 기능과 능력은 isolate와 다소 다릅니다.
+All Dart apps can use `async-await`, `Future`, and `Stream`
+for non-blocking, interleaved computations. The [Dart web platform][], however,
+does not support isolates. Dart web apps can use [web workers][] to run scripts
+in background threads similar to isolates. Web workers' functionality and
+capabilities differ somewhat from isolates, though.
 
-예를 들어, 웹 워커가 스레드 사이에서 데이터를 전송할 때,
-데이터를 복사합니다. 그러나 데이터 복사는 특히 큰 메시지의 경우
-매우 느릴 수 있습니다. Isolate도 비슷하게 작동하지만
-메시지를 저장하는 메모리를 더 효율적으로 _전송_ 할 수 있는 API를 제공합니다.
+For instance, when web workers send data between threads, they copy the data
+back and forth. Data copying can be very slow, though, especially for large
+messages. Isolates do the same, but also provide APIs that can more efficiently
+_transfer_
+the memory that holds the message instead.
 
-웹 워커와 isolate를 생성하는 것 또한 서로 다릅니다.
-웹 워커를 생성하고 싶다면 분리된 프로그램 엔트리를 선언하고
-그것을 따로 컴파일 해야 합니다. 웹 워커를 생성하는 것은
-`Isolate.spawnUri`를 사용하여 isolate를 생성하는 것과 유사합니다.
-`Isoatel.spawn`을 사용하여 isolate를 생성하면 생성을 호출한 isolate와
-[일부 동일한 코드와 데이터를 재사용](#성능과-isolate-그룹)
-하기 때문에 더 적은 리소스를 사용합니다. 웹 워커는 이와 동일한 API가 없습니다.
+Creating web workers and isolates also differs. You can only create web workers
+by declaring a separate program entrypoint and compiling it separately. Starting
+a web worker is similar to using `Isolate.spawnUri` to start an isolate. You can
+also start an isolate with `Isolate.spawn`, which requires fewer resources
+because it
+[reuses some of the same code and data](#performance-and-isolate-groups)
+as the spawning isolate. Web workers don't have an equivalent API.
 
-[Dart 웹 플랫폼]: /overview#platform
-[웹 워커]: https://developer.mozilla.org/docs/Web/API/Web_Workers_API/Using_web_workers
+[Dart web platform]: /overview#platform
+[web workers]: https://developer.mozilla.org/docs/Web/API/Web_Workers_API/Using_web_workers
+
+
+## Additional resources
+
+- If you’re using many isolates, consider
+  the [`IsolateNameServer`][]
+  in Flutter, or
+  [`package:isolate_name_server`][] that provides
+  similar functionality for non-Flutter Dart applications.
+- Read more about [Actor model][], which Dart's isolates are based on.
+- Additional documentation on `Isolate` APIs:
+    - [`Isolate.exit()`][]
+    - [`Isolate.spawn()`][]
+    - [`ReceivePort`][]
+    - [`SendPort`][]
+
+[`IsolateNameServer`]: https://api.flutter.dev/flutter/dart-ui/IsolateNameServer-class.html
+[`package:isolate_name_server`]: https://pub.dev/packages/isolate_name_server
+[Actor model]: https://en.wikipedia.org/wiki/Actor_model
+[`Isolate.run()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/Isolate/run.html
+[`Isolate.exit()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/Isolate/exit.html
+[`Isolate.spawn()`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/Isolate/spawn.html
+[`ReceivePort`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/ReceivePort-class.html
+[`SendPort`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-isolate/SendPort-class.html

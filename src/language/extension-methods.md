@@ -8,16 +8,22 @@ nextpage:
   url: /language/callable-objects
   title: 호출 가능한 객체
 ---
-확장 메서드는 이미 존재하는 라이브러리에 기능을 추가합니다.
-확장 메서드가 무엇인지 모르는 상태에서 사용하고 있을 수도 있습니다.
-예를 들어, IDE에서 코드 완성을 사용할 때,
-IDE가 일반적인 메서드와 함께 확장 메서드를 추천합니다.
 
-<iframe width="560" height="315"
-src="https://www.youtube.com/embed/D3j0OSfT9ZI"
-frameborder="0"
-allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen>
+{% include yt_shims.liquid %}
+
+Extension methods add functionality to existing libraries.
+You might use extension methods without even knowing it.
+For example, when you use code completion in an IDE,
+it suggests extension methods alongside regular methods.
+
+If watching videos helps you learn,
+check out this overview of extension methods.
+
+<iframe
+  {{yt-std-size}}
+  title="Learn about extension methods in Dart"
+  src="{{yt-embed}}/D3j0OSfT9ZI"
+  {{yt-set}}>
 </iframe>
 
 _비디오를 통해 학습하고 싶다면 위의 영상을 참고하세요._

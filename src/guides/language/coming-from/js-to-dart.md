@@ -2725,13 +2725,13 @@ language and practical ways of getting started.
 
 Some possible next steps:
 
-- [Language tour][] to learn more about the Dart language
-- [Library tour][] to learn about Dart's core libraries
-- [Dart codelabs][] for hands-on experience learning a variety of topics
-- [Effective Dart][] to learn about common conventions
+* [Language tour][] to learn more about the Dart language
+* [Core library documentation][] to learn about Dart's core libraries
+* [Dart codelabs][] for hands-on experience learning a variety of topics
+* [Effective Dart][] to learn about common conventions
   and guidelines when writing Dart code
 
-[Language tour]:  /language
-[Library tour]:   /guides/libraries/library-tour
-[Dart codelabs]:  /codelabs
+[Language tour]: /language
+[Core library documentation]: /libraries
+[Dart codelabs]: /codelabs
 [Effective Dart]: /effective-dart

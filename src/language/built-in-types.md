@@ -262,9 +262,8 @@ const validConstString = '$aConstNum $aConstBool $aConstString';
 // const invalidConstString = '$aNum $aBool $aString $aConstList';
 ```
 
-문자열 사용에 대해 더 자세히 알고 싶다면,
-[문자열과 정규 표현식](/guides/libraries/library-tour#strings-and-regular-expressions)을
-참고하세요.
+For more information on using strings, check out
+[Strings and regular expressions](/libraries/dart-core#strings-and-regular-expressions).
 
 
 ## Booleans
@@ -377,8 +376,8 @@ Symbol 리터럴은 컴파일 타임 상수입니다.
 [Sets]: /language/collections#sets
 [Maps]: /language/collections#maps
 [asynchrony support]: /language/async
-[iteration]: /guides/libraries/library-tour#iteration
-[generator functions]: /language/functions#제너레이터
+[iteration]: /libraries/dart-core#iteration
+[generator functions]: /language/functions#generators
 [Understanding null safety]: /null-safety/understanding-null-safety#top-and-bottom
 [`int`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/int-class.html
 [`double`]: {{site.dart-api}}/{{site.data.pkg-vers.SDK.channel}}/dart-core/double-class.html

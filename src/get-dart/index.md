@@ -112,7 +112,7 @@ stable, beta, dev 채널 릴리즈를 다운로드 할 수 있습니다.
 
 [SDK constraints]: /tools/pub/pubspec#sdk-constraints
 [SDK 소스를 빌드]: https://github.com/dart-lang/sdk/wiki/Building
-[Dart libraries]: /guides/libraries/library-tour
+[Dart libraries]: /libraries
 [Dart 도커 이미지]: https://hub.docker.com/_/dart
 [SDK의 zip 압축 파일을 다운로드]: /get-dart/archive
 [Debian stable]: https://www.debian.org/releases

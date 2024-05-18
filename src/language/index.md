@@ -497,7 +497,7 @@ Dart 언어를 학습 할 때 다음을 잘 기억하세요:
     뿐만 아니라, 최상위 *변수* 또한 지원합니다. 
     Instance 변수들은 *필드*, *프로퍼티* 로도 알려져있습니다.
 
--   Java와 다르게, Dart는 `public`, `projected` 그리고 `private` 같은 키워드가 없습니다.
+-   Java와 다르게, Dart는 `public`, `protected` 그리고 `private` 같은 키워드가 없습니다.
     식별자가 언더 스코어 (`_`)로 시작한다면, 이것은 해당 라이브러리에 귀속된(private) 것입니다.
     더 자세한 정보를 원한다면, [라이브러리와 임포트][Libraries and imports]
     를 참고하세요.

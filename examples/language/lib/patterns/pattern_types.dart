@@ -187,13 +187,13 @@ void miscDeclAnalyzedButNotTested() {
       case (:var untyped, :int typed): // ...
     }
 
-    // Record pattern wih null-check and null-assert subpatterns:
+    // Record pattern with null-check and null-assert subpatterns:
     switch (record) {
       case (checked: var checked?, asserted: var asserted!): // ...
       case (:var checked?, :var asserted!): // ...
     }
 
-    // Record pattern wih cast subpattern:
+    // Record pattern with cast subpattern:
     var (untyped: untyped as int, typed: typed as String) = record;
     var (:untyped as int, :typed as String) = record;
     // #enddocregion record-getter
@@ -264,8 +264,11 @@ void miscDeclAnalyzedButNotTested() {
     var token = switch (result) {
       // #docregion parens
       // ...
+      x || y => 'matches true',
       x || y && z => 'matches true',
-      (x || y) && z => 'matches false',
+      x || (y && z) => 'matches true',
+      // `x || y && z` is the same thing as `x || (y && z)`.
+      (x || y) && z => 'matches nothing',
       // ...
       // #enddocregion parens
       _ => throw FormatException('Invalid')

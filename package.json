@@ -1,14 +1,41 @@
 {
   "name": "dart.dev",
   "version": "0.0.0",
-  "private": false,
-  "description": "Source code for https://dart.dev",
+  "private": true,
+  "description": "Source for https://dart.dev",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/dart-lang/site-www.git"
   },
+  "scripts": {
+    "serve": "PRODUCTION=false eleventy --serve",
+    "build-site-for-staging": "PRODUCTION=false eleventy",
+    "build-site-for-production": "PRODUCTION=true eleventy"
+  },
+  "engines": {
+    "node": ">=20.10.0",
+    "pnpm": ">=8.14.0"
+  },
+  "packageManager": "pnpm@8.15.8",
   "dependencies": {
     "bootstrap-scss": "^4.6.2"
   },
-  "packageManager": "pnpm@9.1.1+sha256.9551e803dcb7a1839fdf5416153a844060c7bce013218ce823410532504ac10b"
+  "devDependencies": {
+    "@11ty/eleventy": "3.0.0-alpha.10",
+    "firebase-tools": "^13.9.0",
+    "hast-util-from-html": "^2.0.1",
+    "hast-util-select": "^6.0.2",
+    "hast-util-to-text": "^4.0.2",
+    "html-minifier-terser": "^7.2.0",
+    "js-yaml": "^4.1.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.0.1",
+    "markdown-it-attrs": "^4.1.6",
+    "markdown-it-container": "^4.0.0",
+    "markdown-it-deflist": "^3.0.0",
+    "markdown-it-table": "^4.1.1",
+    "sass": "^1.77.2",
+    "shiki": "^1.5.2"
+  }
 }

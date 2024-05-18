@@ -12,9 +12,9 @@ No support for `dart:mirrors` and `dart:developer`
 
 [Multi-platform]: /libraries#multi-platform-libraries
 [Native platform]: /libraries#native-platform-libraries
-[issue 28617]: https://github.com/dart-lang/sdk/issues/28617
+[issue 28617]: {{site.repo.dart.sdk}}/issues/28617
 
-{{site.alert.tip}}
-  If one of these issues is important to you,
-  let the Dart team know by adding a "thumbs up" to the issue.
-{{site.alert.end}}
+:::tip
+If one of these issues is important to you,
+let the Dart team know by adding a "thumbs up" to the issue.
+:::

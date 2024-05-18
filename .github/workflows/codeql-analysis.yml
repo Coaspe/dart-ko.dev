@@ -23,17 +23,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'ruby' ]
+        language: [ 'javascript' ]
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://git.io/codeql-language-support
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@012739e5082ff0c22ca6d6ab32e07c36df03c4a4
+        uses: github/codeql-action/init@b7cec7526559c32f1616476ff32d17ba4c59b2d6
         with:
           languages: ${{ matrix.language }}
           # If you wish to specify custom queries, you can do so here or in a config file.
@@ -44,7 +44,7 @@ jobs:
       # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
       # If this step fails, then you should remove it and run the build manually (see below)
       - name: Autobuild
-        uses: github/codeql-action/autobuild@012739e5082ff0c22ca6d6ab32e07c36df03c4a4
+        uses: github/codeql-action/autobuild@b7cec7526559c32f1616476ff32d17ba4c59b2d6
 
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 https://git.io/JvXDl
@@ -58,4 +58,4 @@ jobs:
       #   make release
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@012739e5082ff0c22ca6d6ab32e07c36df03c4a4
+        uses: github/codeql-action/analyze@b7cec7526559c32f1616476ff32d17ba4c59b2d6

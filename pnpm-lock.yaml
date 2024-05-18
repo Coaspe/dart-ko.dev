@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      bootstrap-scss:
+        specifier: ^4.6.2
+        version: 4.6.2
+
+packages:
+
+  bootstrap-scss@4.6.2:
+    resolution: {integrity: sha512-emVpCI/S9aeFV1/qqKrztPZLiyow4XfRWLxOAu2SR/67Vau0y6IHNRukQrTx8+OUQ+aVPDhql40eDHSxGoAceA==}
+
+snapshots:
+
+  bootstrap-scss@4.6.2: {}
